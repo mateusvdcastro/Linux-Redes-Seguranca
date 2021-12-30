@@ -1,0 +1,25 @@
+apt-get update  => atualiza o ubuntu server buscando atualizações repositórios na internet
+
+sudo apt-get install gcc  => instalar linguagem C
+sudo apt-get install ffmpeg => conversor de áudio/vídeo
+
+sudo apt-get install --only-upgrade ffmpeg  => atualizar aplicações
+
+sudo apt-get remove gcc
+sudo apt-get remove ffmpeg
+
+man apt-get  => mostra o manual do apt-get
+
+ls /etc/apt/sources.list => verificar se a pasta sources.lits existe
+cat /etc/apt/sources.list => pegar o que está no arquivo e exibir
+
+man => manual
+sudo => super usuário
+apt => pacote de busca
+apt-search => busca informações de aplicações
+apt-get install => usado para instalar aplicações
+
+ctrl + alt + f1/f2/f3/f4/f5/f6 para abrir os 6 consoles possíveis
+
+shutdown -h
+poweroff

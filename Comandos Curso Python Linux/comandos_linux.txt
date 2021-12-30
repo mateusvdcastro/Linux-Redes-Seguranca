@@ -1,0 +1,35 @@
+Assim que abrir pela primeira vez o sistema Ubuntu:
+$ sudo apt update
+$ sudo apt upgrade
+$ sudo apt install build-essential gcc make perl dkms curl
+$ sudo apt install git
+dispositivos -> Inserir imagens de CD dos Adicionais para Convidado (para arrumar a tela)
+
+Abra o terminal do Linux e do Windows
+
+No Linux:
+                        # certifique-se que a rede do Virtual Box está em modo Placa em modo bridge
+$ ip address show        -> Para verificar o IP (192.168.0.13)
+$ sudo apt install ssh
+$ sudo nano /etc/ssh/sshd_config
+$ sudo systemctl restart ssh
+$ nano ~/.ssh/authorized_keys
+
+
+No windows:
+$ ping 192.168.0.13      -> Para verificar o IP gerado no Linux (Placa em modo bridge)
+$ ssh mateus@192.168.0.13
+$ ssh-keygen -t rsa -b 4096 -C "mateusvc1124@gmail.com"             -> C:\Users\Asus/.ssh/id_rsa.pub.
+$ sudo apt install nginx          -> para remover $ sudo apt remove nginx --purge --autoremove
+
+/usr/share/doc/*/copyright.
+
+# Chaves SSH no Linux
+ssh-keygen -f ~/.ssh/nome_da_chave -t rsa -b 4096
+cat ~/.ssh/nome_da_chave.pub
+
+
+# tentando arrumar o erro Connection refused
+$ sudo service ssh status
+$ sudo rm -Rf ~/.ssh/                     -> apagar a pasta do ssh 
+$ sudo apt-get purge openssh-client       -> desinstalar ssh

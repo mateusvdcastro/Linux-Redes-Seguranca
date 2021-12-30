@@ -1,0 +1,23 @@
+cat /etc/apt/sources.list
+
+man dpkg                 => ver manual do dpkg
+dpkg --list              => ver todos os pacotes instalados
+sudo dpkg -i nomedoarquivo.deb        => instala um pacote
+sudo dpkg -r nomedoarquivo.deb        => remove o pacote
+sudo dpkg -P ou --purge               => apaga o pacote e todos os arquivos relacionados
+passwd => para alterar a senha do super usuário
+
+
+sudo apt-get install nomedopacote
+sudo apt-get -f install               => instala todas as dependências não resolvidas do nosso sources.list
+
+--terminal: (o app do terminal executa um programa chamado shell bash, ele roda em um console ligado ao monitor e a um teclado)
+
+$ ls => lista os arquivos da pasta atual
+ctrl + alt + f1/f2/f3/f4/f5/f6 para abrir os 6 consoles possíveis, f7 para o console gráfico
+$ apt-get  => instala os pacotes e todas as dependências 
+$ dpkg => instala um único pacote .deb que for informado  Ex: mysql5.6....deb
+$ 
+$
+$
+$
