@@ -1,0 +1,83 @@
+$ cat /etc/apt/sources.list
+
+$ man dpkg                 => ver manual do dpkg
+$ dpkg --list              => ver todos os pacotes instalados
+$ sudo dpkg -i nomedoarquivo.deb        => instala um pacote
+$ sudo dpkg -r nomedoarquivo.deb        => remove o pacote
+$ sudo dpkg -P ou --purge               => apaga o pacote e todos os arquivos relacionados
+$ passwd => para alterar a senha do super usuário
+
+
+$ sudo apt-get install nomedopacote
+$ sudo apt-get -f install               => instala todas as dependências não resolvidas do nosso sources.list
+
+-- terminal: (o app do terminal executa um programa chamado shell bash, ele roda em um console ligado ao monitor e a um teclado)
+-- command options arguments    ex: type -t ls
+
+$ ls      => lista os arquivos da pasta atual
+$ ls -l   =>  lista com detalhes
+$ ls -a   => lista todos os arquivos inclusive os ocultos que iniciam com .
+$ ls -la  => executa o all e o type (-a e -t) juntos
+$ type    => verificar o tipo de um comando ex: type ls / type echo
+$ cd 'nome da pasta'    => entra na pasta/diretório
+$ cd ..                 => para voltar uma pasta
+$ mkdir   => para criar uma pasta
+$ -a      => tudo (all)   ex: type -a ls
+$ -t      => tipo (type)  ex: type -t ls    (output: builtin   --> significa que ls é um comando interno do bash e não um programa instalado)
+ctrl + alt + f1/f2/f3/f4/f5/f6 para abrir os 6 consoles possíveis, f7 para o console gráfico
+ctrl + l  => limpa o console
+ctrl + a  => vai para o inicio da frase
+ctrl + e  => vai para o final da frase
+ctrl + c  => encerrar a atividade
+ctrl + d  => encerrar a atividade ex: python
+$ apt-get  => instala os pacotes e todas as dependências 
+$ dpkg    => instala um único pacote .deb que for informado  Ex: mysql5.6....deb
+$ echo    =>  ex: echo Mateus, bom dia! -- devolve o que eu digitei (como se fosse um print)
+$ pwd     => mostra o diretório atual
+$ zip     => compacta arquivos do meu diretório
+$ unzip   => descompacta arquivos
+$ data    => data atual
+$ help    => mostra informações de um comando ex: help type
+$ env     => (environment) mostra todas as variáveis de ambiente criadas
+
+criei um arquivo de texto chamado mostra_idade em mateus@mateus-VitualBox == /home/mateus
+digite os comandos abaixo para relembrar variáveis de ambiente e de shell
+$ env NOME='Mateus V de Castro' IDADE=19 OPERATIONAL_SYSTEM='Linux UBUNTU' bash mostra_idade
+$ export NOME='Daniel'
+$ echo $NOME
+$ bash mostra_idade
+
+rode os comandos abaixo (para ver var de ambiente e de shell):
+====== var de shell/local
+$ AMBIENTE=desenvolvimento           => criamos a var de shell (local) AMBiENTE com valor desenvolvimento
+$ echo $AMBiENTE                     => mostra a var local chamada desenvolvimento
+$ AMBIENTE=                          => zeramos/apagamos a variável
+$ echo $AMBiENTE                     => verificando que zeramos msm
+====== var de ambiente
+$ export AMBIENTE=desenvolvimento    => criamos a var de ambiente AMBiENTE com valor desenvolvimento
+$ echo $AMBiENTE                     => mostra a var de ambiente chamada desenvolvimento
+$ AMBIENTE=                          => NÃO ZERAMOS a variável
+$ echo $AMBiENTE
+$ env                                => ela ainda está presente em env !!
+$ export -n AMBIENTE                 => AGORA sim a variável foi apagada do env mas não do shell !!
+$ unset AMBIENTE                     => para apagar tanto do shell quanto do env !!!
+====== variáveis de ambiente do venv
+$ echo $PS1                          => toda a formatação do meu prompt "mateus@mateus-VitualBox", pode ser alterada, ver "https://bashrcgenerator.com/"
+$ echo $PS2                          => Caracter para quando tem uma quebra de linha com enter dentro de aspas "" ou ''
+$ echo $UID                          => ID do meu usuário 
+
+
+====== variável de ambiente EDITOR
+==== Entrar no editor vim
+$ EDITOR=/usr/bin/vi
+$ /usr/bin/vi                        => para entrar no editor
+$ :q                                 => para sair do editor
+==== Entrar no editor Nano
+$ EDITOR=/bin/nano
+$ /bin/nano
+
+
+
+
+
+
