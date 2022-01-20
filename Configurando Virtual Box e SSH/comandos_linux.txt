@@ -4,6 +4,9 @@ $ sudo apt upgrade
 $ sudo apt install build-essential gcc make perl dkms curl
 $ sudo apt install git
 dispositivos -> Inserir imagens de CD dos Adicionais para Convidado (para arrumar a tela)
+$ sudo apt install ubuntu-restricted-extras -y
+
+https://www.osradar.com/install-flat-remix-theme-ubuntu/
 
 Abra o terminal do Linux e do Windows
 

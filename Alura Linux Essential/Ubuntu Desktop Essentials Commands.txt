@@ -22,8 +22,11 @@ $ type    => verificar o tipo de um comando ex: type ls / type echo
 $ cd 'nome da pasta'    => entra na pasta/diretório
 $ cd ..                 => para voltar uma pasta
 $ mkdir   => para criar uma pasta
+$ rm -rf 'nome da pasta'  => remover uma pasta
 $ -a      => tudo (all)   ex: type -a ls
 $ -t      => tipo (type)  ex: type -t ls    (output: builtin   --> significa que ls é um comando interno do bash e não um programa instalado)
+windows + shift + pagedn ou pageup     => enviar um app para outra workspace
+windows pagedn ou pageup     => ficar alternando
 ctrl + alt + f1/f2/f3/f4/f5/f6 para abrir os 6 consoles possíveis, f7 para o console gráfico
 ctrl + l  => limpa o console
 ctrl + a  => vai para o inicio da frase
@@ -34,15 +37,18 @@ $ apt-get  => instala os pacotes e todas as dependências
 $ dpkg    => instala um único pacote .deb que for informado  Ex: mysql5.6....deb
 $ echo    =>  ex: echo Mateus, bom dia! -- devolve o que eu digitei (como se fosse um print)
 $ pwd     => mostra o diretório atual
+$ whoami  => mostra o seu User
 $ zip     => compacta arquivos do meu diretório
 $ unzip   => descompacta arquivos
 $ data    => data atual
 $ help    => mostra informações de um comando ex: help type
 $ env     => (environment) mostra todas as variáveis de ambiente criadas
+$ df -h                             => lista os dispositivos montados (hds, ssds, etc)
+$ chown   => significa change ownership, usada para mudar permissões
 
 criei um arquivo de texto chamado mostra_idade em mateus@mateus-VitualBox == /home/mateus
 digite os comandos abaixo para relembrar variáveis de ambiente e de shell
-$ env NOME='Mateus V de Castro' IDADE=19 OPERATIONAL_SYSTEM='Linux UBUNTU' bash mostra_idade
+$ env FULL_NAME='Mateus V de Castro' AGE=19 OPERATIONAL_SYSTEM='Linux UBUNTU' bash mostra_idade
 $ export NOME='Daniel'
 $ echo $NOME
 $ bash mostra_idade
@@ -52,7 +58,7 @@ rode os comandos abaixo (para ver var de ambiente e de shell):
 $ AMBIENTE=desenvolvimento           => criamos a var de shell (local) AMBiENTE com valor desenvolvimento
 $ echo $AMBiENTE                     => mostra a var local chamada desenvolvimento
 $ AMBIENTE=                          => zeramos/apagamos a variável
-$ echo $AMBiENTE                     => verificando que zeramos msm
+$ echo $AMBIENTE                     => verificando que zeramos msm
 ====== var de ambiente
 $ export AMBIENTE=desenvolvimento    => criamos a var de ambiente AMBiENTE com valor desenvolvimento
 $ echo $AMBiENTE                     => mostra a var de ambiente chamada desenvolvimento
@@ -76,7 +82,25 @@ $ :q                                 => para sair do editor
 $ EDITOR=/bin/nano
 $ /bin/nano
 
+====== Extender o volume da máquina virtual
+ver : https://sourcedigit.com/16391-change-ownership-set-write-permission-on-ext4-partition-in-linux-ubuntu/
+    : https://www.youtube.com/watch?v=cF4qIpOvkkA
+    : https://www.youtube.com/watch?v=6wXZ38RfKxg
 
+
+=> no Windows, no cmd, na pasta do Virtual Box
+
+vboxmanage modifyhd "D:\UBUNTU\Ubuntu 20.04.vdi" --resize 51200  => modifica a maquina para 50GB -- 50*1024=51200
+
+=> No linux particionar com o 'Gparter', montar a unidade em 'Discos' e depois:
+
+$ sudo fdisk -l                     => ver o nome das partições
+$ sudo blkid                        => mostra os UUID(s) das unidades
+$ ll /media/                        => mostra as unidades montadas
+$ sudo chown mateus:mateus /media/mateus/D   => conseguir permissão de leitura e gravação no disco D, já montado, do tipo ext4 que foi particionado no Gparter
+
+ ======= instaláveis para tornar o Linux em um ambiente de desenvolvimento
+$ sudo apt install build-essential default-jdk libssl-dev exuberant-ctags ncurses-term ack-grep silversearch-ag fontconfig imagemagick libmagickwand-dev software-properties-commom git vim-gtk3 curl perl -y
 
 
 
