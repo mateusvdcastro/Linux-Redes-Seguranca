@@ -1,0 +1,25 @@
+$ rpm --query --all                                 => Mostra o que temos instalado no nosso sistema. Para isso, vamos fazer uma pergunta para o comando rpm, um --query. E queremos que todos os pacotes sejam listados, para isso utilizamos --all.
+$ rpm -qa                                           => abreviação do código acima
+$ man rpm                                           => man de manual 
+$ sudo rpm -i lynx-2.8.9-0.8.dev5.fc23.x86_64.rpm   => Para instalar o pacote nós utilizamos o comando rpm passando o argumento -i (install), Como já nos acostumamos, para instalar um pacote é necessário ser superusuário. Para isso temos que utilizar o sudo antes do comando rpm.
+$ rpm -e lynx                                       => Para remover o pacote
+$ sudo yum install gcc                              => Yum seria o equilalente ao apt do Debian, mas versões recentes do Fedora pararam de usar o Yum, agora é dnf
+$ sudo dnf install nginx                            => atual gerenciador de pacotes do Fedora (equivalemte ao apt/apt-get) 
+$
+$
+$
+$
+$
+
+
+
+
+
+
+
+
+
+
+
+
+

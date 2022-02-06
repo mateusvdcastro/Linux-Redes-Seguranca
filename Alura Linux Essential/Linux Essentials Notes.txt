@@ -1,0 +1,60 @@
+
+[LAMP]
+*******Já falamos que o Apache HTTPD, o MySQL, e o PHP são bastante utilizados no mundo Linux. Por esse motivo existe um pacote 
+chamado LAMP. É uma abreviação para esse grupo de tecnologias: Linux com Apache, MySQL e PHP. É extremamente comum encontrarmos 
+servidores que suportam o LAMP, ou seja, um Linux que já vêm instalados com MySQL, o Apache e PHP.
+
+[NFS]
+*******NFS (Network File System). O NFS é um sistema de arquivos baseado na rede. É uma maneira que permite nos comunicarmos com
+ uma outra máquina, ou um servidor e montar, na máquina que estamos utilizando, um diretório como se fosse um diretório normal, 
+local. Podemos criar arquivos, retirar arquivos, fazer todas as operações que faríamos com arquivos que estão em um diretório na 
+nossa máquina. Mas nesse caso o diretório está de fato localizado em uma outra máquina, em um servidor.
+
+[SAMBA]
+*******O Samba é a reimplementação de um protocolo de rede que permite que tenhamos um serviço de arquivos para clientes Windows. 
+O Samba é executado em uma máquina Linux, mas os usuários clientes utilizam Windows. Pessoas que utilizam Linux também conseguirão 
+acessar o servidor Samba.
+
+[CUPS]
+*******Um servidor de impressão muito famoso no mundo Linux é o CUPS. O CUPS é um sistema de impressão bastante comum para Unix. 
+Podendo rodar local ou remotamente. O CUPS gerencia as impressoras. O CUPS pode surpotar a impressão em um cliente Windows, mas 
+falamos que em geral, com Windows nós utilizamos o Samba.
+
+[DNS]
+*******Se executarmos o comando $ ping www.alura.com.br vamos ver que na o alura.com.br é na verdade uma máquina que está apontada 
+em 64.233.190.121. Esse é o IP da máquina representada pelo nome alura.com.br.
+Para traduzir o nome de domínio para o IP, existem várias máquinas no mundo inteiro que centralizam esse serviço. Elas são servidores 
+de nomes de domínios, DNS (Domain Name System).
+O servidor de DNS mais famoso do mundo é o BIND. Ele roda em Linux e pode ser utilizado na instalação de servidores de DNS. Existem 
+servidores na internet que quando digitamos https://www.alura.com.br, é feita uma consulta ao servidor para saber a qual IP 
+corresponde o domínio alura.com.br, e então é fieto um acesso ao IP.
+
+[DHCP Server - Dnsmasq]
+*******Quando nos conectamos com uma rede, seja através de um cabo ou através do Wi-Fi, recebemos que IP para a máquina? Esse IP pode 
+ser escolhido de uma maneira fixa. Podemos determinar qual IP o computador vai receber. Ou podemos utilizar um serviço dinâmico. O 
+computador irá perguntar para alguém na rede qual o IP ele pode pegar e o serviço fornece um IP disponível.
+Quem faz esse serviço é um DHCP Server. Um servidor de dhcp é o Dnsmasq. Portanto ele fornece um IP para a máquina que acabou de 
+ingressar na rede. Além disso, quando a máquina perguntar para o Dnsmaq onde está o alura.com.br, ele vai consultar alguma das 
+máquinas centrais qual o IP do alura.com.br. A máquina irá devolver o IP e assim é possível acessar a máquina.
+Se uma outra máquina da rede consultar o Dnsmasq solicitando um IP, ele fornecerá um outro IP. Se essa máquina também pedir o 
+alura.com.br, talvez ele nem mesmo consulte os servidores centrais. É possível também "cachear" essa informação. Ele pode ser 
+inteligente para que não seja necessário ficar sempre perguntando para os servidores.
+Nesse momento, o que é importante saber para a prova é que temos o BIND como um servidor de DNS extremamente famoso, e temos também o 
+Dnsmasq como um servidor DHCP irá distribuir IPs.
+
+[]
+*******
+
+[]
+*******
+
+[]
+*******
+
+[]
+*******
+
+[POSTFIX]
+*******O Postfix é um servidor de email bastante conhecido no mundo Linux. Segundo a própria descrição no site, o Postfix tenta ser 
+rápido, fácil de administrar, e seguro.
+O Outlook e o Thunderbird, são clientes de email. O primeiro bem conhecido no mundo Windows, e o segundo conhecido no mundo Linux.

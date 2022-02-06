@@ -18,6 +18,10 @@ $ ls      => lista os arquivos da pasta atual
 $ ls -l   =>  lista com detalhes
 $ ls -a   => lista todos os arquivos inclusive os ocultos que iniciam com .
 $ ls -la  => executa o all e o type (-a e -t) juntos
+$ ls bemvindo*      => lista todos os arquivos com bemvindo
+      output: bemvindo.txt bemvindo2.txt
+$ ls *.txt          => zipa todos os arquivos .txt
+& zip bemvindo.zip *.txt => => zipa todos os arquivos .txt e guarda tudo na bemvindo.zip
 $ type    => verificar o tipo de um comando ex: type ls / type echo
 $ cd 'nome da pasta'    => entra na pasta/diretório
 $ cd ..                 => para voltar uma pasta
@@ -40,11 +44,16 @@ $ pwd     => mostra o diretório atual
 $ whoami  => mostra o seu User
 $ zip     => compacta arquivos do meu diretório
 $ unzip   => descompacta arquivos
+$ unzip -l work.zip               => mostra todos os arquivos compactados na pasta work.zip
 $ data    => data atual
 $ help    => mostra informações de um comando ex: help type
 $ env     => (environment) mostra todas as variáveis de ambiente criadas
 $ df -h                             => lista os dispositivos montados (hds, ssds, etc)
 $ chown   => significa change ownership, usada para mudar permissões
+$ mv mensagem.txt bemvindo2.txt     => Move o mensagem.txt para bemvindo2.txt o "Renomeando-o"
+$ cp arquivo.txt arquivo2.txt       => copia o arquivo.txt, cria o arquivo2.txt com as mesmas informações do primeiro
+$ cp -r projetos-java/ projetos-c#/ =>Para copiar o diretório projetos-java para o diretório projetos-c#, passamos o -r como argumento para o cp, para que ele possa copiar os diretórios de maneira recursiva
+
 
 criei um arquivo de texto chamado mostra_idade em mateus@mateus-VitualBox == /home/mateus
 digite os comandos abaixo para relembrar variáveis de ambiente e de shell

@@ -1,0 +1,34 @@
+crtl direito para assumir o mouse do windows
+
+User: mateusvdcastro
+Senha: padrão
+
+O CentOS não detecta e instala as configurações de rede, vamos configurá-la.
+$ nmcli d               => O primeiro comando serve para verificar quais são as placas de rede que existem na nossa máquina. Ao executar o comando podemos verificar que temos um placa ethernet que está desconectada.
+$ nmtui                 => Para conectar, vamos executar um outro comando que é possui uma interface mais agradável para interagir com o usuário.
+Edit Connection > Ethernet (nome da placa de rede) > Marcar a opção "Automatically connect" (barra de espaço) > Ok (Enter) > Quit
+$ systemctl restart network  => Para finalizar, precisamos "restartar" o serviço de rede
+
+
+
+$ sudo yum install lynx   => aqui utilizamos o Yum como gerenciador de pacotes
+$ sudo yum remove lynx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
