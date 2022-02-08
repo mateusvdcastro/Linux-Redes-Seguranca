@@ -6,21 +6,18 @@ $ sudo dpkg -i nomedoarquivo.deb        => instala um pacote
 $ sudo dpkg -r nomedoarquivo.deb        => remove o pacote
 $ sudo dpkg -P ou --purge               => apaga o pacote e todos os arquivos relacionados
 $ passwd => para alterar a senha do super usuário
-
-
 $ sudo apt-get install nomedopacote
 $ sudo apt-get -f install               => instala todas as dependências não resolvidas do nosso sources.list
 
--- terminal: (o app do terminal executa um programa chamado shell bash, ele roda em um console ligado ao monitor e a um teclado)
+-- terminal: (o app do terminal executa um console, que roda um programa chamado shell do interpretador bash)
 -- command options arguments    ex: type -t ls
 
 $ ls      => lista os arquivos da pasta atual
 $ ls -l   =>  lista com detalhes
 $ ls -a   => lista todos os arquivos inclusive os ocultos que iniciam com .
 $ ls -la  => executa o all e o type (-a e -t) juntos
-$ ls bemvindo*      => lista todos os arquivos com bemvindo
-      output: bemvindo.txt bemvindo2.txt
-$ ls *.txt          => zipa todos os arquivos .txt
+$ ls bemvindo*      => lista todos os arquivos com bemvindo - output: bemvindo.txt bemvindo2.txt
+$ ls *.txt          => mostra todos os arquivos .txt
 & zip bemvindo.zip *.txt => => zipa todos os arquivos .txt e guarda tudo na bemvindo.zip
 $ type    => verificar o tipo de um comando ex: type ls / type echo
 $ cd 'nome da pasta'    => entra na pasta/diretório
@@ -37,6 +34,7 @@ ctrl + a  => vai para o inicio da frase
 ctrl + e  => vai para o final da frase
 ctrl + c  => encerrar a atividade
 ctrl + d  => encerrar a atividade ex: python
+ctrl + r  => abre uma busca, para que eu pesquise qual comando eu quero resgatar do meu histórico de comandos
 $ apt-get  => instala os pacotes e todas as dependências 
 $ dpkg    => instala um único pacote .deb que for informado  Ex: mysql5.6....deb
 $ echo    =>  ex: echo Mateus, bom dia! -- devolve o que eu digitei (como se fosse um print)
@@ -53,7 +51,10 @@ $ chown   => significa change ownership, usada para mudar permissões
 $ mv mensagem.txt bemvindo2.txt     => Move o mensagem.txt para bemvindo2.txt o "Renomeando-o"
 $ cp arquivo.txt arquivo2.txt       => copia o arquivo.txt, cria o arquivo2.txt com as mesmas informações do primeiro
 $ cp -r projetos-java/ projetos-c#/ =>Para copiar o diretório projetos-java para o diretório projetos-c#, passamos o -r como argumento para o cp, para que ele possa copiar os diretórios de maneira recursiva
-
+$ history        => mostra o histórico de comandos executados no shell
+$ which nome_do_programa          => mostra qual executável será executado - ex: wich zip - output: /user/bin/zip
+$ which -a nome_do_programa       => mostra todos os caminhos que se relacionem com este
+$ whereis zip                     => Ele nos mostra que o zip está em usr/bin/zip, e em /home/guilherme/zip e temos também um manual do zip, o /usr/share/man/man1/zip.1.gz
 
 criei um arquivo de texto chamado mostra_idade em mateus@mateus-VitualBox == /home/mateus
 digite os comandos abaixo para relembrar variáveis de ambiente e de shell
@@ -80,7 +81,8 @@ $ unset AMBIENTE                     => para apagar tanto do shell quanto do env
 $ echo $PS1                          => toda a formatação do meu prompt "mateus@mateus-VitualBox", pode ser alterada, ver "https://bashrcgenerator.com/"
 $ echo $PS2                          => Caracter para quando tem uma quebra de linha com enter dentro de aspas "" ou ''
 $ echo $UID                          => ID do meu usuário 
-
+$ echo $HISTFILE                     => Local em que é armazenado o histórico de comandos dados no shell 
+$ echo $PATH                         => Quando executamos um comando, o executável desse comando será procurado nos diretórios definidos no valor dessa variável. 
 
 ====== variável de ambiente EDITOR
 ==== Entrar no editor vim
@@ -91,7 +93,7 @@ $ :q                                 => para sair do editor
 $ EDITOR=/bin/nano
 $ /bin/nano
 
-====== Extender o volume da máquina virtual
+====== Estender o volume da máquina virtual
 ver : https://sourcedigit.com/16391-change-ownership-set-write-permission-on-ext4-partition-in-linux-ubuntu/
     : https://www.youtube.com/watch?v=cF4qIpOvkkA
     : https://www.youtube.com/watch?v=6wXZ38RfKxg

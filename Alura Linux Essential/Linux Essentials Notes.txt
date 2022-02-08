@@ -42,19 +42,67 @@ inteligente para que não seja necessário ficar sempre perguntando para os serv
 Nesse momento, o que é importante saber para a prova é que temos o BIND como um servidor de DNS extremamente famoso, e temos também o 
 Dnsmasq como um servidor DHCP irá distribuir IPs.
 
-[]
-*******
+[GNU General Public License ou GPL]
+******* todo código ou projeto que for lançado com a licença GPL continuará para sempre de acordo com a licença. Ainda que receba 
+alterações e for distribuído, continuará como GPL. Isto significa que o Copyright, a licença escolhida para os meus direitos, deverão 
+ser mantidos independentemente das modificações no conteúdo. Ninguém pode usar o código e se fechar, dizendo "agora isso é meu e vai 
+funcionar de outra maneira".
+Como ele faz para isto funcionar? Se temos um produto distribuído com GPL, é necessário ter a opção de acessá-lo através do código 
+original, ou seja, da fonte. Se estou distribuindo um projeto como GPL, as pessoas podem solicitar a fonte, e eu preciso atender a 
+solicitação. Este código-fonte GPL poderá ser usado para qualquer objetivo, ou seja, o programa licenciado com GPL pode ser utilizado 
+para qualquer propósito. Este é o segundo ponto: se houver interesse, preciso disponibilizar o código-fonte do meu programa.
 
-[]
-*******
+[BSD Licenses]
+******* O BSD tem como objetivo ser uma licença simples, então se um usuário decide utilizar nosso produto, terá toda liberdade de uso.
+O usuário poderá fazer o que quiser com o código-fonte, desde que não cite a Universidade, vinculada ao produto derivado, já que a 
+instituição não se responsabilizará pelo produto. O conteúdo é disponibilizado para quem quiser, mas o usuário não poderá usar o nome 
+da Universidade da Califórnia em Berkeley, para respaldar o projeto derivado.
 
-[]
-*******
+[Mozilla Public License (MPL)]
+******* Assim como o GPL, se você usar um código com licença do Mozilla e compartilhá-lo da forma como estiver, ele precisará continuar
+com o Mozilla Public License. O que acontecerá se modificarmos o código? Se adicionarmos algo novo nele? Se tenho um programa com cinco
+funcionalidades e adiciono uma sexta através de um código, podemos usar o código original (com as funcionalidades originais), o qual 
+mantém o Mozilla Public License e deverá continuar sendo disponibilizado como open source. No entanto, o código novo pode seguir a 
+licença conforme o autor das alterações desejar. Ele tem liberdade de seguir outra licença. Observe que a MPL é um meio termo entre o 
+GPL e o BSD.
 
-[]
-*******
+[Apache]
+******* Esta licença é muito parecida com o BSD por não possuir uma regra como a da GPL - "uma vez Apache License, sempre Apache 
+License". Se houver alterações, não é preciso continuar com essa licença. Diferentemente do BSD, que é extremamente simples e direto, 
+com a especificação de "não ter nada a ver com seu produto", sendo possível usar o código como quiser, a Apache License aplica regra 
+a questões de Trading Marketing, patentes, e outros. Ela define alguns termos a mais.
+O importante para nós é sabermos o que acontecerá se utilizarmos um código baseado em GPL ou BSD. O que acontece com Apache License? 
+Somos livres para utilizarmos um código anteriormente baseado nela e alterá-lo, sem ter que, necessariamente, compartilhar o nosso 
+código-fonte, como era preciso com o GPL. Este é o "coração" do Apache.
+
+[Creative Commons CC0 - domínio público]
+******* O que é isso? Significa que a obra não tem mais uma copyright de um indivíduo ou instituição determinada. Por lei, tudo tem 
+copyright, ou seja, os direitos intelectuais pertencem a alguém. Depois de um determinado período de tempo, o conteúdo cai em domínio 
+público e qualquer um pode utilizá-lo, sem pagar pelos direitos autorais. Quantos anos demora para que isto aconteça? A resposta 
+depende da lei de cada país e do tipo de obra ou criação. Em geral existe uma regra (o que não significa que ela não está propensa a 
+mudanças): atualmente, obras datadas de até 1930, por exemplo livros e fotos, estão em domínio público. Criações anteriores a esta 
+data ainda não estão em domínio público e têm os direitos intelectuais preservados.
+
+Mais tipos de licenças em:
+https://br.creativecommons.net/licencas/
+https://en.wikipedia.org/wiki/Business_models_for_open-source_software
 
 [POSTFIX]
 *******O Postfix é um servidor de email bastante conhecido no mundo Linux. Segundo a própria descrição no site, o Postfix tenta ser 
 rápido, fácil de administrar, e seguro.
 O Outlook e o Thunderbird, são clientes de email. O primeiro bem conhecido no mundo Windows, e o segundo conhecido no mundo Linux.
+
+[]
+*******
+
+[]
+*******
+
+[]
+*******
+
+[]
+*******
+
+[]
+*******

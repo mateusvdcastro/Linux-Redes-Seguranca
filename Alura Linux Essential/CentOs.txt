@@ -13,6 +13,15 @@ $ systemctl restart network  => Para finalizar, precisamos "restartar" o serviç
 
 $ sudo yum install lynx   => aqui utilizamos o Yum como gerenciador de pacotes
 $ sudo yum remove lynx
+$ yum search mysql        => Para buscar um pacote o comando utilizado é yum search, ele irá buscar todos os pacotes que correspondem contém a palavra "mysql" em seu nome.
+$ yum info nome_do_pacote   => informalções sobre um pacote
+$ yum makecache             => atualiza a lista de pacotes a serem instalados pelo yum
+$ sudo yum update           => Para atualizar a versão dos pacotes que estão instaladas na nossa máquina, nós utilizamos o yum update.
+O arquivo de configuração de yum fica em /etc/yum/yum.conf. Podemos também por esses repositórios dentro do diretório etc/yum.repos.d.
+$
+$
+$
+
 
 
 
