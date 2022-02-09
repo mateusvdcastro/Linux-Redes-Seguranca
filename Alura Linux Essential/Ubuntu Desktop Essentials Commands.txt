@@ -1,6 +1,10 @@
-$ cat /etc/apt/sources.list
 
-$ man dpkg                 => ver manual do dpkg
+-- terminal: (o app do terminal executa um console, que roda um programa chamado shell do interpretador bash)
+-- command options arguments    ex: type -t ls                    obs: no geral segue esta ordem, mas existem comandos que fogem a regra
+
+==============COMANDOS NO TERMINAL========================================================================================================================================
+$ man dpkg                 => Ver manual do dpkg
+$ man -k printf            => Com o -k buscamos a palavra chave e buscamos diversas referências para a palavra chave.
 $ dpkg --list              => ver todos os pacotes instalados
 $ sudo dpkg -i nomedoarquivo.deb        => instala um pacote
 $ sudo dpkg -r nomedoarquivo.deb        => remove o pacote
@@ -8,33 +12,35 @@ $ sudo dpkg -P ou --purge               => apaga o pacote e todos os arquivos re
 $ passwd => para alterar a senha do super usuário
 $ sudo apt-get install nomedopacote
 $ sudo apt-get -f install               => instala todas as dependências não resolvidas do nosso sources.list
-
--- terminal: (o app do terminal executa um console, que roda um programa chamado shell do interpretador bash)
--- command options arguments    ex: type -t ls
-
 $ ls      => lista os arquivos da pasta atual
 $ ls -l   =>  lista com detalhes
 $ ls -a   => lista todos os arquivos inclusive os ocultos que iniciam com .
 $ ls -la  => executa o all e o type (-a e -t) juntos
 $ ls bemvindo*      => lista todos os arquivos com bemvindo - output: bemvindo.txt bemvindo2.txt
 $ ls *.txt          => mostra todos os arquivos .txt
-& zip bemvindo.zip *.txt => => zipa todos os arquivos .txt e guarda tudo na bemvindo.zip
+$ zip bemvindo.zip *.txt => => zipa todos os arquivos .txt e guarda tudo na bemvindo.zip
+$ cat arquivo.txt   => mostra o conteúdo de arquivos.txt
+$ cat texto*.txt    => mostra o conteúdo de todo arquivo "texto + alguma coisa + .txt"
+$ cat texto?.txt    => mostra o conteúdo de todo arquivo "texto + algum caracter + .txt" obs: apenas um caracter seja número, letra, etc
+$ cat arquivo[123].txt  => mostra arquivo1.txt arquivo2.txt arquivo3.txt
+$ cat arquivo[12].txt  => mostra arquivo1.txt arquivo2.txt
+$ cat arquivo[0-9].txt  => mostra arquivo0.txt até o arquivo9.txt
+$ cat arquivo[A-Z].txt   => Com isso estamos dizendo que queremos um carácter qualquer de A até Z, escrito em letras maiúsculas
+$ cat arquivo[a-z].txt   => fornecerá qualquer letra minúscula.
+$ cat {arquivo*, texto?.txt}  => Pegaremos tudo o que começa com arquivo, mas queremos pegar também todos os arquivos que começam com texto, seguidos de qualquer coisa (?) e tendo no fim .txt. Para dizer que queremos ou o primeiro padrão ou o segundo, colocamos isso dentro de chaves
 $ type    => verificar o tipo de um comando ex: type ls / type echo
 $ cd 'nome da pasta'    => entra na pasta/diretório
 $ cd ..                 => para voltar uma pasta
+$ locate arquivo/programa/etc     => Busca no sistema inteiro o parâmetro digitado. O locate possui um banco de dados onde ele armazena todos os arquivos que existem, isto é, arquivos que ele é capaz de localizar. Então, isso é um banco de dados que ele mantêm e, por isso, toda vez que buscamos algo ele não necessita sair varrendo todos os arquivos e todos os diretórios para achar o que queremos. Ele vai rapidamente nesse banco de dados, que contem todos os nomes de diretórios e arquivos, encontra o que solicitamos e nos traz o que buscávamos. Esse é um processo que já está otimizado, como o locate é bastante utilizado no dia a dia ele simplesmente mantêm tudo já otimizado para realizar a busca.
+$ sudo updatedb                   => Quando apagamos arquivos ou adicionamos, precisamos atualizar o bando de dados para que o locate busque corretamente os arquivos
+$ locate -e texto                 => Podemos rodar um locate com a opção -e que é de arquivos apagados e arquivos que não existem mais. Então, ele não vai mais nos mostrar arquivos que não existem mais.
+$ locate "*/log-*"                => irá buscar todos os arquivos que "diretório qualquer + log- + qualquer coisa"
+
+$ sudo apt-get install mlocate    => nem todo SO tem o Locate instalado, para instalar digite esse comando
 $ mkdir   => para criar uma pasta
 $ rm -rf 'nome da pasta'  => remover uma pasta
 $ -a      => tudo (all)   ex: type -a ls
 $ -t      => tipo (type)  ex: type -t ls    (output: builtin   --> significa que ls é um comando interno do bash e não um programa instalado)
-windows + shift + pagedn ou pageup     => enviar um app para outra workspace
-windows pagedn ou pageup     => ficar alternando
-ctrl + alt + f1/f2/f3/f4/f5/f6 para abrir os 6 consoles possíveis, f7 para o console gráfico
-ctrl + l  => limpa o console
-ctrl + a  => vai para o inicio da frase
-ctrl + e  => vai para o final da frase
-ctrl + c  => encerrar a atividade
-ctrl + d  => encerrar a atividade ex: python
-ctrl + r  => abre uma busca, para que eu pesquise qual comando eu quero resgatar do meu histórico de comandos
 $ apt-get  => instala os pacotes e todas as dependências 
 $ dpkg    => instala um único pacote .deb que for informado  Ex: mysql5.6....deb
 $ echo    =>  ex: echo Mateus, bom dia! -- devolve o que eu digitei (como se fosse um print)
@@ -44,7 +50,10 @@ $ zip     => compacta arquivos do meu diretório
 $ unzip   => descompacta arquivos
 $ unzip -l work.zip               => mostra todos os arquivos compactados na pasta work.zip
 $ data    => data atual
-$ help    => mostra informações de um comando ex: help type
+$ help    => mostra informações de um comando, O help nos ajuda referente as funções de coisas definidas em cima do shell, isto é, nos builtin do shell. ex: help type 
+$ ls --help => mostra o help do ls, ou seja, obter ajuda para comandos externos (não builtin) normalmente utiliza-se a opção --help.
+$ ls -h     => -h abreviação do --help, mas apresenta comportamento inesperado
+$ less texto1.txt  => less é o nome de um visualizador, o mesmo que é exibido quando usamos o comando "$ man ". Utilizamos as setas para navegar, espaço para ir para frente, / para buscarmos alguma coisa, então, por exemplo, vamos buscar aquela "Linha 253", digitando /25 ele busca isso para nós e usamos o q para sair.
 $ env     => (environment) mostra todas as variáveis de ambiente criadas
 $ df -h                             => lista os dispositivos montados (hds, ssds, etc)
 $ chown                             => significa change ownership, usada para mudar permissões
@@ -59,7 +68,31 @@ $ whereis zip                     => Ele nos mostra que o zip está em usr/bin/z
 $ echo $?                         => Estamos perguntando qual é o último resultado que um comando, um programa teve. Se deu tudo "ok" o resultado é 0.
 $ comando1 && comando 2           => O && é usado para falar que o segundo comando será executado apenas se o exit code do primeiro comando for igual a zero, isto é, apenas se o primeiro for sucesso. Assim, se o primeiro não tivesse sido executado com sucesso, o segundo comando não seria executado.
 $ comando1 || comando 2           => Para dizermos o "ou" utilizamos o pipe duas vezes || , o pipe é também chamado de cano.
+$ comando_qualquer ; echo "Bom dia"  => Para executar dois comandos em sequência, podemos utilizar o ; (ponto e vírgula). Os comandos serão executados independente do resultado do anterior.
+$ du /arquivo/                       => Para descobrir quanto do disco que o diretório está usando basta ir até o terminal e dizer: "por favor, mostre-me o quanto do disco (du, disk usage) o diretório /arquivo||pasta||app/ está usando"
+$ du -s /arquivo/                    => Queremos que o programa resuma sua saída e nos mostre apenas o total no diretório. Como queremos que ele sintetizar (-s, summarize) a informação
+$ du -sh /arquivo/                   => A saída padrão do comando du mostra os números em kilobytes. Só que esse número não fica muito compreensível para nós, precisamos deixá-lo mais inteligível para humanos (-h). Podemos utilizar as duas expressões separadamente, -s -h, ou juntas -sh
+$ df -h /arquivo/                    => Para saber o quanto do disco está sendo usado, utilizamos outro comando: df .Este retorna o espaço livre, ou ocupado, de cada partição no sistema. Da mesma forma que fazemos com o du, podemos especificar o diretório, assim, ele retorna somente a partição da qual esse diretório pertence. Podemos também utilizar a opção -h e teremos uma saída mais legível
+================================================================================================================================================================
 
+======== DIRETÓRIOS IMPORTANTES===============================================================================================================================================
+/etc/apt/sources.list       => The sources.list file is a key factor in adding or upgrading applications to your Ubuntu installation. This is also used by your system for system updates. The file is basically the roadmap for your system to know where it may download programs for installation or upgrade.
+$ ls /usr/share/doc             => Então, no diretório /usr/share/docs é comum termos documentação sobre as mais variadas coisas, programas, comandos e etc. Nesse diretório é onde os programas instalam suas documentações, por padrão. Então, podemos, por exemplo, buscar a documentação do zip. Para isso, digitaremos ls /usr/share/doc/zip (irá aparecer no caso do zip que o software sofreu atualizações, então digite $less /usr/share/doc/zip/WHATSNEW)
+================================================================================================================================================================
+
+======== Atalhos ===============================================================================================================================================
+windows + shift + pagedn ou pageup     => enviar um app para outra workspace
+windows pagedn ou pageup     => ficar alternando
+ctrl + alt + f1/f2/f3/f4/f5/f6 para abrir os 6 consoles possíveis, f7 para o console gráfico
+ctrl + l  => limpa o console
+ctrl + a  => vai para o inicio da frase
+ctrl + e  => vai para o final da frase
+ctrl + c  => encerrar a atividade
+ctrl + d  => encerrar a atividade ex: python
+ctrl + r  => abre uma busca, para que eu pesquise qual comando eu quero resgatar do meu histórico de comandos
+================================================================================================================================================================
+
+==========VARIÁVEIS DE AMBIENTE E LOCAIS========================================================================================================================
 criei um arquivo de texto chamado mostra_idade em mateus@mateus-VitualBox == /home/mateus
 digite os comandos abaixo para relembrar variáveis de ambiente e de shell
 $ env FULL_NAME='Mateus V de Castro' AGE=19 OPERATIONAL_SYSTEM='Linux UBUNTU' bash mostra_idade
@@ -81,12 +114,14 @@ $ echo $AMBiENTE
 $ env                                => ela ainda está presente em env !!
 $ export -n AMBIENTE                 => AGORA sim a variável foi apagada do env mas não do shell !!
 $ unset AMBIENTE                     => para apagar tanto do shell quanto do env !!!
+
 ====== variáveis de ambiente do venv
 $ echo $PS1                          => toda a formatação do meu prompt "mateus@mateus-VitualBox", pode ser alterada, ver "https://bashrcgenerator.com/"
 $ echo $PS2                          => Caracter para quando tem uma quebra de linha com enter dentro de aspas "" ou ''
 $ echo $UID                          => ID do meu usuário 
 $ echo $HISTFILE                     => Local em que é armazenado o histórico de comandos dados no shell 
 $ echo $PATH                         => Quando executamos um comando, o executável desse comando será procurado nos diretórios definidos no valor dessa variável. 
+$ echo $MANPATH                      => A variável $PATH indica para o shell onde ele deveria buscar os comandos e da mesma maneira esta variável $PATH ajuda a buscar comandos, existe também a variável $MANPATH. Essa variável diz para o man, onde ele deve procurar os manuais. Se a variável é vazia ele procura um arquivo de configuração e este arquivo está em cat /etc/manpath.config
 
 ====== variável de ambiente EDITOR
 ==== Entrar no editor vim
@@ -97,7 +132,9 @@ $ :q                                 => para sair do editor
 $ EDITOR=/bin/nano
 $ /bin/nano
 
-====== Estender o volume da máquina virtual
+================================================================================================================================================================
+
+====== Estender o volume da máquina virtual=====================================================================================================================
 ver : https://sourcedigit.com/16391-change-ownership-set-write-permission-on-ext4-partition-in-linux-ubuntu/
     : https://www.youtube.com/watch?v=cF4qIpOvkkA
     : https://www.youtube.com/watch?v=6wXZ38RfKxg
@@ -113,10 +150,11 @@ $ sudo fdisk -l                     => ver o nome das partições
 $ sudo blkid                        => mostra os UUID(s) das unidades
 $ ll /media/                        => mostra as unidades montadas
 $ sudo chown mateus:mateus /media/mateus/D   => conseguir permissão de leitura e gravação no disco D, já montado, do tipo ext4 que foi particionado no Gparter
+================================================================================================================================================================
 
- ======= instaláveis para tornar o Linux em um ambiente de desenvolvimento
+ ======= instaláveis para tornar o Linux em um ambiente de desenvolvimento======================================================================================
 $ sudo apt install build-essential default-jdk libssl-dev exuberant-ctags ncurses-term ack-grep silversearch-ag fontconfig imagemagick libmagickwand-dev software-properties-commom git vim-gtk3 curl perl -y
-
+================================================================================================================================================================
 
 
 
