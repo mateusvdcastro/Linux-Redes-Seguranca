@@ -47,7 +47,8 @@ $ data    => data atual
 $ help    => mostra informações de um comando ex: help type
 $ env     => (environment) mostra todas as variáveis de ambiente criadas
 $ df -h                             => lista os dispositivos montados (hds, ssds, etc)
-$ chown   => significa change ownership, usada para mudar permissões
+$ chown                             => significa change ownership, usada para mudar permissões
+$ chmod +x arquivo                  => conseguir permissão de execução de um arquivo (torná-lo executável)
 $ mv mensagem.txt bemvindo2.txt     => Move o mensagem.txt para bemvindo2.txt o "Renomeando-o"
 $ cp arquivo.txt arquivo2.txt       => copia o arquivo.txt, cria o arquivo2.txt com as mesmas informações do primeiro
 $ cp -r projetos-java/ projetos-c#/ =>Para copiar o diretório projetos-java para o diretório projetos-c#, passamos o -r como argumento para o cp, para que ele possa copiar os diretórios de maneira recursiva
@@ -55,6 +56,9 @@ $ history        => mostra o histórico de comandos executados no shell
 $ which nome_do_programa          => mostra qual executável será executado - ex: wich zip - output: /user/bin/zip
 $ which -a nome_do_programa       => mostra todos os caminhos que se relacionem com este
 $ whereis zip                     => Ele nos mostra que o zip está em usr/bin/zip, e em /home/guilherme/zip e temos também um manual do zip, o /usr/share/man/man1/zip.1.gz
+$ echo $?                         => Estamos perguntando qual é o último resultado que um comando, um programa teve. Se deu tudo "ok" o resultado é 0.
+$ comando1 && comando 2           => O && é usado para falar que o segundo comando será executado apenas se o exit code do primeiro comando for igual a zero, isto é, apenas se o primeiro for sucesso. Assim, se o primeiro não tivesse sido executado com sucesso, o segundo comando não seria executado.
+$ comando1 || comando 2           => Para dizermos o "ou" utilizamos o pipe duas vezes || , o pipe é também chamado de cano.
 
 criei um arquivo de texto chamado mostra_idade em mateus@mateus-VitualBox == /home/mateus
 digite os comandos abaixo para relembrar variáveis de ambiente e de shell
