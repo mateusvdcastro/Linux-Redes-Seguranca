@@ -13,12 +13,26 @@ $ passwd => para alterar a senha do super usuário
 $ sudo apt-get install nomedopacote
 $ sudo apt-get -f install               => instala todas as dependências não resolvidas do nosso sources.list
 $ ls      => lista os arquivos da pasta atual
-$ ls -l   =>  lista com detalhes
+$ ls -l   =>  lista com detalhes, teremos o conteúdo de dentro do diretório
+$ ls --help => mostra o help do ls, ou seja, obter ajuda para comandos externos (não builtin) normalmente utiliza-se a opção --help.
+$ ls -h     => -h abreviação do --help, mas apresenta comportamento inesperado
 $ ls -a   => lista todos os arquivos inclusive os ocultos que iniciam com .
 $ ls -la  => executa o all e o type (-a e -t) juntos
+$ ls -d   => O ls tem uma opção que se chama -d minúsculo e quando usamos essa opção o que estamos dizendo é que queremos analisar um diretório específico.
+$ ls -ld  => Se quisermos ver informações sobre o diretório em si, e não sobre o conteúdo do diretório
+$ ls -i || ls --inode  =>  Cada arquivo é representado por um ou mais nós que trazem a informação base dos arquivos que estão ligados que por sua vez estão ligados a outros nós que estão ligados a outros nós que trazem dados de arquivos, diretórios e etc e assim por diante. Então, é um pouco uma árvore que vai se interligando com todos esses nós. Temos, ainda, uma opção do ls que é o ls -i que mostra a informação desses nós.
+$ ls --color=auto           => coloca uma cor para diferenciar os itens listados, branco, se for normal, verde se for executável, azul escuro se for diretório e azul claro se for um link.
+$ ls -F             => indica, visualmente, através de caracteres o que cada coisa que está na lista é. Um arquivo normal não possui nenhum carácter, um arquivo executável possui um asterisco, um diretório é marcado pela barra e um link possui um arroba.
 $ ls bemvindo*      => lista todos os arquivos com bemvindo - output: bemvindo.txt bemvindo2.txt
+$ ls *              => mostra os diretórios atuais e entra neles em um nível dos diretórios filhos (ls -R entra em mais de um nível)
 $ ls *.txt          => mostra todos os arquivos .txt
-$ zip bemvindo.zip *.txt => => zipa todos os arquivos .txt e guarda tudo na bemvindo.zip
+$ ls --reverse || ls -r     =>Para modificar a ordenação podemos digitar ls --reverse que estaremos pedindo: "Porfavor, reverta a ordem" e ele trará do "z" até o "a"
+$ ls --sort=size || ls -S   => exibe por odem de tamanho (mas não podemos ver o tamanho dos arquivos)
+$ ls --format=long ||ls -l  => Para ver em uma lista onde podemos confirmar o tamanho dos arquivos. Para verificar mais informações em uma lista longa podemos dizer ao ls para formatar a sua saída em um formato longo.
+      ex: /bin/ls --format=long --reverse --sort=size
+$ ls --sort=time ||ls -t    => mostrar por tempo de criação
+$ ls --recursive ||ls -R    => Mostra os diretórios atuais mas também todos os arquivos filhos deles de maneira recursiva
+$ zip bemvindo.zip *.txt    => zipa todos os arquivos .txt e guarda tudo na bemvindo.zip
 $ cat arquivo.txt   => mostra o conteúdo de arquivos.txt
 $ cat texto*.txt    => mostra o conteúdo de todo arquivo "texto + alguma coisa + .txt"
 $ cat texto?.txt    => mostra o conteúdo de todo arquivo "texto + algum caracter + .txt" obs: apenas um caracter seja número, letra, etc
@@ -31,17 +45,28 @@ $ cat {arquivo*, texto?.txt}  => Pegaremos tudo o que começa com arquivo, mas q
 $ type    => verificar o tipo de um comando ex: type ls / type echo
 $ cd 'nome da pasta'    => entra na pasta/diretório
 $ cd ..                 => para voltar uma pasta
+$ cd -                  =>  Podemos nem lembrar qual era o diretório que estávamos antes, o último diretório que utilizamos. Para isso digitaremos cd -. O hífen é utilizado para voltarmos ao último diretório que estávamos utilizando.
 $ locate arquivo/programa/etc     => Busca no sistema inteiro o parâmetro digitado. O locate possui um banco de dados onde ele armazena todos os arquivos que existem, isto é, arquivos que ele é capaz de localizar. Então, isso é um banco de dados que ele mantêm e, por isso, toda vez que buscamos algo ele não necessita sair varrendo todos os arquivos e todos os diretórios para achar o que queremos. Ele vai rapidamente nesse banco de dados, que contem todos os nomes de diretórios e arquivos, encontra o que solicitamos e nos traz o que buscávamos. Esse é um processo que já está otimizado, como o locate é bastante utilizado no dia a dia ele simplesmente mantêm tudo já otimizado para realizar a busca.
 $ sudo updatedb                   => Quando apagamos arquivos ou adicionamos, precisamos atualizar o bando de dados para que o locate busque corretamente os arquivos
 $ locate -e texto                 => Podemos rodar um locate com a opção -e que é de arquivos apagados e arquivos que não existem mais. Então, ele não vai mais nos mostrar arquivos que não existem mais.
 $ locate "*/log-*"                => irá buscar todos os arquivos que "diretório qualquer + log- + qualquer coisa"
-
 $ sudo apt-get install mlocate    => nem todo SO tem o Locate instalado, para instalar digite esse comando
-$ mkdir   => para criar uma pasta
-$ rm -rf 'nome da pasta'  => remover uma pasta
-$ -a      => tudo (all)   ex: type -a ls
-$ -t      => tipo (type)  ex: type -t ls    (output: builtin   --> significa que ls é um comando interno do bash e não um programa instalado)
-$ apt-get  => instala os pacotes e todas as dependências 
+$ mkdir     => para criar uma pasta
+$ mkdir -p  => cria várias pastas que você informar caso elas não existam ex: mkdir -p Pictures/fotos/2020/trimestre1
+$ mkdir -p Pictures/foto/201{1,2,3,4,5}/trimestre{1,2,3,4}  => usamos globbing para criar as pastas 2011, 2012, 2013 ..., todas com trimestre 1234 dentro de cada uma
+$ mkdir -pv ferias/201{3,4,5}/{julho,dezembro}   => Utilizando o mkdir e o globbing crie o diretório ferias dentro do diretório Pictures, e dentro dele os diretórios 2013, 2014 e 2015. Dentro de cada um desses três diretórios, crie os diretórios julho e dezembro.
+$ mkdir -pv => É possível também combinar o -p com a opção -v (verbose), que irá listar todas as operações que estão sendo feitas
+$ rmdir     => remove um diretório se ele estiver vazio  ex: rmdir Pictures/fotos/2020/trimestre1  -  removerá apenas trimestre1
+$ rmdir -p  => remove os diretórios enquanto estiverem vazios ex: rmdir -p Pictures/fotos/2019/trimestre1 Primeiro o rmdir irá remover o diretório trimestre1. A partir desse momento o diretório 2019 não está mais vazio e também será removido. Como o diretório fotos possui outros diretório, ele não é removido. Se tivéssemos uma sequência de diretórios vazios, todos seriam removidos.
+$ rm loja/*  => remove todo dir vazio que estiver dentro de loja
+$ rm -i loja/*  => pergunta se quer remover todo dir vazio que estiver dentro de loja
+$ rm -r loja/*  => remove tudo o que estiver dentro de loja de maneira recursiva (-r e -R tanto faz)
+$ rm -rfi 'nome da pasta'  => remover uma pasta de maneira forçada (-f), de maneira recursiva (-r) e de maneira interativa para te perguntar sobre cada passo (i) {i serve como segurança, caso você digite "rm -fv arquivos /" com este espaço errado vc apaga tudo desde o dir raiz}
+$ rm
+$ touch     => O comando touch altera a data de modificação de um arquivo para a data e hora atuais do sistema. O conteúdo do arquivo em si não é modificado, é como se apenas "tocássemos" no arquivo. Caso o arquivo não exista, o comportamento padrão é criar o arquivo.
+$ -a        => tudo (all)   ex: type -a ls
+$ -t        => tipo (type)  ex: type -t ls    (output: builtin   --> significa que ls é um comando interno do bash e não um programa instalado)
+$ apt-get   => instala os pacotes e todas as dependências 
 $ dpkg    => instala um único pacote .deb que for informado  Ex: mysql5.6....deb
 $ echo    =>  ex: echo Mateus, bom dia! -- devolve o que eu digitei (como se fosse um print)
 $ pwd     => mostra o diretório atual
@@ -51,16 +76,22 @@ $ unzip   => descompacta arquivos
 $ unzip -l work.zip               => mostra todos os arquivos compactados na pasta work.zip
 $ data    => data atual
 $ help    => mostra informações de um comando, O help nos ajuda referente as funções de coisas definidas em cima do shell, isto é, nos builtin do shell. ex: help type 
-$ ls --help => mostra o help do ls, ou seja, obter ajuda para comandos externos (não builtin) normalmente utiliza-se a opção --help.
-$ ls -h     => -h abreviação do --help, mas apresenta comportamento inesperado
 $ less texto1.txt  => less é o nome de um visualizador, o mesmo que é exibido quando usamos o comando "$ man ". Utilizamos as setas para navegar, espaço para ir para frente, / para buscarmos alguma coisa, então, por exemplo, vamos buscar aquela "Linha 253", digitando /25 ele busca isso para nós e usamos o q para sair.
 $ env     => (environment) mostra todas as variáveis de ambiente criadas
 $ df -h                             => lista os dispositivos montados (hds, ssds, etc)
 $ chown                             => significa change ownership, usada para mudar permissões
 $ chmod +x arquivo                  => conseguir permissão de execução de um arquivo (torná-lo executável)
-$ mv mensagem.txt bemvindo2.txt     => Move o mensagem.txt para bemvindo2.txt o "Renomeando-o"
-$ cp arquivo.txt arquivo2.txt       => copia o arquivo.txt, cria o arquivo2.txt com as mesmas informações do primeiro
-$ cp -r projetos-java/ projetos-c#/ =>Para copiar o diretório projetos-java para o diretório projetos-c#, passamos o -r como argumento para o cp, para que ele possa copiar os diretórios de maneira recursiva
+$ mv loja/mensagem.txt loja/bemvindo2.txt     => Move o mensagem.txt para bemvindo2.txt o "renomeando-o" (maneira de renomear arquivos)
+$ mv loja/mensagem.txt Documents/             => Move o mensagem.txt para Documents
+$ cp arquivo.txt arquivo2.txt       => copia o arquivo.txt, e cria o arquivo2.txt com as mesmas informações do primeiro
+$ cp -R projetos-java/ projetos-c#/ => Para copiar o diretório projetos-java para o diretório projetos-c#, passamos o -R como argumento para o cp, para que ele possa copiar os diretórios de maneira recursiva
+$ cp -R loja loja_nova              => copia de maneira recursiva tudo o que está no dir loja para loja_nova
+$ cp loja/contato.html loja2        => copiando o arquivo contato.html para o diretório loja2
+$ cp -i loja/bemvindo.html loja/bemvindo2.html => O cp subscreve, então, temos que tomar muito cuidado quando utilizamos o copy, quando copiamos um arquivo para outro arquivo. Tanto que muitas vezes o que fazemos é o cp e pedimos para ele nos perguntar antes o que devemos fazer, para isso, digitamos cp -i, ele nos perguntará se queremos subscrever: "*overwrite 'loja/bemvindo2.html' ? *". E como não queremos que nada seja subscrito , digitaremos apenas um n, de "no" para dizermos que não queremos que seja subscrito
+$ cp loja/bemvindo1.html loja/bemvindo2.html loja3/  => copia os arquivos bemvindo{1,2}.html para o diretório loja3
+$ cp -v loja/bemvindo1.html loja/bemvindo2.html loja5/ => copia bemvindo{1,2}.txt para loja5 mas exibe no terminal (de forma mais visual) o que está ocorrendo com o parâmetro -v de --verbose
+$ cp -vu loja/* lojabackup/      => copia todo arquivo que sofreu alguma atualização (-u de update) em loja, para o dir lojabackup
+$ cp -b loja/* loja2             => Se já existir, um arquivo com esse nome "loja2" podemos simplesmente fazer um backup desse arquivo e, para isso, usamos o -b de backup. Podemos verificar que temos dois tipos de arquivo, aqueles que possuem um til e que representam a versão antiga dos arquivos e os que estão sem o acento que representam a versão nova. O til (~) no final, no último carácter, portanto, é um padrão para indicar que determinado arquivo é um backup de um arquivo que tínhamos.
 $ history        => mostra o histórico de comandos executados no shell
 $ which nome_do_programa          => mostra qual executável será executado - ex: wich zip - output: /user/bin/zip
 $ which -a nome_do_programa       => mostra todos os caminhos que se relacionem com este
