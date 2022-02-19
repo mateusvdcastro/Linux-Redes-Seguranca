@@ -92,11 +92,20 @@ https://en.wikipedia.org/wiki/Business_models_for_open-source_software
 rápido, fácil de administrar, e seguro.
 O Outlook e o Thunderbird, são clientes de email. O primeiro bem conhecido no mundo Windows, e o segundo conhecido no mundo Linux.
 
-[]
-*******
+[IPv4]
+*******IPV4 então é quem define como podemos dar um nome numérico para todos os dispositivos na nossa rede.O IPV4 são 4 números, mas 
+esse 4 do IPv4 se refere ao protocolo. Então um exemplo de um IP de um número para identificar um computador na minha rede é esse 
+“172.16.254.1”. São 4 números seguidos, cada um desses números tem um valor entre 0 e 255, então eu tenho de 0 a 255 em cada; por quê? 
+Porque, na verdade, cada um desses números são 8 bits, é um byte.  Se eu estou usando o IPV4, vocês lembram do IPV4? Nós temos de 0 a 
+255 no primeiro número, são 256 números possíveis, depois, de novo 3 vezes, isso é, você pode ter 4 bilhões de IPs diferentes na mesma 
+rede.  Então se eu estou em uma rede chamada internet e, cada um dos dispositivos conectados à internet, tiver um IP próprio, o máximo 
+de dispositivos que eu posso ter conectados diretamente é 4.294.967.296. Pensando nisso foi feito o IPv6
 
-[]
-*******
+[IPv6]
+*******Qual a diferença do IPV6 para o IPV4? Tem diversas características diferentes. Não é só a quantidade de endereços disponíveis, ele 
+tem outras espertezas, outras sacadas para otimizar esse descobrimento de IP e essas coisas. Repare que no IPV6 nós podemos ter até 2^¹²⁸, 
+não são mais 32 bits, são 128 bits. Isso dá 3.4 x 10³⁸ dispositivos que podem ser conectador a rede.Ao invés de ser montado com números, 
+como já estamos acostumados, na base decimal, ele é na base hexadecimal. Então são 8 conjuntos, invés de 4 conjuntos.
 
 []
 *******
