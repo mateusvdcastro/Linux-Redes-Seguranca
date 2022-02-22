@@ -1,0 +1,66 @@
+$ ping       => Verifica a conectividade no nível de IP para outro computador TCP/IP enviando mensagens de solicitação de eco do Protocolo ICMP. O recebimento de mensagens de resposta de eco correspondentes é exibido, juntamente com os tempos de ida e volta. 
+$ ipconfig   => Exibe todos os valores atuais de configuração de rede TCP/IP e atualiza as configurações de protocolo DHCP e DNS (sistema de nomes de domínio). Usado sem parâmetros, o ipconfig exibe endereços IPv4 (protocolo IP versão 4) e IPv6, máscara de sub-rede e gateway padrão para todos os adaptadores.
+                TTL: O TTL seria uma informação dentro do pacote do IP que informa qual é a máxima quantidade de hops que minha informação pode passar antes de ser descartada. É a quantidade de máquinas que ela vai poder passar no caminho.
+$ ipconfig /all => Exibe mais informações, inclusive o número de série da minha placa de Rede (MAC ou Endereço Físico) usado no protocolo ARP do aparelho Switch
+$ tracert -d => O traceroute seria usado para verificar a rota que minha informação percorreu até chegar o destino. (traceroute -n no linux)
+                Output: "*" Quando nós temos uma máquina que retornou (*) e passou a informação para uma próxima máquina, isso provavelmente indica que o administrador dessa máquina desabilitou a resposta ao nosso chamado. O que acontece seria que esse tipo de teste pode ser interpretado como uma tentativa de “scanear” possíveis portas abertas e vulnerabilidades que possam existir, caso seja usado por um usuário malicioso, pode ser usada como uma forma de reconhecimento da rede dessa possível vítima para que assim possa explorar possíveis falhas.
+$ nslookup   => Exibe informações que você pode usar para diagnosticar a infraestrutura do DNS (Sistema de Nomes de Domínio). Antes de usar essa ferramenta, você deve estar familiarizado com o trabalho do DNS. A ferramenta de linha de comando nslookup estará disponível somente se você tiver instalado o protocolo TCP/IP.
+$ ping 127.0.0.1 || ping localhost => É um endereço interno da placa de rede, usado para testar se os protocolos TCP/IP estão funcionando. Ele é conhecido como endereço de loopback, pois o sinal é enviado e recebido por ele mesmo.
+$ 
+$ 
+$ 
+$ 
+$ 
+$ 
+$
+
+
+!IP: O termo IP (Internet Protocol) é um número identificador dado ao seu computador, ou roteador, ao conectar-se à rede. É através desse número que seu computador pode enviar e receber dados na internet. O IP é definido pelo seu provedor de Internet. Ele pode ser estático (não mudar) ou dinâmico (mudando de tempos em tempos).
+!Classes do IP: ver imagem. A IETF (Internet Engineering Task Force) determinou que existiriam ao todo 5 classes de endereços IP, indo de ordem alfabética da classe A até a classe E. Porém as duas últimas classes não são usadas para serem endereçadas as máquinas. A classe D seria usada para multicast (termo usado quando queremos nos comunicar com somente algumas máquinas de nossa rede) e a classe E seria uma classe experimental. Portanto as classes de IP que podem ser endereçadas para máquinas seriam a classe A, B e C.
+!IP Privado: Os endereços internos privados não são roteados na Internet e nenhum tráfego pode ser enviado a eles da Internet, eles apenas deveriam funcionar dentro da rede local.Esses são endereços IP reservados. Esses endereços são destinados ao uso em redes locais fechadas e a alocação de tais endereços não é controlada globalmente por ninguém.O acesso direto à Internet usando um endereço IP privado não é possível. Nesse caso, a conexão com a Internet é via NAT (a tradução do endereço de rede substitui o endereço IP privado por um público). Os endereços IP privados na mesma rede local devem ser exclusivos e não podem ser repetidos.
+       * Note que o IP da minha máquina é um IP Privado, estão, para acessarmos a internet a nossa provedora nos dá um ip público que pode ser visto no site: https://meuip.com.br/
+!IP Público: São endereços públicos globais usados na Internet. Um endereço IP público é um endereço IP usado para acessar a Internet. Os endereços IP públicos (globais) são roteados na Internet, ao contrário dos endereços privados. A presença de um endereço IP público em seu roteador ou computador permitirá que você organize seu próprio servidor (VPN, FTP, WEB, etc.), acesso remoto ao seu computador, câmeras de vigilância de vídeo e acesse-os de qualquer lugar da rede global. Com um endereço IP público, você pode configurar qualquer servidor doméstico para publicá-lo na Internet: Web (HTTP), VPN (PPTP / IPSec / OpenVPN), mídia (áudio / vídeo), FTP, unidade de rede NAS, servidor de jogos, etc.
+       * Pode ser visto em: https://meuip.com.br/
+!NAT: Isso acontece porque nosso roteador possui a configuração chamada NAT, essa configuração vai converter o endereço IP privado que temos em nossas máquinas para IP públicos que nosso provedor de serviços nos fornece.
+!Wireshark: https://www.wireshark.org/  - Wireshark is the world’s foremost and widely-used network protocol analyzer. It lets you see what’s happening on your network at a microscopic level and is the de facto (and often de jure) standard across many commercial and non-profit enterprises, government agencies, and educational institutions. Wireshark development thrives thanks to the volunteer contributions of networking experts around the globe and is the continuation of a project started by Gerald Combs in 1998.
+       *ip.addr==algum_ip   => para filtrar no wireshark
+!TCP: O protocolo TCP encontra-se acima da camada onde o IP está localizado e ele é responsável por realizar o transporte da minha informação. Além do protocolo TCP, essa camada possui também outro protocolo bastante conhecido, o UDP.
+!ARP: O ARP é o protocolo utilizado para fazer o mapeamento entre o endereço IP e o endereço MAC de um dispositivo. Isso é necessário porque o MAC encontra-se um nível abaixo do IP e eu preciso dele para poder transmitir as informações. Em redes de computadores, temos protocolos que possuem hierarquias diferentes. Para poder chegar até o IP que está na camada 3, eu preciso passar pelo MAC que está na camada 2, pense como se fosse escalar uma pirâmide, não dá pra chegar ao topo sem passar pelo meio dela!
+!TLS: (Transport Layer Security) seria um protocolo de criptografia utilizado para segurança da informação (usado no HTTPS). Ele seria a evolução do protocolo SSL (Secure Sockets Layer).
+!T568A: Padrão para o cabo de internet, desenvolvido pela associação internacional de Telecomunicações (Telecomunication industry association - TIA). Eles definiram o padrão de cores que deveria ser seguido. O T568B, utlizado na outra ponta do cabo, tem os cabos invertidos para fazer corretamente a passaem de entrada e saída de dados de uma máquina para outra, informaçoes estão na imagem salva nesta pasta
+       T568A ordem: Branco e verde, verde, branco e laranja, azul, branco e azul, laranja, branco e marrom, marrom
+	  T568B ordem: Branco e laranja, laranja, branco e verde, azul, branco e azul, verde, branco e marrom, marrom
+       *As placas de rede dos computadores transmitem, por padrão, nas posições 1 e 2. As placas de rede dos computadores recebem por padrão nas posições 3 e 6. As placas de rede dos hubs transmitem por padrão nas posições 3 e 6. As placas de rede dos hubs recebem por padrão nas posições 1 e 2.
+       *Se tentarmos fazer a conexão de dois computadores com cabo direto e conseguirmos pingar a máquina, provavelmente as placas de rede possuem um padrão auto-MDIX que é capaz de detectar que colocamos um cabo “errado”, mas consegue realizar a correção das polaridades via software 
+!Hub: Aparelho que permite fazer a conexão de rede com várias máquinas https://www.google.com/search?q=ethernet+hub&sxsrf=APq-WBva_gdk-gLwFgRs6xiklwWP5SIz4A:1645466536375&source=lnms&tbm=isch&sa=X&ved=2ahUKEwj8p4_DsJH2AhWHEbkGHY5EBMUQ_AUoAnoECAEQBA&biw=1536&bih=764&dpr=1.25
+       * Uma das limitações do hub: ele não consegue aprender aonde os computadores estão interconectados e sempre passará as informações para todos os dispositivos conectados com a porta, com exceção de quem enviou a requisição (exemplo quando uso o comando ping). O nome disso é Broadcast. Imagine um usuário fazendo o download de 500 mb e todos os dispositivos recebendo essa informação... Causa uma lentidão na rede. Em relação ao hub, precisamos falar também sobre a segurança da informação. A requisição que fizemos entre o segundo computador e o laptop, o hub desconhece aonde está conectado o laptop. Logo, ele enviará para todos os dispositivos que estiverem conectados. Se uma das máquinas tiver um usuário malicioso, ele pode fazer o que chamamos de análise de protocolo e decifrar o que está sendo enviado pelo segundo computador. O hub representa uma lentidão, além da vulnerabilidade da segurança.
+!Switch: Veio como um substituto aos Hubs, por ser mais seguro (O Hub não consegue aprender onde um equipamento está localizado, o Switch sim). Quando um dispositivo quer se comunicar com outro, ele vai necessitar passar pelo Switch e ele informa dentro do pacote qual é seu endereço MAC e o Switch grava essa informação em sua memória, para que não tenha que "vazar" a informação para outros computadores que não seja o que enviou a informação e está esperando a resposta, uma vez que ele salvou o endereço dele e sabe para quem devolver. 
+       * Uma das limitações do switch: Métodos usados por usuários maliciosos seria de inserir vários endereços MAC falsos para “lotar” a memória do Switch, uma vez que a memória esteja cheia, o Switch não vai conseguir definir quem está onde e ele passa a atuar como um Hub. Para contornar esse risco, podemos configurar a porta do Switch para aceitar um número máximo de endereços MAC, ao ultrapassar esse limite a porta é desligada e o ataque não teria sucesso.
+!Roteador: A função do roteador é interconectar redes encaminhando seus pacotes de dados, os Switches e hubs são usados somente para conexão na minha rede local.
+       * Para conectar um computador com um roteador, uso um cabo cruzado.
+       * cofigurando Roteador na aba cli:
+         $ ?           => mostra algumas informações
+         $ enable      => para subir em privilégio administrativo
+         $ configure terminal => para entrar no modo de configuração do roteador
+         $ interface fastEthernet 0/0 => para começar a configurar uma porta do roteador
+         $ no shutdown                => agora a porta estará habilitada e acesa em verde
+         $ exit                       => sair das configurações dessa porta
+         $ interface fastEthernet 0/1 => para entrar nas configurações da outra porta
+         $ no shutdown                => agora a porta estará habilitada e acesa em verde
+         $ ip address 192.168.3.5 255.255.255.0 => como não temos um aparelho DHCP vamos dar um ip manualmente (192.168.3.5 = gateway) e informar a máscara de rede
+         $ CTRL + Z                   => sair da configuração
+         $ ping 192.168.3.2           => verificar se a conexão foi feita com sucesso com a máquina da porta 0/1
+         $ configure terminal => para entrar no modo de configuração do roteador
+         $ interface fastEthernet 0/0 => para começar a configurar uma porta do roteador
+         $ ip address 191.168.3.7 255.255.255.0 => (191.168.3.7 = gateway) Lembrando que temos que configuras o roteador e o computador na mesma rede nessa porta, por isso obedecer a máscara de rede
+         $ CTRL + Z                   => sair da configuração
+         $ ping 191.168.3.1           => verificar se a conexão foi feita com sucesso com a máquina da porta 0/0, agora temos a conexão das duas portas feitas        
+         $ show ip interface brief    => ver meus gateways configurados
+         Ir em config do PC1 e colocar o seu gateway => 191.168.3.7
+         Ir em config do PC2 e colocar o seu gateway => 192.168.3.5
+         No PC1 $ ping 192.168.3.2    => Agora meu PC1 consegue se comunicar com o PC2 que está em uma rede diferente da dele
+         No PC2 $ ping 191.168.3.1    => Agora meu PC2 consegue se comunicar com o PC1 que está em uma rede diferente da dele
+!Máscara de Rede: A máscara de rede é usada como forma de comparação para determinar se dois equipamentos estão na mesma rede. Para isso ela vai dividir o endereço IP em dois grupos, de rede e hosts (máquinas).
+!Defaut gateway: O default gateway é o endereço IP o qual será responsável por encaminhar pacotes para redes externas, é o IP do meu roteador.
+!Vamos fazer agora a tradução do endereço IP de loopback para a url www.cursoderedesdaalura.com: Caso seja Windows: Abrir bloco de notas como administrador e abrir o arquivo hosts localizado em C:\Windows\System32\drivers\etc e insira na última linha o mapeamento 127.0.0.1 www.cursoderedesdaalura.com e teste o ping para essa url
+!Para modificar o IP da minha máquina manualmente:  Vamos até no ícone de conectividade, depois em "configurações de rede", "Ethernet". Em seguida, clicaremos em "Ethernet", ao ser aberta uma nova janela, selecionaremos "Propriedades". Será aberta uma nova janela, buscaremos pela opção "Protocolo IP Versão 4(TCP/IPv4)", depois em "Propriedades". Na nova janela, selecionaremos "Usar o seguinte endereço IP" e escreveremos o IP que ele deverá usar para fazer o teste.
