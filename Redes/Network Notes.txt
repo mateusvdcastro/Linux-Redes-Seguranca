@@ -37,7 +37,7 @@ $
 !Switch: Veio como um substituto aos Hubs, por ser mais seguro (O Hub não consegue aprender onde um equipamento está localizado, o Switch sim). Quando um dispositivo quer se comunicar com outro, ele vai necessitar passar pelo Switch e ele informa dentro do pacote qual é seu endereço MAC e o Switch grava essa informação em sua memória, para que não tenha que "vazar" a informação para outros computadores que não seja o que enviou a informação e está esperando a resposta, uma vez que ele salvou o endereço dele e sabe para quem devolver. 
        * Uma das limitações do switch: Métodos usados por usuários maliciosos seria de inserir vários endereços MAC falsos para “lotar” a memória do Switch, uma vez que a memória esteja cheia, o Switch não vai conseguir definir quem está onde e ele passa a atuar como um Hub. Para contornar esse risco, podemos configurar a porta do Switch para aceitar um número máximo de endereços MAC, ao ultrapassar esse limite a porta é desligada e o ataque não teria sucesso.
 !Roteador: A função do roteador é interconectar redes encaminhando seus pacotes de dados, os Switches e hubs são usados somente para conexão na minha rede local.
-       * Para conectar um computador com um roteador, uso um cabo cruzado.
+       * Para conectar um computador com um roteador, uso um cabo cruzado (CISCO CABO CONSOLE RJ45 PARA DB9), e usamos o app PUTTY para acessá-lo
        * cofigurando Roteador na aba cli:
          $ ?           => mostra algumas informações
          $ enable      => para subir em privilégio administrativo
@@ -62,5 +62,52 @@ $
          No PC2 $ ping 191.168.3.1    => Agora meu PC2 consegue se comunicar com o PC1 que está em uma rede diferente da dele
 !Máscara de Rede: A máscara de rede é usada como forma de comparação para determinar se dois equipamentos estão na mesma rede. Para isso ela vai dividir o endereço IP em dois grupos, de rede e hosts (máquinas).
 !Defaut gateway: O default gateway é o endereço IP o qual será responsável por encaminhar pacotes para redes externas, é o IP do meu roteador.
+!Broadcast: Broadcast seria um termo usado quando a comunicação é feita para todos os dispositivos que estão na mesma rede.
 !Vamos fazer agora a tradução do endereço IP de loopback para a url www.cursoderedesdaalura.com: Caso seja Windows: Abrir bloco de notas como administrador e abrir o arquivo hosts localizado em C:\Windows\System32\drivers\etc e insira na última linha o mapeamento 127.0.0.1 www.cursoderedesdaalura.com e teste o ping para essa url
 !Para modificar o IP da minha máquina manualmente:  Vamos até no ícone de conectividade, depois em "configurações de rede", "Ethernet". Em seguida, clicaremos em "Ethernet", ao ser aberta uma nova janela, selecionaremos "Propriedades". Será aberta uma nova janela, buscaremos pela opção "Protocolo IP Versão 4(TCP/IPv4)", depois em "Propriedades". Na nova janela, selecionaremos "Usar o seguinte endereço IP" e escreveremos o IP que ele deverá usar para fazer o teste.
+!DHCP: O protocolo DHCP é um protocolo de cliente/servidor que fornece automaticamente um host ip (protocolo IP) com seu endereço IP e outras informações de configuração relacionadas, como a máscara de sub-rede e o gateway padrão.
+       * cofigurando Roteador na aba cli:
+         $ enable                      => para subir em privilégio administrativo
+         $ configure terminal          => para entrar no modo de configuração do roteador
+         $ interface fastEthernet 0/0  => para começar a configurar uma porta do roteador
+         $ no shutdown                 => agora a porta estará habilitada e acesa em verde
+         $ exit                        => sair das configurações dessa porta
+         $ ip dhcp pool ALURA          => O conjunto de endereços IP disponíveis, já descontados os endereços das faixas de exelusão, é conhecido como Pool de endereços.
+         $ network 192.168.0.0 255.255.255.0  => irmar o endereço de rede e máscara de rede
+         $ default-router 192.168.0.1  => definir um gateway padrão para todas as máquinas conectadas a essa rede
+         $ exit
+         $ interface fastEthernet 0/0  => Para configurarmos a porta 0/0 do roteador
+         $ ip address 192.168.0.1 255.255.255.0     => Definir o IP dessa porta 0/0 que como já informamos antes servirá como gateway
+	    Ir na aba Descktop de cada computador e mudar de Static para DHCP
+       * Quando um cliente não possui endereço IP ele não sabe a quem perguntar, então ele precisa sair perguntando para todo mundo que está na mesma rede quem poderá fornecer um endereço IP. Quando essa comunicação é feita para todos os dispositivos, chamamos isso de Broadcast.
+!Servidor web: Referente ao hardware, um servidor web é um computador que armazena arquivos que compõem os sites (por exemplo, documentos HTML, imagens, folhas de estilo, e arquivos JavaScript) e os entrega para o dispositivo do usuário final. Está conectado a Internet e pode ser acessado através do seu nome de domínio (DNS), como por exemplo mozilla.org. Referente ao software, um servidor web inclui diversos componentes que controlam como os usuários acessam os arquivos hospedados (armazenados para disponibilização), no mínimo um servidor HTTP. Um servidor HTTP é um software que compreende URLs (endereços web) e HTTP (o protocolo que seu navegador utiliza para visualizar páginas web.
+       * cofigurando Roteador na aba cli:
+         $ enable                      => para subir em privilégio administrativo
+         $ configure terminal          => para entrar no modo de configuração do roteador
+         $ interface fastEthernet 0/1  => configurar a porta 0/1
+         $ no shutdown                 => agora a porta estará habilitada e acesa em verde
+         $ ip address 8.8.8.1 255.0.0.0
+       * Agora ir no servidor:
+         Em ip configuration > interface > static > ipv4 = 8.0.255.255 > Subnet mask = 255.0.0.0 > gateway > 8.8.8.1 
+	 * Colocar um html para o projeto do google:
+         Ir em Services > Http > indice 5 > edit > apagar tudo > 
+										<html>
+										<h1>GOOGLE</h1>
+										<input type="search">
+										<input type="button" value="Buscar">
+										</html>
+       * Agora ir em um dos PCs e em web digitar o ip do servidor: 8.0.255.255
+!DNS: O sistema DNS da internet funciona praticamente como uma agenda de telefone ao gerenciar o mapeamento entre nomes e números. Os servidores DNS convertem solicitações de nomes em endereços IP, controlando qual servidor um usuário final alcançará quando digitar um nome de domínio no navegador da web.
+       * No servidor DNS:
+         Em ip configuration > interface > static > ipv4 = 8.1.0.0 > Subnet mask = 255.0.0.0 > gateway > 8.8.8.1
+       * Fazer o DNS do ip do google:
+         Ir em Services > DNS > dns service = on >  name = www.google.com > address = 8.0.255.255 > add
+       * Ir no roteador DHCP para informarmos quem será o DNS (note que em ip configuration de cada máquina não tem um dns setado, o DHCP irá informar):
+         $ enable                      => para subir em privilégio administrativo
+         $ configure terminal          => para entrar no modo de configuração do roteador
+         $ ip dhcp pool ALURA          => acessar o poll que criamos antes
+         $ dns-server 8.1.0.0          => agora o DHCP sabe qual IP de DNS ele deve passar aos computadores
+         Ir nos computadores e dar refresh mudando de Static para DHCP
+       *O serviço web utiliza a porta de comunicação 80 para o protocolo HTTP e 443 para a versão segura do protocolo HTTP (HTTPS), enquanto que o protocolo DNS utiliza a porta de comunicação 53
+
+
