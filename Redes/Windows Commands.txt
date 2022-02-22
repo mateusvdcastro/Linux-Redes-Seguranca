@@ -1,0 +1,24 @@
+$ ping       => Verifica a conectividade no nível de IP para outro computador TCP/IP enviando mensagens de solicitação de eco do Protocolo ICMP. O recebimento de mensagens de resposta de eco correspondentes é exibido, juntamente com os tempos de ida e volta. 
+$ ipconfig   => Exibe todos os valores atuais de configuração de rede TCP/IP e atualiza as configurações de protocolo DHCP e DNS (sistema de nomes de domínio). Usado sem parâmetros, o ipconfig exibe endereços IPv4 (protocolo IP versão 4) e IPv6, máscara de sub-rede e gateway padrão para todos os adaptadores.
+                TTL: O TTL seria uma informação dentro do pacote do IP que informa qual é a máxima quantidade de hops que minha informação pode passar antes de ser descartada. É a quantidade de máquinas que ela vai poder passar no caminho.
+$ tracert -d => O traceroute seria usado para verificar a rota que minha informação percorreu até chegar o destino. (traceroute -n no linux)
+                Output: "*" Quando nós temos uma máquina que retornou (*) e passou a informação para uma próxima máquina, isso provavelmente indica que o administrador dessa máquina desabilitou a resposta ao nosso chamado. O que acontece seria que esse tipo de teste pode ser interpretado como uma tentativa de “scanear” possíveis portas abertas e vulnerabilidades que possam existir, caso seja usado por um usuário malicioso, pode ser usada como uma forma de reconhecimento da rede dessa possível vítima para que assim possa explorar possíveis falhas.
+$ nslookup   => Exibe informações que você pode usar para diagnosticar a infraestrutura do DNS (Sistema de Nomes de Domínio). Antes de usar essa ferramenta, você deve estar familiarizado com o trabalho do DNS. A ferramenta de linha de comando nslookup estará disponível somente se você tiver instalado o protocolo TCP/IP.
+$ ping 127.0.0.1 || ping localhost => Este tipo de endereçamento chamamos de loopback, em que enviamos informações para a nossa mesma máquina para verificar se está tudo funcionando esta transmissão interna.
+$ 
+$ 
+$ 
+$ 
+$ 
+$ 
+$ 
+$
+
+!T568A: Padrão para o cabo de internet, desenvolvido pela associação internacional de Telecomunicações (Telecomunication industry association - TIA). Eles definiram o padrão de cores que deveria ser seguido. O T568B, utlizado na outra ponta do cabo, tem os cabos invertidos para fazer corretamente a passaem de entrada e saída de dados de uma máquina para outra, informaçoes estão na imagem salva nesta pasta
+       T568A ordem: Branco e verde, verde, branco e laranja, azul, branco e azul, laranja, branco e marrom, marrom
+	  T568B ordem: Branco e laranja, laranja, branco e verde, azul, branco e azul, verde, branco e marrom, marrom
+       *As placas de rede dos computadores transmitem, por padrão, nas posições 1 e 2. As placas de rede dos computadores recebem por padrão nas posições 3 e 6. As placas de rede dos hubs transmitem por padrão nas posições 3 e 6. As placas de rede dos hubs recebem por padrão nas posições 1 e 2.
+       *Se tentarmos fazer a conexão de dois computadores com cabo direto e conseguirmos pingar a máquina, provavelmente as placas de rede possuem um padrão auto-MDIX que é capaz de detectar que colocamos um cabo “errado”, mas consegue realizar a correção das polaridades via software 
+!Hub: Aparelho que permite fazer a conexão de rede com várias máquinas https://www.google.com/search?q=ethernet+hub&sxsrf=APq-WBva_gdk-gLwFgRs6xiklwWP5SIz4A:1645466536375&source=lnms&tbm=isch&sa=X&ved=2ahUKEwj8p4_DsJH2AhWHEbkGHY5EBMUQ_AUoAnoECAEQBA&biw=1536&bih=764&dpr=1.25
+!Vamos fazer agora a tradução do endereço IP de loopback para a url www.cursoderedesdaalura.com: Caso seja Windows: Abrir bloco de notas como administrador e abrir o arquivo hosts localizado em C:\Windows\System32\drivers\etc e insira na última linha o mapeamento 127.0.0.1 www.cursoderedesdaalura.com e teste o ping para essa url
+!Para modificar o IP da minha máquina manualmente:  Vamos até no ícone de conectividade, depois em "configurações de rede", "Ethernet". Em seguida, clicaremos em "Ethernet", ao ser aberta uma nova janela, selecionaremos "Propriedades". Será aberta uma nova janela, buscaremos pela opção "Protocolo IP Versão 4(TCP/IPv4)", depois em "Propriedades". Na nova janela, selecionaremos "Usar o seguinte endereço IP" e escreveremos o IP que ele deverá usar para fazer o teste.
