@@ -34,12 +34,11 @@ $
        *Se tentarmos fazer a conexão de dois computadores com cabo direto e conseguirmos pingar a máquina, provavelmente as placas de rede possuem um padrão auto-MDIX que é capaz de detectar que colocamos um cabo “errado”, mas consegue realizar a correção das polaridades via software 
 !Hub: Aparelho que permite fazer a conexão de rede com várias máquinas https://www.google.com/search?q=ethernet+hub&sxsrf=APq-WBva_gdk-gLwFgRs6xiklwWP5SIz4A:1645466536375&source=lnms&tbm=isch&sa=X&ved=2ahUKEwj8p4_DsJH2AhWHEbkGHY5EBMUQ_AUoAnoECAEQBA&biw=1536&bih=764&dpr=1.25
        * Uma das limitações do hub: ele não consegue aprender aonde os computadores estão interconectados e sempre passará as informações para todos os dispositivos conectados com a porta, com exceção de quem enviou a requisição (exemplo quando uso o comando ping). O nome disso é Broadcast. Imagine um usuário fazendo o download de 500 mb e todos os dispositivos recebendo essa informação... Causa uma lentidão na rede. Em relação ao hub, precisamos falar também sobre a segurança da informação. A requisição que fizemos entre o segundo computador e o laptop, o hub desconhece aonde está conectado o laptop. Logo, ele enviará para todos os dispositivos que estiverem conectados. Se uma das máquinas tiver um usuário malicioso, ele pode fazer o que chamamos de análise de protocolo e decifrar o que está sendo enviado pelo segundo computador. O hub representa uma lentidão, além da vulnerabilidade da segurança.
-!Switch: Veio como um substituto aos Hubs, por ser mais seguro (O Hub não consegue aprender onde um equipamento está localizado, o Switch sim). Quando um dispositivo quer se comunicar com outro, ele vai necessitar passar pelo Switch e ele informa dentro do pacote qual é seu endereço MAC e o Switch grava essa informação em sua memória, para que não tenha que "vazar" a informação para outros computadores que não seja o que enviou a informação e está esperando a resposta, uma vez que ele salvou o endereço dele e sabe para quem devolver. 
-       * Uma das limitações do switch: Métodos usados por usuários maliciosos seria de inserir vários endereços MAC falsos para “lotar” a memória do Switch, uma vez que a memória esteja cheia, o Switch não vai conseguir definir quem está onde e ele passa a atuar como um Hub. Para contornar esse risco, podemos configurar a porta do Switch para aceitar um número máximo de endereços MAC, ao ultrapassar esse limite a porta é desligada e o ataque não teria sucesso.
 !Roteador: A função do roteador é interconectar redes encaminhando seus pacotes de dados, os Switches e hubs são usados somente para conexão na minha rede local.
        * Para conectar um computador com um roteador, uso um cabo cruzado (CISCO CABO CONSOLE RJ45 PARA DB9), e usamos o app PUTTY para acessá-lo
        * cofigurando Roteador na aba cli:
-         $ ?           => mostra algumas informações
+         $ ?                    => mostra algumas informações
+         $ show running-config  => mostrando tudo oq está configurado
          $ enable      => para subir em privilégio administrativo
          $ configure terminal => para entrar no modo de configuração do roteador
          $ interface fastEthernet 0/0 => para começar a configurar uma porta do roteador
@@ -60,11 +59,73 @@ $
          Ir em config do PC2 e colocar o seu gateway => 192.168.3.5
          No PC1 $ ping 192.168.3.2    => Agora meu PC1 consegue se comunicar com o PC2 que está em uma rede diferente da dele
          No PC2 $ ping 191.168.3.1    => Agora meu PC2 consegue se comunicar com o PC1 que está em uma rede diferente da dele
-!Máscara de Rede: A máscara de rede é usada como forma de comparação para determinar se dois equipamentos estão na mesma rede. Para isso ela vai dividir o endereço IP em dois grupos, de rede e hosts (máquinas).
-!Defaut gateway: O default gateway é o endereço IP o qual será responsável por encaminhar pacotes para redes externas, é o IP do meu roteador.
-!Broadcast: Broadcast seria um termo usado quando a comunicação é feita para todos os dispositivos que estão na mesma rede.
-!Vamos fazer agora a tradução do endereço IP de loopback para a url www.cursoderedesdaalura.com: Caso seja Windows: Abrir bloco de notas como administrador e abrir o arquivo hosts localizado em C:\Windows\System32\drivers\etc e insira na última linha o mapeamento 127.0.0.1 www.cursoderedesdaalura.com e teste o ping para essa url
-!Para modificar o IP da minha máquina manualmente:  Vamos até no ícone de conectividade, depois em "configurações de rede", "Ethernet". Em seguida, clicaremos em "Ethernet", ao ser aberta uma nova janela, selecionaremos "Propriedades". Será aberta uma nova janela, buscaremos pela opção "Protocolo IP Versão 4(TCP/IPv4)", depois em "Propriedades". Na nova janela, selecionaremos "Usar o seguinte endereço IP" e escreveremos o IP que ele deverá usar para fazer o teste.
+!Switch: Veio como um substituto aos Hubs, por ser mais seguro (O Hub não consegue aprender onde um equipamento está localizado, o Switch sim). Quando um dispositivo quer se comunicar com outro, ele vai necessitar passar pelo Switch e ele informa dentro do pacote qual é seu endereço MAC e o Switch grava essa informação em sua memória, para que não tenha que "vazar" a informação para outros computadores que não seja o que enviou a informação e está esperando a resposta, uma vez que ele salvou o endereço dele e sabe para quem devolver. 
+       * Uma das limitações do switch: Métodos usados por usuários maliciosos seria de inserir vários endereços MAC falsos para “lotar” a memória do Switch, uma vez que a memória esteja cheia, o Switch não vai conseguir definir quem está onde e ele passa a atuar como um Hub. Para contornar esse risco, podemos configurar a porta do Switch para aceitar um número máximo de endereços MAC, ao ultrapassar esse limite a porta é desligada e o ataque não teria sucesso.
+       * O protocolo STP é utilizado pelos Switches como uma forma de prevenir que loops aconteçam em nossas redes.
+       * O endereço FF-FF-FF-FF-FF-FF será interpretado como sendo um endereço broadcast e será passado para todas as portas do Switch com exceção da porta a qual enviou essa informação
+       * No caso de todos os Switches estarem configurados com a prioridade padrão 32.768. Qual será o critério que o protocolo do STP irá adotar para eleger o Switch Root? Uma vez que as prioridades do Switch estiverem configuradas com o mesmo valor padrão, o Switch Root será o Switch que tiver o menor endereço MAC. A porta root seria a porta que os outros Switches definiram como sendo a melhor porta de acesso ao Switch Root. Os modos de operação das portas do Switch Root seriam no modo Designado.
+       * A análise que o protocolo STP realiza para eleger o Switch Root seria através dos valores de prioridade e endereço MAC presentes dentro do protocolo BPDU. Esse conjunto de valores de prioridade e endereço MAC é conhecido como Bridge-ID. O primeiro critério que o STP irá analisar será o valor de prioridade, o Switch que apresentar menor prioridade será eleito como Root. Caso ocorra um empate entre as prioridades, o Switch irá analisar os endereços MAC e o que apresentar o menor endereço MAC é que será eleito como Root.
+!VLAN no Switch:
+       * Uma rede local virtual, normalmente denominada de VLAN, é uma rede logicamente independente. Várias VLANs podem coexistir em um mesmo comutador, de forma a dividir uma rede local em mais de uma rede, criando domínios de broadcast separados
+       * As Vlans (Virtual Lans) são usadas para segmentação de redes e priorização de tráfego. Hoje em dia as redes corporativas trafegam diferentes tipos de dados em suas redes, como por exemplo, podemos ter tráfego de dados, vídeo e voz e acaba sendo necessário lidar com esses diferentes tipos de tráfego de uma maneira a priorizar um sobre o outro.
+         $ ?                    => mostra algumas informações
+         $ enable               => para subir em privilégio administrativo
+         $ show vlan brief      => mostra todos os números de vlan sendo utilizadas 1-1005, usar apenas números livres
+         $ configure terminal   => para entrar no modo de configuração do switch
+         $ vlan 10              => colocamos o número da vlan que queremos configurar
+         $ name VENDAS          => seguimentar as vlans por setor da empresa, por isso vamos nomeá-la
+         $ exit                       => sair das configurações dessa vlan
+         $ CTRL + Z                   => sair da configuração
+         $ show vlan brief            => vemos que ela foi adicionada, mas ainda não tem interfaces
+         $ configure terminal   => para entrar no modo de configuração do switch
+         $ interface range fastEthernet 0/1 - 2 => com range podemos configurar mais de uma porta do switch de uma só vez
+         $ switchport mode access     => definindo modo de acesso
+         $ switchport access vlan 10  => definir qual vlan essa porta está associada
+         $ exit                       => sair das configurações dessa vlan
+         $ CTRL + Z                   => sair da configuração
+         $ show vlan brief            => agora vemos que a vlan de vendas está associada as portas 0/1 e 0/2
+!Portas Trunk:
+       * As portas trunk são portas configuradas para realizar o transporte de múltiplas Vlans entre Switches ou entre Switches e roteadores:
+         $ enable               => para subir em privilégio administrativo
+         $ show vlan brief      => mostra todos os números de vlan sendo utilizadas 1-1005, usar apenas números livres
+         $ configure terminal   => para entrar no modo de configuração do switch
+         $ interface range fastEthernet 0/3 => porta que iremos configurar em modo trunk
+         $ switchport mode trunk            => definindo a porta em modo trunk
+         $ CTRL + Z                         => sair da configuração
+         $ show interfaces trunk            => mostra as portas que estão trabalhando em modo trunk e quais números de vlan elas passam
+!Comunicação entre duas vlans atraves do roteador e configurando o DHCP:
+       * no switch
+         $ enable  
+         $ configure terminal                   
+         $ interface fastEthernet 0/5           
+         $ switchport mode trunk                
+         $ show interfaces trunk
+       * no roteador
+         $ enable                     => para subir em privilégio administrativo
+         $ configure terminal         => para entrar no modo de configuração do roteador
+         $ interface fastEthernet 0/1 => para começar a configurar uma porta do roteador
+         $ no shutdown                => agora a porta estará habilitada e acesa em verde
+         $ CTRL + Z                   => sair da configuração
+         $ ip dhcp pool VLAN10          => O conjunto de endereços IP disponíveis, já descontados os endereços das faixas de exelusão, é conhecido como Pool de endereços.
+         $ network 192.168.10.0 255.255.255.0  => definir o endereço de rede e máscara de rede
+         $ exit          
+         $ ip dhcp pool VLAN20                 => O conjunto de endereços IP disponíveis, já descontados os endereços das faixas de exelusão, é conhecido como Pool de endereços.
+         $ network 192.168.20.0 255.255.255.0  => definir o endereço de rede e máscara de rede
+         $ exit
+         $ interface fastEthernet 0/1.1        => vamos dividir a fasEthernet em duas sub interfaces, uma para a Vlan10 e outra para a 20 
+         $ encapsulation dot1Q 10              =>
+         $ ip address 192.168.10.1 255.255.255.0  => definindo um ip para essa sub rede
+         $ exit 
+         $ interface fastEthernet 0/1.2        => vamos dividir a fasEthernet em duas sub interfaces, uma para a Vlan10 e outra para a 20
+         $ encapsulation dot1Q 20
+         $ ip address 192.168.20.1 255.255.255.0  =>  definindo um ip para essa sub rede
+         $ exit 
+         $ ip dhcp pool VLAN10
+         $ default-router 192.168.10.1         => DHCP gateway
+         $ exit 
+         $ ip dhcp pool VLAN20
+         $ default-router 192.168.20.1         => DHCP gateway               
+         $ exit                        
 !DHCP: O protocolo DHCP é um protocolo de cliente/servidor que fornece automaticamente um host ip (protocolo IP) com seu endereço IP e outras informações de configuração relacionadas, como a máscara de sub-rede e o gateway padrão.
        * cofigurando Roteador na aba cli:
          $ enable                      => para subir em privilégio administrativo
@@ -73,7 +134,7 @@ $
          $ no shutdown                 => agora a porta estará habilitada e acesa em verde
          $ exit                        => sair das configurações dessa porta
          $ ip dhcp pool ALURA          => O conjunto de endereços IP disponíveis, já descontados os endereços das faixas de exelusão, é conhecido como Pool de endereços.
-         $ network 192.168.0.0 255.255.255.0  => irmar o endereço de rede e máscara de rede
+         $ network 192.168.0.0 255.255.255.0  => definir o endereço de rede e máscara de rede
          $ default-router 192.168.0.1  => definir um gateway padrão para todas as máquinas conectadas a essa rede
          $ exit
          $ interface fastEthernet 0/0  => Para configurarmos a porta 0/0 do roteador
@@ -108,6 +169,27 @@ $
          $ ip dhcp pool ALURA          => acessar o poll que criamos antes
          $ dns-server 8.1.0.0          => agora o DHCP sabe qual IP de DNS ele deve passar aos computadores
          Ir nos computadores e dar refresh mudando de Static para DHCP
-       *O serviço web utiliza a porta de comunicação 80 para o protocolo HTTP e 443 para a versão segura do protocolo HTTP (HTTPS), enquanto que o protocolo DNS utiliza a porta de comunicação 53
+       * O serviço web utiliza a porta de comunicação 80 para o protocolo HTTP e 443 para a versão segura do protocolo HTTP (HTTPS), enquanto que o protocolo DNS utiliza a porta de comunicação 53
+!STP (Spanning tree protocol):
+       * Spanning Tree Protocol (referido com o acrónimo STP) é um protocolo para equipamentos de rede que permite resolver problemas de loop em redes comutadas cuja topologia introduza anéis nas ligações, auxiliando na melhor performance da rede. O protocolo STP possibilita a inclusão de ligações redundantes entre os computadores, provendo caminhos alternativos no caso de falha de uma dessas ligações. Nesse contexto, ele serve para evitar a formação de loops entre os comutadores e permitir a ativação e desativação automática dos caminhos alternativos. Para isso, o algoritmo de Spanning Tree determina qual é o caminho mais eficiente (de menor custo) entre cada segmento separado por bridges ou switches. Caso ocorra um problema nesse caminho, o algoritmo irá recalcular, entre os existentes, o novo caminho mais eficiente, habilitando-o automaticamente.
+         $ enable                      => para subir em privilégio administrativo
+         $ show spanning-tree vlan 10  => mostra informações do switch root e do atual (bridge ID) 
+         $ show spanning-tree vlan 20
+         $ enable
+         $ configure terminal
+         $ spanning-tree vlan 10 priority 0 => para definir um switch como root da vlan 10 manualmente
+         $ spanning-tree vlan 20 priority 0 => para definir um switch como root da vlan 20 manualmente
+!Máscara de Rede: A máscara de rede é usada como forma de comparação para determinar se dois equipamentos estão na mesma rede. Para isso ela vai dividir o endereço IP em dois grupos, de rede e hosts (máquinas).
+!Defaut gateway: O default gateway é o endereço IP o qual será responsável por encaminhar pacotes para redes externas, é o IP do meu roteador.
+!Broadcast: Broadcast seria um termo usado quando a comunicação é feita para todos os dispositivos que estão na mesma rede.
+!Vamos fazer agora a tradução do endereço IP de loopback para a url www.cursoderedesdaalura.com: Caso seja Windows: Abrir bloco de notas como administrador e abrir o arquivo hosts localizado em C:\Windows\System32\drivers\etc e insira na última linha o mapeamento 127.0.0.1 www.cursoderedesdaalura.com e teste o ping para essa url
+!Para modificar o IP da minha máquina manualmente:  Vamos até no ícone de conectividade, depois em "configurações de rede", "Ethernet". Em seguida, clicaremos em "Ethernet", ao ser aberta uma nova janela, selecionaremos "Propriedades". Será aberta uma nova janela, buscaremos pela opção "Protocolo IP Versão 4(TCP/IPv4)", depois em "Propriedades". Na nova janela, selecionaremos "Usar o seguinte endereço IP" e escreveremos o IP que ele deverá usar para fazer o teste.
+!Classful e Classless: Nas redes Classful utilizamos as máscaras de rede respectivas a sua classe de endereços IP. Já nas redes Classless não teríamos esse vínculo entre endereços IP e máscaras de redes, somos livres para ajustar a máscara de rede para nossa necessidade independente de qual classe estarmos usando.  (classful ex: 255.255.255.0 , classless ex: 255.255.254.0)
+           * Devemos desenvolver um projeto e o arquiteto de redes do projeto que estamos desenvolvendo disse que todos os endereços IP devem possuir máscara de rede /19. Que máscara de rede seria essa? A anotação CIDR seria a referência de quantos bits 1 nós temos em nossa máscara de rede. A máscara de rede possui ao todo 32 bits sendo separados em quatro intervalos com 8 bits por intervalos. Teremos então: 11111111.11111111.11100000.00000000 Se nós transformarmos esse valor em decimal, teremos: 255.255.224.0 Embora a forma oficial de representação e configuração da máscara de rede para endereços IPv4 seja por essa forma decimal (255.255.224.0) é comum no dia-a-dia utilizar essa anotação CIDR (/19).
+
+
+
+
+
 
 
