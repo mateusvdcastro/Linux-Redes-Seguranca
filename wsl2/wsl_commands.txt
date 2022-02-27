@@ -1,6 +1,6 @@
 Wsl Doc: https://docs.microsoft.com/pt-br/windows/wsl/basic-commands
 
-$ wsl --d <Distribution Name>                 => wsl.exe caso for rodar no Linux. Instalar uma distribuição do Linux específica
+$ wsl --install -d <Distribution Name>        => wsl.exe caso for rodar no Linux. Instalar uma distribuição do Linux específica
 $ wsl -l -o                                   => wsl --list --online para listar as distribuições do Linux disponíveis
 $ wsl -l -v                                   => wsl --list --verbose. Listar distribuições do Linux instaladas
 $ wsl --set-default <Distribution Name>       => Definir distribuição padrão do Linux
