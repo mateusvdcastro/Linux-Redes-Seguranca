@@ -22,9 +22,40 @@ $
 !IP Público: São endereços públicos globais usados na Internet. Um endereço IP público é um endereço IP usado para acessar a Internet. Os endereços IP públicos (globais) são roteados na Internet, ao contrário dos endereços privados. A presença de um endereço IP público em seu roteador ou computador permitirá que você organize seu próprio servidor (VPN, FTP, WEB, etc.), acesso remoto ao seu computador, câmeras de vigilância de vídeo e acesse-os de qualquer lugar da rede global. Com um endereço IP público, você pode configurar qualquer servidor doméstico para publicá-lo na Internet: Web (HTTP), VPN (PPTP / IPSec / OpenVPN), mídia (áudio / vídeo), FTP, unidade de rede NAS, servidor de jogos, etc.
        * Pode ser visto em: https://meuip.com.br/
 !NAT: Isso acontece porque nosso roteador possui a configuração chamada NAT, essa configuração vai converter o endereço IP privado que temos em nossas máquinas para IP públicos que nosso provedor de serviços nos fornece.
+       * configurando NAT 
+        ! Fazer nos dois roteadores, o seu e no do provedor
+        $ enable    
+        $ configure terminal   
+        $ interface serial 0/1/0   
+        $ no shutdown  
+        $ ip address 150.1.1.1 255.255.255.252  => Roteador 1 
+        $ ip address 150.1.1.2 255.255.255.252  => Roteador 0
+        !
+        !Faremos então a tradução dos IPs públicos para os privados, no roteador do provedor:
+        $ enable    
+        $ configure terminal  
+        $ ip access-list standard NAT   
+        $ permit 172.16.0.0 0.0.255.255   => Tanto o setor de vendas quanto o de finanças começam com 172.16 por isso já estamos permitindo todos os computadores da rede com 0.0.255.255
+        $ exit   
+        No roteador do cliente roteador 0:
+        $ interface fastEthernet 0/1.1    
+        $ ip nat inside   
+        $ exit   
+        $ interface fastEthernet 0/1.2    
+        $ ip nat inside   
+        $ exit   
+        $ interface serial 0/1/0    
+        $ ip nat outside   
+        $ exit   
+        $ ip nat inside source list NAT interface serial 0/1/0 overload   => Com esse comando, diremos que será traduzido os endereços IPs que estão na rede (inside), e especificamos quais são esses endereços IPs que estão na lista NAT para a interface serial 0/1/0. Entretanto, seremos um pouco cuidadoso, porque só temos um endereço IP público, mas temos vários usuários na rede que podem estar acessando a internet ou qualquer outro recurso externo simultaneamente. Para especificar que a configuração da tradução tem que englobar todos esses endereços IPs internos de forma simultânea, colocaremos o overload. Com o overload, é dito que todos os usuários podem estar usando simultaneamente o endereço IP público 150.1.1.2. Depois disso, usamos a tecla "Enter" e teoricamente já criamos a lista de acessos com os endereços IPs que devem ser traduzidos. Nós especificamos as interfaces internas e externas, e associamos a nossa lista com esses IPs privados, para ela ser traduzida para a interface                                                                              serial 0/1/0, que irá conter o endereço público, e também especificamos a forma de tradução overload, dizendo que pode ocorrer mais de um usuário estar usando um recurso da internet ao mesmo tempo. 
+        $ show ip nat translations   => Para vermos todas as traduções feitas
+        $    =>
+        $    =>
+        $    =>
 !Wireshark: https://www.wireshark.org/  - Wireshark is the world’s foremost and widely-used network protocol analyzer. It lets you see what’s happening on your network at a microscopic level and is the de facto (and often de jure) standard across many commercial and non-profit enterprises, government agencies, and educational institutions. Wireshark development thrives thanks to the volunteer contributions of networking experts around the globe and is the continuation of a project started by Gerald Combs in 1998.
        *ip.addr==algum_ip   => para filtrar no wireshark
 !TCP: O protocolo TCP encontra-se acima da camada onde o IP está localizado e ele é responsável por realizar o transporte da minha informação. Além do protocolo TCP, essa camada possui também outro protocolo bastante conhecido, o UDP.
+!ICMP: ICMP, sigla para o inglês Internet Control Message Protocol (em português, Protocolo de Mensagens de Controle da Internet), é um protocolo integrante do Protocolo IP, definido pelo RFC 792, é utilizado para comunicar informações da camada de rede, sendo o uso mais comum para fornecer relatórios de erros à fonte original. Qualquer computador que utilize IP precisa aceitar as mensagens ICMP e alterar o seu comportamento de acordo com o erro relatado. Os gateways devem estar programados para enviar mensagens ICMP quando receberem datagramas que provoquem algum erro.
 !ARP: O ARP é o protocolo utilizado para fazer o mapeamento entre o endereço IP e o endereço MAC de um dispositivo. Isso é necessário porque o MAC encontra-se um nível abaixo do IP e eu preciso dele para poder transmitir as informações. Em redes de computadores, temos protocolos que possuem hierarquias diferentes. Para poder chegar até o IP que está na camada 3, eu preciso passar pelo MAC que está na camada 2, pense como se fosse escalar uma pirâmide, não dá pra chegar ao topo sem passar pelo meio dela!
 !TLS: (Transport Layer Security) seria um protocolo de criptografia utilizado para segurança da informação (usado no HTTPS). Ele seria a evolução do protocolo SSL (Secure Sockets Layer).
 !T568A: Padrão para o cabo de internet, desenvolvido pela associação internacional de Telecomunicações (Telecomunication industry association - TIA). Eles definiram o padrão de cores que deveria ser seguido. O T568B, utlizado na outra ponta do cabo, tem os cabos invertidos para fazer corretamente a passaem de entrada e saída de dados de uma máquina para outra, informaçoes estão na imagem salva nesta pasta
@@ -38,11 +69,12 @@ $
        * Para conectar um computador com um roteador, uso um cabo cruzado (CISCO CABO CONSOLE RJ45 PARA DB9), e usamos o app PUTTY para acessá-lo
        * cofigurando Roteador na aba cli:
          $ ?                    => mostra algumas informações
+         $ wr                   => para salvar todas as configurações do roteador, ou seja, passar da memória volátil para a não volátil
          $ show running-config  => mostrando tudo oq está configurado
          $ enable      => para subir em privilégio administrativo
          $ configure terminal => para entrar no modo de configuração do roteador
          $ interface fastEthernet 0/0 => para começar a configurar uma porta do roteador
-         $ no shutdown                => agora a porta estará habilitada e acesa em verde
+         $ no shutdown                => agora a porta estará habilitada e acesa na cor verde
          $ exit                       => sair das configurações dessa porta
          $ interface fastEthernet 0/1 => para entrar nas configurações da outra porta
          $ no shutdown                => agora a porta estará habilitada e acesa em verde
@@ -79,7 +111,7 @@ $
          $ show vlan brief            => vemos que ela foi adicionada, mas ainda não tem interfaces
          $ configure terminal   => para entrar no modo de configuração do switch
          $ interface range fastEthernet 0/1 - 2 => com range podemos configurar mais de uma porta do switch de uma só vez
-         $ switchport mode access     => definindo modo de acesso
+         $ switchport mode access     => O comando switchport mode access indicaria que essa porta está conectada a um dispositivo final
          $ switchport access vlan 10  => definir qual vlan essa porta está associada
          $ exit                       => sair das configurações dessa vlan
          $ CTRL + Z                   => sair da configuração
@@ -186,7 +218,27 @@ $
 !Para modificar o IP da minha máquina manualmente:  Vamos até no ícone de conectividade, depois em "configurações de rede", "Ethernet". Em seguida, clicaremos em "Ethernet", ao ser aberta uma nova janela, selecionaremos "Propriedades". Será aberta uma nova janela, buscaremos pela opção "Protocolo IP Versão 4(TCP/IPv4)", depois em "Propriedades". Na nova janela, selecionaremos "Usar o seguinte endereço IP" e escreveremos o IP que ele deverá usar para fazer o teste.
 !Classful e Classless: Nas redes Classful utilizamos as máscaras de rede respectivas a sua classe de endereços IP. Já nas redes Classless não teríamos esse vínculo entre endereços IP e máscaras de redes, somos livres para ajustar a máscara de rede para nossa necessidade independente de qual classe estarmos usando.  (classful ex: 255.255.255.0 , classless ex: 255.255.254.0)
            * Devemos desenvolver um projeto e o arquiteto de redes do projeto que estamos desenvolvendo disse que todos os endereços IP devem possuir máscara de rede /19. Que máscara de rede seria essa? A anotação CIDR seria a referência de quantos bits 1 nós temos em nossa máscara de rede. A máscara de rede possui ao todo 32 bits sendo separados em quatro intervalos com 8 bits por intervalos. Teremos então: 11111111.11111111.11100000.00000000 Se nós transformarmos esse valor em decimal, teremos: 255.255.224.0 Embora a forma oficial de representação e configuração da máscara de rede para endereços IPv4 seja por essa forma decimal (255.255.224.0) é comum no dia-a-dia utilizar essa anotação CIDR (/19).
-
+!ACL: Listas de acesso ou do inglês (ACL) são listas as quais contém políticas de permissão ou negação de acesso por parte de clientes. Dessa forma, conseguimos criar políticas por usuário de quais protocolos e serviços que podem ser utilizados
+       * Uma vez que a lista de acesso não possui nenhuma configuração para tratamento de um pacote de informação, a lista irá descartar esse pacote. 
+       * No roteador:
+         $ enable                                     
+         $ configure terminal                          
+         $ ip access-list extended SERVIDOR-GERENTES  => Criando uma lista de acesso
+         $ no ip access-list extended SERVIDOR-GERENTES  => Para excluir uma lista de acesso
+         Retirar os ips de dinâmico para estático para não inutilizar a lista
+         $ permit tcp 172.16.2.131 0.0.0.0 172.16.3.2 0.0.0.0 => informando o ip do computador que desejamos permiter acesso e o "Source wildcard bits" que seria para indicar para a lista de acesso qual parte do ip deve igual e qual a parte pode ser diferente, quando temos mais de um computador querendo se comunicar. Depois devemos colocar o ip de destino que no caso seria o servidor e também informar o "Source wildcard bits"
+         $ permit tcp 172.16.0.2 0.0.0.0 172.16.3.2 0.0.0.0   => outro computador com permissão a este servidor
+         $ deny tcp 172.16.2.128 0.0.0.255 172.16.3.2 0.0.0.0 => Isto quer dizer que se não for nenhum desses endereços (172.16.2.131 e 172.16.0.2), o pacotinho será negado! Feito isso, vamos permitir que os outros protocolos de comunicação trabalhem normalmente, sem que o ACL exclua o pacote e derrube a comunicação dos demais computadores
+         $ deny tcp 172.16.0.0 0.0.0.255 172.16.3.2 0.0.0.0
+         $ permit ip any any                                  => Com o #permit ip any any, estamos permitindo qualquer tráfego que não seja destinado ao servidor. Uma vez que estamos colocando any, isso indica que qualquer endereço IP de origem assim como qualquer endereço IP de destino será aceito. Essa configuração é comumente utilizada nas listas de acesso para permitir que todo tráfego que esteja fora do nosso foco da lista de acesso continue funcionando normalmente.
+         $ exit
+         $ ip dhcp excluded-address 172.16.2.131  => como estou usando estaticamente esses indereços ips eu preciso que o dhcp os exclua para que ele não acabe os entregando para outros computadores e cause conflito na rede
+         $ ip dhcp excluded-address 172.16.0.2
+         $ interface fastEthernet 0/1.1 
+         $ ip access-group SERVIDOR-GERENTES in  
+         $ exit  
+         $ interface fastEthernet 0/1.2 
+         $ ip access-group SERVIDOR-GERENTES in 
 
 
 
