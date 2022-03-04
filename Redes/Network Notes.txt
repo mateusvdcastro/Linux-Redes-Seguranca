@@ -34,7 +34,7 @@ $
         !Faremos então a tradução dos IPs públicos para os privados, no roteador do provedor:
         $ enable    
         $ configure terminal  
-        $ ip access-list standard NAT   
+        $ ip access-list standard NAT     => O tipo standard analisa a origem dos endereços e nesse caso estamos só preocupados com a origem e não com o possível destino que esses endereços planejam acessar
         $ permit 172.16.0.0 0.0.255.255   => Tanto o setor de vendas quanto o de finanças começam com 172.16 por isso já estamos permitindo todos os computadores da rede com 0.0.255.255
         $ exit   
         No roteador do cliente roteador 0:

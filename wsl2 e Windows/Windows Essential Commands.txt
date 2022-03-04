@@ -1,0 +1,23 @@
+$ dir   => Displays a list of a directory's files and subdirectories. If used without parameters, this command displays the disk's volume label and serial number, followed by a list of directories and files on the disk (including their names and the date and time each was last modified). For files, this command displays the name extension and the size in bytes. This command also displays the total number of files and directories listed, their cumulative size, and the free space (in bytes) remaining on the disk.
+$ cd    => Displays the name of the current directory or changes the current directory. If used with only a drive letter (for example, cd C:), cd displays the names of the current directory in the specified drive. If used without parameters, cd displays the current drive and directory.
+$ cd .
+$ cd ..
+$ mkdir => Creates a directory or subdirectory. Command extensions, which are enabled by default, allow you to use a single mkdir command to create intermediate directories in a specified path.
+$ rmdir => Deletes a directory. The rmdir command can also run from the Windows Recovery Console, using different parameters. For more information, see Windows Recovery Environment (WinRE).
+$ move  => Moves one or more files from one directory to another directory.
+$ type  => In the Windows Command shell, type is a built in command which displays the contents of a text file. Use the type command to view a text file without modifying it. In PowerShell, type is a built-in alias to the Get-Content cmdlet, which also displays the contents of a file, but using a different syntax.
+$ more  => Displays one screen of output at a time.
+$ echo  => Displays messages or turns on or off the command echoing feature. If used without parameters, echo displays the current echo setting.
+$ echo Bem vindo ao Windows! > boas_vindas.txt  => > to direct the stdout of echo for an archive
+$ echo Vamos começar! >> boas_vindas.txt        => >> append the stdout in the archive
+$ copy  => Copies one or more files from one location to another.
+$ del   => Deletes one or more files. This command performs the same actions as the erase command. The del command can also run from the Windows Recovery Console, using different parameters. For more information, see Windows Recovery Environment (WinRE).
+$ cls   => Clears the Command Prompt window.
+$ help  => Displays a list of the available commands or detailed help information on a specified command. If used without parameters, help lists and briefly describes every system command.
+$ tree  => Displays the directory structure of a path or of the disk in a drive graphically. The structure displayed by this command depends upon the parameters that you specify at the command prompt. If you don't specify a drive or path, this command displays the tree structure beginning with the current directory of the current drive.
+$ rename => Renames files or directories.
+$  =>
+$  =>
+$  =>
+$  =>
+$  =>

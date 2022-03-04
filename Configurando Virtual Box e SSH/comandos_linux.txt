@@ -17,6 +17,7 @@ $ sudo apt install ssh
 $ sudo nano /etc/ssh/sshd_config
 $ sudo systemctl restart ssh
 $ nano ~/.ssh/authorized_keys
+$ scp work.zip jose@localhost:~/  => Scp faz a transferência de arquivos entre duas máquinas usando ssh.
 
 
 No windows:

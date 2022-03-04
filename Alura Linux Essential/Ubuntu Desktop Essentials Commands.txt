@@ -196,6 +196,7 @@ $ grep '[:digit:]\*,\?[:digit:]\*' post-do-blog.txt => "nenhum ou mais de um dig
 $ grep '[:digit:]\*[,\.][:digit:]\*' post-do-blog.txt => "nenhum ou mais de um digitos de 0 a 9" + vírgula ou . (usamos \ para que . signifique . e não qualquer digito) + "nenhum ou mais de um digitos de 0 a 9"
 $ `pwd` => `` as aspas simples executam a sáida do comando digitado dentro delas.O shell irá executar o comando pwd e em seguida tentará executar seu resultado, que é o diretório atual, como se fosse um comando. Por esse motivo teremos um erro.
 $ bash script.sh   => roda o script em um novo shell copiando as variáveis de ambiente do shell anterior
+$ sh script.sh     => sh é um intérprete de linguagem de comando que executa comandos lidos a partir de uma sequência de linhas de comando , da entrada padrão ou de um arquivo especificado .
 $ source script.sh => source irá executar o script no shell atual, isso ajuda a não usarmos variáveis de outros shells
 $ . script.sh      => " . + espaço + nome do script" irá rodar o script no shell atual
 $ . script.sh 2016 => 2016 é o primeiro argumento que passei ao meu script, que pode ser lido dentro dele com $1   ($0 é o caminho relativo do arquivo, se chamarmos o script com o caminho absoluto ele será também absoluto)
@@ -218,12 +219,18 @@ $ syslogd         => um servidor de arquivos log que roda em background (ele faz
 $ ps              => mostra todos os processos que estão rodando no shell atual  
 $ ps -e           => mostra todos os processos do sistema 
 $ ps -ef          => mostra todos os processos do sistema com mais detalhes  ex: ps -ef | grep "vi"   - usamos o grep para buscar informações na lista
+$ pstree          => Este utilitário lista os processos em execução usando o formato de árvore.
+$ jobs            => Lista os processos inicializados a partir do terminal.
+$ bg              => Este comando faz com que um processo (identificado por num), que está sendo executado em primeiro plano, passe a ser executado em segundo plano.
+$ [processo] &    => esse E comercial depois do nome de algum programa faz com que ele fique rodando em segundo plano ex: gedit &
+$ fg              => Este comando move processo em segundo plano (background) para o primeiro plano (foreground). O processo pode ser identificado pelo seu número (PID) ou pela ordem de entrada do processo em background.
 $ kill  2801      => comando para encerrar um processo, no caso o processo nº 2801 que era o editor VI
 $ kill  -9 2801   => -9 faz com que o um processo seja encerrado forçadamente 
+$ service [programa] stop  => para parar a execução de algum programa
+$ service [programa] start => para iniciar algum programa
 $ dig www.alura.com.br => Dig (Domain Information Groper) é uma linha de comando que executa a pesquisa de DNS por consultas de nomes de servidores e mostra o resultado para você. Por padrão, o dig envia a consulta DNS para o nome do servidor listado no resolvedor (/etc/resolv.conf). A menos que seja solicitado a consultar um nome de servidor específico.
 $ ping 198.168.0.17    => O comando PING (Packet Internet Groper) é uma ferramenta bastante conhecida e amada! Seu principal propósito é gerenciar o status de conectividade da rede com um dispositivo através de um IP. Com o ping, você tem acesso ao tempo de envio e recebimento de resposta de uma rede. Ele funciona enviando uma série de mensagens ICMP (Internet Control Message Protocol) ao host de destino e aguarda por uma resposta echo do host ou dispositivo. Assim, somos informados sobre o funcionamento da rede.
 $ ifconfig             => O comando é usado para configurar (e posteriormente manter) as interfaces de rede. É usado durante o boot para configurar a maioria das interfaces de rede para um estado utilizável. Depois disto, sua utilização é normalmente necessária somente durante depurações ou quando for necessário melhorar a configuração do sistema.
-$ ping 198.168.0.17    =>
 $ host www.google.com  => O host realiza pesquisas de DNS, convertendo nomes de domínio em endereços IP e vice-versa. Quando nenhum argumento ou opção é fornecido, o host imprime um breve resumo dos argumentos e opções da linha de comando .
 $ localhost            => Localhost is a hostname that refers to the computer system on which the calling program is running, which means the machine will talk to itself when we call localhost. It helps us to check the network services in the machine, even during network hardware failures. When using “localhost” the network services are accessed through the logical network interface called loopback. The IP address of the loopback interface is 127.0.0.1. Thus, the localhost resolves to 127.0.0.1 as part of the name resolution.
 $ route                => Nas redes de computadores, um roteador é um dispositivo responsável por encaminhar o tráfego de rede. Quando os datagramas chegam a um roteador, o roteador deve determinar a melhor maneira de direcioná- los para seu destino. No Linux , BSD e outros sistemas similares ao Unix, o comando route é usado para visualizar e fazer alterações na tabela de roteamento do kernel . A sintaxe do comando é diferente em diferentes sistemas; aqui, quando se trata de sintaxe de comando específica, discutiremos a versão do Linux. A rota em execução na linha de comandos sem nenhuma opção exibe as entradas da tabela de roteamento. Isso nos mostra como o sistema está configurado atualmente. Se um pacote entrar no sistema e tiver um destino no intervalo de 192.168.1.0 a 192.168.1.255 , ele será encaminhado para o gateway * , que é 0.0.0.0 – um endereço especial que representa um destino inválido ou inexistente. Portanto, nesse caso, nosso sistema não roteará esses pacotes. Se o destino não estiver nesse intervalo de endereços IP, ele será encaminhado para o gateway padrão (neste caso, 192.168.1.2 , e esse sistema determinará como encaminhar o tráfego para a próxima etapa em direção ao seu destino.
@@ -329,6 +336,23 @@ $ echo $MANPATH                      => A variável $PATH indica para o shell on
 $ EDITOR=/usr/bin/vi
 $ /usr/bin/vi                        => para entrar no editor
 $ :q                                 => para sair do editor
+
+Navegação
+
+Setas - Navegam no arquivo. "$" - Vai para o final da linha atual. "0" (zero) - Vai para o ínicio da linha. Shift + "g" - Vai para a 
+última linha do texto. "Número da linha" + Shift + g - Para ir pra uma linha específica do texto (3 + Shift + g => vai para a linha 3). 
+"/" + palavra ou frase + Enter - Faz uma busca no arquivo pelo texto especificado. "n" - Vai para a próxima ocorrência do texto 
+especificado. Shift + "n" - Vai para a ocorrência anterior do texto especificado.
+
+Edição de texto
+
+"i" - inclui texto (na posição atual). "a" - adiciona texto (na posição posterior). Shift + "a" - adiciona texto (fim da linha). "Esc" 
+- Sai do modo edição de texto para o modo navegação.
+
+"x" - Remove caracteres (n x remove n caracteres). "dd" - Remove uma linha (n dd remove n linhas). "yy" - Copia a linha atual. "Número 
+de linhas" + "yy" - Copia X linhas a partir da atual. "p" - Cola o texto no arquivo a partir da posição atual. "Número de vezes" + "p" 
+- Cola um texto N vezes a partir da posição atual. ":w"- salva o arquivo. ":q!" - Sai do arquivo sem salvar. ":wq" - Salva e sai do 
+arquivo.
 ==== Entrar no editor Nano
 $ EDITOR=/bin/nano
 $ /bin/nano
