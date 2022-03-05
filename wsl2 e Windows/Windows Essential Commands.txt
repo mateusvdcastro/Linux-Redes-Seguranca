@@ -11,13 +11,22 @@ $ echo  => Displays messages or turns on or off the command echoing feature. If 
 $ echo Bem vindo ao Windows! > boas_vindas.txt  => > to direct the stdout of echo for an archive
 $ echo Vamos começar! >> boas_vindas.txt        => >> append the stdout in the archive
 $ copy  => Copies one or more files from one location to another.
+$ Xcopy => Copies files and directories, including subdirectories ex: xcopy /e /y
 $ del   => Deletes one or more files. This command performs the same actions as the erase command. The del command can also run from the Windows Recovery Console, using different parameters. For more information, see Windows Recovery Environment (WinRE).
 $ cls   => Clears the Command Prompt window.
 $ help  => Displays a list of the available commands or detailed help information on a specified command. If used without parameters, help lists and briefly describes every system command.
 $ tree  => Displays the directory structure of a path or of the disk in a drive graphically. The structure displayed by this command depends upon the parameters that you specify at the command prompt. If you don't specify a drive or path, this command displays the tree structure beginning with the current directory of the current drive.
 $ rename => Renames files or directories.
-$  =>
-$  =>
-$  =>
-$  =>
-$  =>
+$ pause  => Suspends the processing of a batch program and displays the following prompt: Press any key to continue . . .
+$ set    => ver todas as variáveis de ambiente
+$ set PATH=%PATH%;C:\Users\Asus\bin  => Exibe, define ou remove cmd.exe variáveis de ambiente. Mas de maneira temporária, se fechar o prompt a modificação some, para alterar em definitivo usamos setx
+$ setx   => Cria ou modifica variáveis de ambiente no ambiente do usuário ou do sistema, sem a necessidade de programação ou script. O comando Setx também recupera os valores das chaves do Registro e os grava em arquivos de texto. ex: setx PATH "%PATH%;C:\Users\Asus\bin" /M
+$ echo %PROCESSOR_ARCHITECTURE% => ver a arquitetura do meu processador
+$ wmic OS get OSArchitecture    => ver a arquitetura do meu processador
+
+
+================ Chocolatei Install ========================================================================
+Ver: https://chocolatey.org/
+
+@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+============================================================================================================
