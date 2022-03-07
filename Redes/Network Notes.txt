@@ -21,37 +21,6 @@ $
        * Note que o IP da minha máquina é um IP Privado, estão, para acessarmos a internet a nossa provedora nos dá um ip público que pode ser visto no site: https://meuip.com.br/
 !IP Público: São endereços públicos globais usados na Internet. Um endereço IP público é um endereço IP usado para acessar a Internet. Os endereços IP públicos (globais) são roteados na Internet, ao contrário dos endereços privados. A presença de um endereço IP público em seu roteador ou computador permitirá que você organize seu próprio servidor (VPN, FTP, WEB, etc.), acesso remoto ao seu computador, câmeras de vigilância de vídeo e acesse-os de qualquer lugar da rede global. Com um endereço IP público, você pode configurar qualquer servidor doméstico para publicá-lo na Internet: Web (HTTP), VPN (PPTP / IPSec / OpenVPN), mídia (áudio / vídeo), FTP, unidade de rede NAS, servidor de jogos, etc.
        * Pode ser visto em: https://meuip.com.br/
-!NAT: Isso acontece porque nosso roteador possui a configuração chamada NAT, essa configuração vai converter o endereço IP privado que temos em nossas máquinas para IP públicos que nosso provedor de serviços nos fornece.
-       * configurando NAT 
-        ! Fazer nos dois roteadores, o seu e no do provedor
-        $ enable    
-        $ configure terminal   
-        $ interface serial 0/1/0   
-        $ no shutdown  
-        $ ip address 150.1.1.1 255.255.255.252  => Roteador 1 
-        $ ip address 150.1.1.2 255.255.255.252  => Roteador 0
-        !
-        !Faremos então a tradução dos IPs públicos para os privados, no roteador do provedor:
-        $ enable    
-        $ configure terminal  
-        $ ip access-list standard NAT     => O tipo standard analisa a origem dos endereços e nesse caso estamos só preocupados com a origem e não com o possível destino que esses endereços planejam acessar
-        $ permit 172.16.0.0 0.0.255.255   => Tanto o setor de vendas quanto o de finanças começam com 172.16 por isso já estamos permitindo todos os computadores da rede com 0.0.255.255
-        $ exit   
-        No roteador do cliente roteador 0:
-        $ interface fastEthernet 0/1.1    
-        $ ip nat inside   
-        $ exit   
-        $ interface fastEthernet 0/1.2    
-        $ ip nat inside   
-        $ exit   
-        $ interface serial 0/1/0    
-        $ ip nat outside   
-        $ exit   
-        $ ip nat inside source list NAT interface serial 0/1/0 overload   => Com esse comando, diremos que será traduzido os endereços IPs que estão na rede (inside), e especificamos quais são esses endereços IPs que estão na lista NAT para a interface serial 0/1/0. Entretanto, seremos um pouco cuidadoso, porque só temos um endereço IP público, mas temos vários usuários na rede que podem estar acessando a internet ou qualquer outro recurso externo simultaneamente. Para especificar que a configuração da tradução tem que englobar todos esses endereços IPs internos de forma simultânea, colocaremos o overload. Com o overload, é dito que todos os usuários podem estar usando simultaneamente o endereço IP público 150.1.1.2. Depois disso, usamos a tecla "Enter" e teoricamente já criamos a lista de acessos com os endereços IPs que devem ser traduzidos. Nós especificamos as interfaces internas e externas, e associamos a nossa lista com esses IPs privados, para ela ser traduzida para a interface                                                                              serial 0/1/0, que irá conter o endereço público, e também especificamos a forma de tradução overload, dizendo que pode ocorrer mais de um usuário estar usando um recurso da internet ao mesmo tempo. 
-        $ show ip nat translations   => Para vermos todas as traduções feitas
-        $    =>
-        $    =>
-        $    =>
 !Wireshark: https://www.wireshark.org/  - Wireshark is the world’s foremost and widely-used network protocol analyzer. It lets you see what’s happening on your network at a microscopic level and is the de facto (and often de jure) standard across many commercial and non-profit enterprises, government agencies, and educational institutions. Wireshark development thrives thanks to the volunteer contributions of networking experts around the globe and is the continuation of a project started by Gerald Combs in 1998.
        *ip.addr==algum_ip   => para filtrar no wireshark
 !TCP: O protocolo TCP encontra-se acima da camada onde o IP está localizado e ele é responsável por realizar o transporte da minha informação. Além do protocolo TCP, essa camada possui também outro protocolo bastante conhecido, o UDP.
@@ -68,9 +37,11 @@ $
 !Roteador: A função do roteador é interconectar redes encaminhando seus pacotes de dados, os Switches e hubs são usados somente para conexão na minha rede local.
        * Para conectar um computador com um roteador, uso um cabo cruzado (CISCO CABO CONSOLE RJ45 PARA DB9), e usamos o app PUTTY para acessá-lo
        * cofigurando Roteador na aba cli:
-         $ ?                    => mostra algumas informações
-         $ wr                   => para salvar todas as configurações do roteador, ou seja, passar da memória volátil para a não volátil
-         $ show running-config  => mostrando tudo oq está configurado
+         $ ?                        => mostra algumas informações
+         $ wr                       => para salvar todas as configurações do roteador, ou seja, passar da memória volátil para a não volátil
+         $ show running-config      => mostrando tudo oq está configurado
+         $ show ip route            => ver a tabela com todas as rodas que o roteador possui
+         $ ip route <ip> <ip_mask> <interface> => definir uma rota  ex: ip route 150.1.1.8 255.255.255.252 serial 0/1/0
          $ enable      => para subir em privilégio administrativo
          $ configure terminal => para entrar no modo de configuração do roteador
          $ interface fastEthernet 0/0 => para começar a configurar uma porta do roteador
@@ -239,7 +210,60 @@ $
          $ exit  
          $ interface fastEthernet 0/1.2 
          $ ip access-group SERVIDOR-GERENTES in 
-
+!WAN: Wide Area Network  => As redes LAN são redes geograficamente pequenas, que geralmente estão concentradas em apenas um local, tais redes são de responsabilidade do cliente final. As redes WAN são redes de longa extensão geográfica, redes de provedores de serviços costumam possuir suas redes em diferentes cidades e estados acomodando diversos clientes.
+!LAN: Local Area Network
+!NAT: Isso acontece porque nosso roteador possui a configuração chamada NAT, essa configuração vai converter o endereço IP privado que temos em nossas máquinas para IP públicos que nosso provedor de serviços nos fornece.
+       * configurando NAT 
+        ! Fazer nos dois roteadores, o seu e no do provedor
+        $ enable    
+        $ configure terminal   
+        $ interface serial 0/1/0   
+        $ no shutdown  
+        $ ip address 150.1.1.1 255.255.255.252  => Roteador 1, este é o ip público
+        $ ip address 150.1.1.2 255.255.255.252  => Roteador 0
+        !
+        !Faremos então a tradução dos IPs públicos para os privados
+        No roteador do cliente roteador 0:
+        $ enable    
+        $ configure terminal  
+        $ ip access-list standard NAT     => O tipo standard analisa a origem dos endereços e nesse caso estamos só preocupados com a origem e não com o possível destino que esses endereços planejam acessar
+        $ permit 172.16.0.0 0.0.255.255   => Tanto o setor de vendas quanto o de finanças começam com 172.16 por isso já estamos permitindo todos os computadores da rede com 0.0.255.255 de poderem ser traduzidas para um ip público
+        $ exit
+        $ interface fastEthernet 0/1.1    
+        $ ip nat inside   
+        $ exit   
+        $ interface fastEthernet 0/1.2    
+        $ ip nat inside   
+        $ exit   
+        $ interface serial 0/1/0    
+        $ ip nat outside   
+        $ exit   
+        $ ip nat inside source list NAT interface serial 0/1/0 overload   => Com esse comando, diremos que será traduzido os endereços IPs que estão na rede (inside), e especificamos quais são esses endereços IPs que estão na lista NAT para a interface serial 0/1/0. Entretanto, seremos um pouco cuidadoso, porque só temos um endereço IP público, mas temos vários usuários na rede que podem estar acessando a internet ou qualquer outro recurso externo simultaneamente. Para especificar que a configuração da tradução tem que englobar todos esses endereços IPs internos de forma simultânea, colocaremos o overload. Com o overload, é dito que todos os usuários podem estar usando simultaneamente o endereço IP público 150.1.1.2. Depois disso, usamos a tecla "Enter" e teoricamente já criamos a lista de acessos com os endereços IPs que devem ser traduzidos. Nós especificamos as interfaces internas e externas, e associamos a nossa lista com esses IPs privados, para ela ser traduzida para a interface                                                                              serial 0/1/0, que irá conter o endereço público, e também especificamos a forma de tradução overload, dizendo que pode ocorrer mais de um usuário estar usando um recurso da internet ao mesmo tempo. 
+        $ show ip nat translations   => Para vermos todas as traduções feitas
+!RIP:
+      * O protocolo de roteamento RIP é um dos mais antigos protocolos de roteamento e tem como métrica a quantidade de saltos (hops) para definir a melhor rota. O protocolo RIP vai definir como a melhor rota aquela onde apresentar a menor quantidade de saltos (hops) para chegar até o destino. Dessa forma, parâmetros como velocidade do link não é analisada por esse protocolo e com isso podemos ter a escolha de uma rota menos eficiente.
+        No roteador (router 1)
+        $ enable
+        $ configure terminal
+        $ router rip    => habilita o protocolo
+        $ version 2
+        $ no auto summary
+        $ network 150.1.1.0
+        $ network 150.1.1.4   
+        No roteador (router 2)
+        $ enable
+        $ configure terminal
+        $ router rip
+        $ version 2
+        $ no auto summary
+        $ network 150.1.1.4
+        $ network 150.1.1.8
+        $ show ip route 
+        $    =>
+        $    =>
+        $    =>
+        $    =>
+        $    =>
 
 
 
