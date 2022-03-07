@@ -241,7 +241,7 @@ $
         $ ip nat inside source list NAT interface serial 0/1/0 overload   => Com esse comando, diremos que será traduzido os endereços IPs que estão na rede (inside), e especificamos quais são esses endereços IPs que estão na lista NAT para a interface serial 0/1/0. Entretanto, seremos um pouco cuidadoso, porque só temos um endereço IP público, mas temos vários usuários na rede que podem estar acessando a internet ou qualquer outro recurso externo simultaneamente. Para especificar que a configuração da tradução tem que englobar todos esses endereços IPs internos de forma simultânea, colocaremos o overload. Com o overload, é dito que todos os usuários podem estar usando simultaneamente o endereço IP público 150.1.1.2. Depois disso, usamos a tecla "Enter" e teoricamente já criamos a lista de acessos com os endereços IPs que devem ser traduzidos. Nós especificamos as interfaces internas e externas, e associamos a nossa lista com esses IPs privados, para ela ser traduzida para a interface                                                                              serial 0/1/0, que irá conter o endereço público, e também especificamos a forma de tradução overload, dizendo que pode ocorrer mais de um usuário estar usando um recurso da internet ao mesmo tempo. 
         $ show ip nat translations   => Para vermos todas as traduções feitas
 !RIP:
-      * O protocolo de roteamento RIP é um dos mais antigos protocolos de roteamento e tem como métrica a quantidade de saltos (hops) para definir a melhor rota. O protocolo RIP vai definir como a melhor rota aquela onde apresentar a menor quantidade de saltos (hops) para chegar até o destino. Dessa forma, parâmetros como velocidade do link não é analisada por esse protocolo e com isso podemos ter a escolha de uma rota menos eficiente.
+      * O protocolo de roteamento RIP é um dos mais antigos protocolos de roteamento e tem como métrica a quantidade de saltos (hops) para definir a melhor rota. O protocolo RIP vai definir como a melhor rota aquela onde apresentar a menor quantidade de saltos (hops) para chegar até o destino. Dessa forma, parâmetros como velocidade do link não é analisada por esse protocolo e com isso podemos ter a escolha de uma rota menos eficiente (por isso a maioria das vezes utilizamos OSPF).
         No roteador (router 1)
         $ enable
         $ configure terminal
@@ -259,6 +259,49 @@ $
         $ network 150.1.1.4
         $ network 150.1.1.8
         $ show ip route 
+!OSPF: 
+      * O protocolo de roteamento OSPF (Open Shortest Path First) é enquadrado na categoria de protocolo de roteamento dinâmico de interior gateway, responsável em encaminhar os pacotes de rede pelo melhor caminho possível.
+      * O protocolo OSPF permite que tenhamos uma divisão de nossa rede separada por áreas, possuindo dentre outras vantagens a possibilidade de isolar possíveis problemas. Quando rotas são informadas de uma área para a outra damos o nome de inter area.
+      * O protocolo OSPF utiliza a velocidade do link como métrica para definição da melhor rota. A fórmula para o cálculo dessa métrica seria chamada de custo e utiliza a velocidade padrão de 100 Mbps dividida pela velocidade do link. Por exemplo, caso a velocidade do link seja de 10 Mbps nós termos o custo de 100 Mbps / 10 Mbps = 10, dessa forma quanto maior a velocidade do link menor será o resultado dessa divisão e consequentemente será uma rota melhor de acordo com o OSPF.
+      * Através da divisão por áreas conseguimos isolar possíveis problemas e instabilidades que possam ocorrer em uma área, não necessitando assim informar todos esses detalhes para outras áreas sobrecarregando a rede.
+        No roteador (router 3):
+        $ enable
+        $ configure terminal
+        $ router ospf 1   => router ospf <num_identificação>, para habilitar o ospf
+        $ network 170.1.1.0 0.0.0.255 area 0
+        $ network 180.1.1.0 0.0.0.255 area 0
+        No roteador (router 4):
+        $ enable
+        $ configure terminal
+        $ router ospf 1   => router ospf <num_identificação>, para habilitar o ospf
+        $ network 180.1.1.0 0.0.0.255 area 0
+        $ network 190.1.1.0 0.0.0.255 area 1
+        $ show ip route
+!BGP:
+      *  
+        No roteador (router 2):
+        $ enable
+        $ configure terminal
+        $ router bgp 1000  =>
+        $ neighbor 160.1.1.2 remote-as 2000  => neighbor <ip> <AS> ver: https://bgp.he.net/country/BR
+        No roteador (router 3):
+        $ enable
+        $ configure terminal
+        $ router bgp 2000 
+        $ neighbor 160.1.1.1 remote-as 1000
+        $ network 170.1.1.0 mask 255.255.255.252
+        $ network 180.1.1.0 mask 255.255.255.252 
+        $ network 190.1.1.0 mask 255.255.255.252
+        No roteador (router 2):
+        $ show ip route
+        $ configure terminal
+        $ router bgp 1000   =>
+        $ network 150.1.1.0 mask 255.255.255.252
+        $ network 150.1.1.4 mask 255.255.255.252
+        $ network 150.1.1.8 mask 255.255.255.252
+        $    =>
+        $    =>
+        $    =>
         $    =>
         $    =>
         $    =>
