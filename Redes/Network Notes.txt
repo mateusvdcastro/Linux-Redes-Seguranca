@@ -278,7 +278,10 @@ $
         $ network 190.1.1.0 0.0.0.255 area 1
         $ show ip route
 !BGP:
-      *  
+      * BGP (Border Gateway Protocol) é o protocolo subjacente ao sistema de roteamento global da Internet. Ele gerencia como os pacotes são roteados, de rede para rede, por meio da troca de informações de roteamento e acessibilidade entre roteadores de ponta. 
+      * A internet seria formada por uma série de provedores de serviços informando as rotas que cada um conhece para outro provedor de serviço, essa comunicação feita entre vários provedores é normalmente feita pelo protocolo BGP
+      * Os números de Autonomous System são números usados para identificar redes de provedores de serviços e que permitem que um provedor de serviço troque informações com outros provedores de serviços vizinhos.
+      * 
         No roteador (router 2):
         $ enable
         $ configure terminal
@@ -295,18 +298,75 @@ $
         No roteador (router 2):
         $ show ip route
         $ configure terminal
-        $ router bgp 1000   =>
+        $ router bgp 1000
         $ network 150.1.1.0 mask 255.255.255.252
         $ network 150.1.1.4 mask 255.255.255.252
         $ network 150.1.1.8 mask 255.255.255.252
-        $    =>
-        $    =>
-        $    =>
-        $    =>
-        $    =>
-        $    =>
-        $    =>
-        $    =>
+        No roteador (router 3):
+        $ enable
+        $ configure terminal
+        $ router ospf 1
+        $ redistribute bgp 2000 subnets   => redistribuir as redes que foram aprendidas via protocolo BGP para os outros roteadores
+        No roteador (router 4):
+        $ show ip route
+        No roteador (router 2):
+        $ enable
+        $ configure terminal
+        $ router rip
+        $ default-information originate => Para definir o Router5 como portão de saída padrão da rede, selecionaremos o roteador, e no seu terminal usaremos o comando default-information originate, o qual informa aos demais roteadores que se comunicam via protocolo RIP que este é o portão de saída padrão da rede.
+        No roteador (router 0):
+        $ configuration terminal   
+        $ no ip route 150.1.1.8 255.255.255.252 serial 0/1/0
+        $ ip route 0.0.0.0 0.0.0.0 serial 0/1/0  => A rota default é a rota de saída padrão de uma rede, caso nenhuma entrada mais específica esteja presente na tabela de roteamento do roteador, a rota default irá assumir e encaminhará os dados para a interface que foi configurada
+!IPV6:
+      Ver: https://www.alura.com.br/artigos/entendendo-o-ipv6
+      * O desenvolvimento do protocolo IPv6 foi necessário porque a quantidade de endereço IPv4 públicos chegaram a um fim. Dessa forma, uma das preocupações no desenvolvimento desse novo protocolo era com relação a quantidade de endereços disponíveis para evitar assim que um novo protocolo precisasse ser desenvolvido. O IPv6 é capaz de fornecer aproximadamente 3.4×10 ^ 38 endereços, o que faz com que o esgotamento de endereços IPv6 seja muito improvável mesmo pensando a longo prazo.
+      * O protocolo IPv6 possui ao todo 8 intervalos com 16 bits em cada intervalo, o que totalizaria 128 bits no protocolo IPv6
+      * O protocolo IPv6 permite que seja realizada uma abreviação :: quando ocorrer uma sequência de intervalos de bits 0. Porém essa abreviação só pode ser realizada uma vez no endereço IPv6. Em nossa rede, o endereço IPv6 apresentado possui duas abreviações e dessa forma, não é um endereço IPv6 válido e não irá funcionar.
+      * Ao analisar o endereço IPv6 3002:ABD2:8712:5634:9231:7622:6621:9012 / 48 Qual deveria ser o endereço IPv6 de um outro dispositivo para eles estarem na mesma rede? A máscara de rede do endereço IPv6 é /48, isso indica que os 48 primeiros bits devem ser iguais entre os dispositivos para que eles estejam na mesma rede. Dessa forma, outro dispositivo deverá começar com o intervalo 3002:ABD2:8712 para estar na mesma rede desse endereço IPv6.
+        No switch (switch 2):
+        $ enable
+        $ configure terminal
+        $ interface fastEthernet 0/10   
+        $ switchport access vlan 30
+        $ show vlan brief
+        No servidor (servidor 5):
+        Vá em IPV6 configuration
+        $ 2001:0BAA:0000:0000::AAAA / 64  => em ipv6 address static
+        $ 2001:0BAA:0000:0000::BBBB       => em ipv6 gateway
+        No roteador (router 0):
+        $ enable
+        $ configure terminal
+        $ ipv6 unicast-routing  
+        $ interface fastEthernet 0/1.3  
+        $ ipv6 address 2001:0BAA:0000:0000::BBBB/64 => já podemos dar um "do ping 2001:0BAA::AAAA" e ver que temos comunicação com o server
+        $ exit
+        $ interface fastEthernet 0/1.1
+        $ ipv6 address 2000:0BAA:0000:0000::BBBB/64 => vlan de vendas
+        $ exit
+        $ interface fastEthernet 0/1.2
+        $ ipv6 address 2002:0BAA:0000:0000::BBBB/64 => vlan de finanças
+        Nos computadores:
+        Ge. Finanças
+        $ 2002:0BAA:0000:0000::AAAA/64 =>  Ge.Finanças em ipv6 em ip configuration
+        $ 2002:0BAA:0000:0000::BBBB    => gateway
+        Fun.Vendas
+        $ 2000:0BAA:0000:0000::AAAA/64
+        $ 2000:0BAA:0000:0000::BBBB
+        Ge.Vendas
+        $ 2000:0BAA:0000:0000::CCCC/64
+        $ 2000:0BAA:0000:0000::BBBB
+        Fun.Finanças
+        $ 2002:0BAA:0000:0000::CCCC/64
+        $ 2002:0BAA:0000:0000::BBBB
+!OSI:
+    Ver: https://www.alura.com.br/artigos/conhecendo-o-modelo-osi
+         https://pt.wikipedia.org/wiki/Protocolo_(ci%C3%AAncia_da_computa%C3%A7%C3%A3o)
+!SSID:
+    O SSID (Service Set Identifier) é um texto de até 32 caracteres que identifica as redes sem fio. É esse nome que os dispositivos utilizam para se conectar. Cada ponto de acesso tem seu SSID que o identifica na rede. Em alguns casos, podemos ter na mesma rede vários pontos de acesso com o mesmo SSID. Neste caso, é comum ouvir o termo ESSID (Extended Service Set ID). No primeiro curso de redes vimos que existem os endereços IPs que os computadores utilizam para se comunicar e, além dos endereços IPs, existem os endereços MAC. Esses endereços são fixos e associados a placa de rede do dispositivo. Quando utilizamos vários SSID na mesma rede, as máquinas utilizam o endereço MAC para saber qual o access point que estão conectadas. Em redes sem fio, isso é chamado de BSSID (Basic Service Set ID). O BSSID nada mais é do que o endereço MAC do ponto de acesso. Mesmo sem ter mais de um access point com o mesmo nome, os dispositivos sempre utilizam o BSSID para realizar a comunicação com o ponto de acesso.
+    Ver: https://www.lifewire.com/wireless-standards-802-11a-802-11b-g-n-and-802-11ac-816553
+
+
 
 
 
