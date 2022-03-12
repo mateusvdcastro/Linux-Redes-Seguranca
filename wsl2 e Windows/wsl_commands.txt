@@ -8,5 +8,19 @@ $ wsl --status                                => Veja informações gerais sobre
 $ wsl --shutdown                              => Encerra imediatamente todas as distribuições em execução e a máquina virtual do utilitário leve do WSL 2. Esse comando pode ser necessário em instâncias que exigem que você reinicie o ambiente de máquina virtual do WSL 2
 $ wsl --unregister <DistributionName>         => Para cancelar o registro e desinstalar uma distribuição do WSL
 $ sudo apt update && sudo apt upgrade -y      => atualizar
-$ 
-$ 
+$ wsl --terminate <Distro>                    => Encerra a distribuição especificada.
+$ man kex
+$ kex                                         => abrir interface gráfica no kali linux
+$ kex --stop                                  =>
+$ kex  --sl                                   =>
+$ kex --sl --stop                             =>
+$                                             =>
+$                                             =>
+$                                             =>
+
+
+
+
+
+
+https://www.kali.org/docs/wsl/win-kex/#installation
