@@ -8,7 +8,7 @@ $ nslookup      => Exibe informações que você pode usar para diagnosticar a i
 $ ping 127.0.0.1 || ping localhost => É um endereço interno da placa de rede, usado para testar se os protocolos TCP/IP estão funcionando. Ele é conhecido como endereço de loopback, pois o sinal é enviado e recebido por ele mesmo.
 $ macof -i eth0 => O comando macof, se refere a overflow de endereços mac. É preciso informar em que interface ( -i) esse ataque será realizado. No nosso caso, temos a eth0, a placa de rede que está conectada ao switch no programa de emulação. Ao dar enter, ele começará a mandar uma infinidade de endereços para o switch, a fim de lotar a memória e fazer com que ele trabalhe como um switch, podendo assim pegarmos informações de pacotes com o wireshark
 $ arp -a        => Ver quais endereços MAC estão salvou para serem usados pelo ARP
-$ 
+$ iptables -L   => 
 $ 
 $ 
 $ 
@@ -387,6 +387,10 @@ Canais de Wifi:
       * A região desmilitarizada (DMZ) seria a região na qual temos recursos que devem ser acessados por usuários da internet. Dessa forma, conseguimos isolar essa região de recursos que precisam ser acessados externamente dos recursos que devem ser acessados somente por usuários de nossa rede interna.
       * Os firewalls stateful conseguem guardar em sua memória informações das requisições internas que foram iniciadas. Quando ocorre um retorno desse pacote o firewall compara com sua tabela de memória elementos como endereço IP, portas de comunicação, etc e com isso consegue definir que trata-se de uma informação de retorno e com isso permitirá acesso a rede interna.
       * O Reverse Shell seria a forma na qual o comando de uma máquina é obtida através de uma conexão da máquina alvo com a máquina de ataque. Ou seja, a conexão é estabelecida na direção reversa ao qual o ataque é realizada. Esse tipo de ataque torna-se muito útil, pois é possível que equipamentos de segurança como o Firewall nos conceda permissão de acesso a rede interna uma vez que nosso pacote é um retorno a uma requisição que foi originada por um usuário interno a rede.
+      * Inbound - Tráfego que chega até o firewall em direção ao servidor/rede. Outbound - Tráfego originado no servidor/rede com destino a outras redes.
+      * Ao criar um Security Group da AWS por default (máquinas Linux), é criada uma regra que permite que você faça a conexão através do protocolo SSH (porta 22).
+      * pfSense - Logo após a instalação, sem termos feito nenhuma customização, é possível acessar o pfSense através do browser (porta 80) e também através do console do próprio firewall. Por default, o acesso via SSH vem desabilitado. Para um gerenciamento seguro, é recomendável que você desabilite o acesso à porta 80 ( a porta padrão do HTTP) e habilite o gerenciamento web exclusivamente pela porta 443 (HTTPS).
+      *  
 !Man In the Middle (MITM):
       * O ataque Man In The Middle consiste em explorar a forma sem estado (stateless) na qual o protocolo ARP trabalha. Dessa forma, um Hacker pode usar de ferramentas para enviar respostas desse protocolo com o intuito de manipular a tabela ARP de suas vítimas para ficar assim no meio da comunicação e visualizar o que é trafegado entre os dispositivos manipulados.
         $ apt-get-install mitmf  => no kali linux
