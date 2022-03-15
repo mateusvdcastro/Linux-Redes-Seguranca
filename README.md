@@ -1,7 +1,5 @@
 # Linux
- Anotações e estudos sobre o SO Linux
+ Notes and studies about Linux, Network and Information Security
 
-
-
-Arquivos txt com todas as configurações que fiz no curso de Python para deploy de aplicações no linux <br>
-Arquivos txt com todas as anotações do curso Linux Essentials da Alura
+Archives txt with all things that I did throughout the Python course to deploy my applications on linux <br>
+Archives txt with all notes that I did throughout the Linux Essentials course of Alura 
