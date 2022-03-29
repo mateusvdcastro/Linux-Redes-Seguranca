@@ -332,6 +332,7 @@ $ echo $PATH                         => Quando executamos um comando, o executá
 $ echo $MANPATH                      => A variável $PATH indica para o shell onde ele deveria buscar os comandos e da mesma maneira esta variável $PATH ajuda a buscar comandos, existe também a variável $MANPATH. Essa variável diz para o man, onde ele deve procurar os manuais. Se a variável é vazia ele procura um arquivo de configuração e este arquivo está em cat /etc/manpath.config
 
 ====== variável de ambiente EDITOR
+
 ==== Entrar no editor vim
 $ EDITOR=/usr/bin/vi
 $ /usr/bin/vi                        => para entrar no editor
@@ -353,6 +354,7 @@ Edição de texto
 de linhas" + "yy" - Copia X linhas a partir da atual. "p" - Cola o texto no arquivo a partir da posição atual. "Número de vezes" + "p" 
 - Cola um texto N vezes a partir da posição atual. ":w"- salva o arquivo. ":q!" - Sai do arquivo sem salvar. ":wq" - Salva e sai do 
 arquivo.
+
 ==== Entrar no editor Nano
 $ EDITOR=/bin/nano
 $ /bin/nano

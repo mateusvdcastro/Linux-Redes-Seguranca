@@ -1,0 +1,90 @@
+$ docker images => The default docker images will show all top level images, their repository and tags, and their size. Docker images have intermediate layers that increase reusability, decrease disk usage, and speed up docker build by allowing each step to be cached. These intermediate layers are not shown by default. The SIZE is the cumulative space taken up by the image and all its parent images. This is also the disk space used by the contents of the Tar file created when you docker save an image. An image will be listed more than once if it has multiple repository names or tags. This single image (identifiable by its matching IMAGE ID) uses up the SIZE listed only once.
+$ docker pull   => ex: docker pull ubuntu. Pull an image or a repository from a registry
+$ docker run -i -t ubuntu // docker run -it ubuntu => to access a Ubunt
+$ docker pause <ID container>    => pause the execution
+$ docker unpause <ID container>  => unpause the execution
+$ docker container rm <id-do-container> --force   => abruptly removes
+$ docker run <image> sleep 1d       => ex: docker run ubuntu sleep 1d. O comando run procura a imagem localmente -> Baixa a imagem caso não encontre localmente -> Valida o hash da imagem -> Executa o container. Se dermos um docker ps -a veremos que o ubuntu irá executar um "bash" e como não definimos nenhum processo logo ele irá fechar, mas agora definimos o processo "sleep 1d", ou seja, nosso conteiner irá executar durante um dia, não fechando logo em seguida que dermos o run. 
+$ docker start <container ID>       => inicia um container
+$ docker stop <container ID>        => to stop a container
+$ docker stop $(docker ps -a -q)    => stop all running containers
+$ docker ps      => List running containers
+$ docker ps -a   => List all containers
+$ docker ps -s   => List containers with virtual size
+$ docker rm <conteiner ID> => Remove one or more containers ex: docker rm 43aac92b4c99
+$ docker rm $(docker ps -qa) => Remove all conteiners 
+$ docker rm -f <the-container-id>   => Before to remove a container, you need stop it. Thus, you can stop and remove a container in a single command by adding the "force" flag to the docker rm command
+$ docker image ls     => it lists all created imagens and informations about 
+$ docker inspect <IMAGE>  => Return low-level information on Docker objects
+$ docker history [OPTIONS] IMAGE => Show the history (all layers) of an image
+$ docker rmi <your-image-id>  => After that you make sure which image want to remove, to do that executing this simple command docker rmi <your-image-id>. Then you can confirm that image has been removed or not by list all the images and check.
+
+========== Executar um comando em um container que já está em execução ==========================================================================================
+$ docker exec -it ubuntu bash           => open an ubuntu terminal. O docker run cria um novo container e o executa. O docker exec permite executar um comando em um container que já está em execução.
+$ docker exec -it <ID container> bash   => open an ubuntu terminal
+$ docker exec <container-id> cat /data.txt   => "docker run" creates a new container and runs it. "docker exec" lets you run a command in a container that is already running.
+=================================================================================================================================================================
+
+========== Mapeando portas ======================================================================================================================================
+$ docker run -d -P <image name>     => Publish all exposed ports to the host interfaces
+$ docker run -d -p <port> <image name>     => Publish a container's port or a range of ports to the host format
+$ docker port <CONTAINER ID> [PRIVATE_PORT[/PROTO]]  => List port mappings or a specific mapping for the container
+$ docker run -dp 3000:3000 YOUR-USER-NAME/getting-started  => run a container in background -d and -p with the port expecified and a image name
+=================================================================================================================================================================
+
+========== Subindo a imagem para o Docker =======================================================================================================================
+$ docker login -u YOUR-USER-NAME    => Login to the Docker Hub using the command
+$ docker build -t <username>/<WORKDIR>:<version> . => ex: "docker build -t danielartine/app-node:1.0 ." - Build an image from a Dockerfile. The docker build command builds Docker images from a Dockerfile and a “context”. A build’s context is the set of files located in the specified PATH or URL. The build process can refer to any of the files in the context. For example, your build can use a COPY instruction to reference a file in the context.
+$ docker tag getting-started YOUR-USER-NAME/getting-started => Use the docker tag command to give the getting-started image a new name. Be sure to swap out YOUR-USER-NAME with your Docker ID.
+$ docker push YOUR-USER-NAME/getting-started => push a image to a repository on Docker Hub, we can texted it on : https://labs.play-with-docker.com/
+=================================================================================================================================================================
+
+========== Persistindo Dados ====================================================================================================================================
+$ docker volume create <database> => ex: docker volume create todo-db
+$ docker run -dp <port:port> -v <volume name>:<DIR OF THE CONTAINER> <IMAGE NAME>   => ex: docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started. With -v we can store our datas. Start the todo app container, but add the -v flag to specify a volume mount. We will use the named volume and mount it to /etc/todos, which will capture all files created at the path.
+$ docker run -it -v <volume name>:<DIR OF THE CONTAINER> <IMAGE NAME>   ex: docker run -it -v meu-volume:/app ubuntu bash   Ver: /var/lib/docker/volumes => local where docker storage volumes 
+$ docker run -it --mount source=meu-volume,target=/app      => other way to do the same of the code above
+$ docker volume inspect <VOLUME NAME> => Where is Docker actually storing my data when I use a named volume
+$ docker run -it -v <dir of the host machibe>:<dir to be persisted on the container> => ex: docker run -it -v c:Users/Mateus/volume-docker:/app ubuntu bash. This is called of bind mounts, is used for persist data between different containers. Thus, is an alternative for volume. 
+$ docker run -it --mount type=bind,source="$(pwd)"/target,target=/app                => instead of to use -v tag, the documentation recommends the --mount tag.
+=================================================================================================================================================================
+
+======== Comunicação através de redes =====================================================================================================================================
+$ docker network <COMMAND> => Manage networks. You can use subcommands to create, inspect, list, remove, prune, connect, and disconnect networks.
+$ docker network ls        => list all networks
+$ docker network create --driver bridge minha-bridge       => minha-bridge will be used to make the connection between two containers.
+$ docker run -it --name ubuntu1 --network minha-bridge ubuntu bash   => docker run -it --name <CONTAINER NAME> --network <NETWORK> <IMAGE NAME> <COMMAND>
+$ docker run -d --name ubuntu2 --network minha-bridge ubuntu sleep1d => Thus, we have two containers on the same network
+=================================================================================================================================================================
+
+====== Comunicação entre um banco de dados e uma aplicação ==================================================================================================
+$ docker run -d --network minha-bridge --name meu-mongo mongo:4.4.6  => Isso significa que eu preciso que o host name, ou seja, o nome desse container, seja “meu-mongo”.
+$ docker run -d --network minha-bridge --name alurabooks -p 3000:3000 aluradocker/alura-books:1.0
+=============================================================================================================================================================
+
+! O Docker Compose irá resolver o problema de executar múltiplos containers de uma só vez e de maneira coordenada, evitando executar cada comando de execução individualmente.
+  Ver: https://docs.docker.com/compose/
+
+$ docker-compose up       => Up containers. Must to be executed inside the fouder that contain the archive .yml 
+$ docker-compose up -d    => Up on detached (background) mode
+$ docker-compose down     => Stops containers and removes containers, networks, volumes, and images created by up.
+$  =>
+$  =>
+$  =>
+$  =>
+
+!Container:
+   * O container nada mais é do que a imagem (imagem é a "receita" para criarmos containers) mas com uma camada adicional de permissão de leitura e escrita
+   * O container funciona da seguinte maneira: dentro do nosso sistema operacional nós temos diversos containers, diversas aplicações que estarão sendo executadas no nosso sistema operacional. Só que no fim das contas eles vão funcionar diretamente como processos dentro do nosso sistema. Enquanto uma máquina virtual terá toda aquela etapa de virtualização dos sistemas operacionais, dentro do nosso sistema original, os containers vão funcionar diretamente como processos dentro do nosso sistema.
+     Mas como o processo vai conseguir garantir isolamento, como é que vai funcionar sem instalar o sistema? Como vamos conseguir resolver e responder a essas perguntas? A outra questão é que quando os nossos containers estiverem em execução dentro do nosso sistema operacional, a fim de garantir o isolamento entre cada um deles e o nosso sistema operacional original, existe um conceito chamado namespace, que vai garantir que cada um desses containers tenha a capacidade de se isolar em determinados níveis.
+     Mas que níveis são esses? Nós teremos os principais namespaces, que são os de PID, que garantem o isolamento a nível de processo dentro de cada um dos containers. Então um processo dentro de um container, que consequentemente é um processo dentro do nosso sistema operacional, vai estar isolado de todos os outros do nosso host, da nossa máquina original.
+     Nós teremos o NET também, o namespace de rede, que vai garantir o isolamento entre uma interface de rede de cada um dos containers e também do nosso sistema operacional original.
+     O de IPC, que vai ser de intercomunicação entre cada um dos processos da nossa máquina. O de MNT, que é da parte de files system, sistema de arquivos, montagem, volumes e afins. Também estará devidamente isolado.
+     E o de UTS, que faz um compartilhamento, um isolamento ao mesmo tempo também, de host do nosso Kernel da máquina que está escutando o container. Esse último em específico, o UTS, ajuda a responder até a próxima pergunta, que é como o container dentro do nosso sistema operacional vai funcionar sem um sistema operacional?
+     Porque na verdade graças ao namespace de UTS, se estivermos executando os nossos containers, por exemplo, em uma máquina que tem o Kernel Linux, cada um desses containers a princípio também vai ter um pedaço desse Kernel, só que devidamente isolado.
+     Então conseguimos já responder a essa pergunta. Nós não precisamos necessariamente instalar um sistema operacional dentro de um container porque ele já vai ter, graças a esse namespace de UTS, também esse acesso ao Kernel do sistema original, só que isoladamente.
+     E por fim, também na parte de gerenciamento de recursos, vamos dizer que queremos definir o que levantamos no problema anteriormente, de definir o consumo máximo de memória, de CPU e afins para cada um dos nossos containers. Existe um outro conceito que se chama “Cgroups”, que vai garantir que consigamos definir tanto de maneira automática quando de maneira manual como os consumos serão feitos para cada um desses containers dentro do nosso sistema operacional.
+!Em dockerfiles a instrução ARG carrega variáveis apenas no momento de build da imagem, enquanto a instrução ENV carrega variáveis que serão utilizadas no container. A instrução FROM é usada para definirmos uma imagem como base para a nossa.
+     Ver: https://docs.docker.com/engine/reference/builder/
+
+

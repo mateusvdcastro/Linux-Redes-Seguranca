@@ -1,0 +1,33 @@
+HTTP é um protocolo que define as regras de comunicação entre cliente e servidor na internet.
+Quando usamos HTTP, os dados são enviados em texto puro. O que pode ser perigoso, já que assim deixamos os dados abertos para intermediários.
+Quando precisamos informar nossos dados a algum servidor, queremos ter certeza que este servidor realmente representa a entidade em questão. 
+Queremos confiar em quem estamos fornecendo nossos dados! Um certificado digital prova uma identidade para um site, onde temos informações 
+sobre o seu domínio e a data de expiração desse certificado. Além disso, o certificado ainda guarda a chave pública que é utilizada para criptografar 
+(cifrar) os dados que são trafegados entre cliente e servidor.
+Uma autoridade certificadora (CA - Certificate Authority) é um órgão que garante ao navegador e ao usuário que a identidade de um servidor 
+(por exemplo o servidor da Alura) é realmente válida. Portanto, podemos trocar informações com este sem riscos!
+Aprendemos no vídeo que o HTTPS usa uma chave pública e uma chave privada. As chaves estão ligadas matematicamente, o que foi cifrado pela chave pública 
+só pode ser decifrado pela chave privada. Isso garante que os dados cifrados pelo navegador (chave pública) só podem ser lidos pelo servidor (chave privada). 
+Como temos duas chaves diferentes envolvidas, esse método de criptografia é chamado de criptografia assimétrica. No entanto, a criptografia assimétrica tem um 
+problema, ela é lenta. Por outro lado, temos a criptografia simétrica, que usa a mesma chave para cifrar e decifrar os dados, como na vida real, onde usamos 
+a mesma chave para abrir e fechar a porta. A criptografia simétrica é muito mais rápida, mas infelizmente não tão segura. Como existe apenas uma chave, ela 
+ficará espalhada pelos clientes (navegadores) e qualquer um, que tem a posse dessa chave, pode decifrar a comunicação. Agora, o interessante é que o HTTPS usa 
+ambos os métodos de criptografia, assimétrica e simétrica. No certificado, vem a chave pública para o cliente utilizar. E o servidor continua na posse da chave 
+privada. Isso é seguro, mas lento e por isso o cliente gera uma chave simétrica ao vivo. Uma chave só para ele e o servidor com o qual está se comunicando 
+naquele momento! Essa chave exclusiva (e simétrica) é então enviada para o servidor utilizando a criptografia assimétrica (chave privada e pública) e então é 
+utilizada para o restante da comunicação. Então, HTTPS começa com criptografia assimétrica para depois mudar para criptografia simétrica. Essa chave simétrica 
+será gerada no início da comunicação e será reaproveitada nas requisições seguintes. Bem-vindo ao mundo fantástico do HTTPS :)
+
+
+
+==== Comunicação Peer-to-peer do Torrent ================================================================================================
+Você já usou torrent para baixar algum arquivo na internet? Caso sim, aproveitou um outro modelo de comunicação, o P2P ou Peer-To-Peer!
+O modelo Cliente-Servidor não é o único modelo de comunicação na rede, nem sempre o mais adequado. Por exemplo, imagine que precisemos 
+contar as letras de 20 palavras. No caso do modelo Cliente-Servidor, quem fará esse trabalho é o servidor, certo? E se precisar contar 
+as letras de 1 milhão de palavras? Muito trabalhoso para o servidor, não?
+O modelo Cliente-Servidor tenta centralizar o trabalho no servidor, mas isso também pode gerar gargalos. Se cada Cliente pudesse ajudar 
+no trabalho, ou seja, assumir um pouco da responsabilidade do servidor, seria muito mais rápido. Essa é a ideia do P2P! Não há mais uma 
+clara divisão entre Cliente-Servidor, cada cliente também é servidor e vice-versa!
+Isto é útil quando você precisa distribuir um trabalho ou necessita baixar algo de vários lugares diferentes. Faz sentido?
+Usando algum aplicativo de Torrent, o protocolo utilizado não é o HTTP, e sim o protocolo P2P, como BitTorrent ou Gnutella.
+=========================================================================================================================================
