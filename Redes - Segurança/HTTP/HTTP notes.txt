@@ -17,7 +17,75 @@ privada. Isso é seguro, mas lento e por isso o cliente gera uma chave simétric
 naquele momento! Essa chave exclusiva (e simétrica) é então enviada para o servidor utilizando a criptografia assimétrica (chave privada e pública) e então é 
 utilizada para o restante da comunicação. Então, HTTPS começa com criptografia assimétrica para depois mudar para criptografia simétrica. Essa chave simétrica 
 será gerada no início da comunicação e será reaproveitada nas requisições seguintes. Bem-vindo ao mundo fantástico do HTTPS :)
+Nas requisições HTTP, uma requisição sempre deve ser enviada com todas as informações necessárias, o que faz uma requisição ser sempre independente das demais.
+Uma comunicação com HTTP sempre é iniciada pelo cliente que manda uma requisição ao servidor esperando por uma resposta.
+Uma sessão HTTP nada mais é que um tempo que o cliente permanece ativo no sistema! Isso é parecido com uma sessão no cinema. Uma sessão, nesse contexto, é o 
+tempo que o cliente usa a sala no cinema para assistir a um filme. Quando você sai da sala, termina a sessão. Ou seja, quando você se desloga, a Alura termina a 
+sua sessão.
 
+
+GET  - Lembrando que o método define a ação ou intenção da requisição HTTP (GET é igual a receber). O código da resposta dá uma dica ao cliente se a requisição 
+       foi um sucesso ou não, e qual foi o problema em caso de falha. 
+POST - Usando o POST, o navegador envia os dados do formulário no corpo da requisição e não na URL! Se fosse um GET, todos os dados seriam enviados através da URL. 
+       Como não desejamos que os dados do login e senha apareçam na URL do navegador, foi utilizado um HTTP POST. (O POST, ao contrário do GET, envia os parâmetros 
+       no corpo da requisição HTTP, escondendo eles da URI.)
+
+No dia a dia, vocês vão ver códigos usando GET para fazer pesquisas mas também para alterar ou remover algo no servidor. A mesma coisa podemos dizer sobre POST. Vocês 
+vão usar o POST para inserir e alterar dados, mas também para pesquisar. As aplicações podem adaptar o significado dos métodos HTTP quando for necessário.
+
+Temos mais métodos como o DELETE e PUT.
+
+Classe 2xx - O código 200 significa que tudo deu certo. 
+Classe 3xx - Temos também o código 301. Quando o navegador recebe o status 
+             301 ele já sabe que é preciso enviar uma nova requisição e procura a nova URL no cabeçalho de resposta Location, por exemplo, se eu digitar 
+             http://buscape.com o site da busca irá me redirecionar para o https://buscape.com e me retornar o código 301.
+Classe 4xx - 404 é o código clássico que indica que o recurso não foi encontrado. Em geral, a classe 4xx indica que o cliente errou algo na requisição.
+             Segue um outro exemplo da classe 4xx, tente acessar: https://s3.amazonaws.com/caelum-online-public/http/qq.png
+             Nesse caso o código de resposta é 403(não permitido): o cliente não tem a permissão.
+Classe 5xx - A classe 5xx significa que houve algum problema no servidor.
+             Por exemplo: 500 - Internal Server Error, ou outro famoso: 503 - Service Unavailable.
+             O código 500 acontece com frequência quando estamos desenvolvendo uma aplicação web e, ao testar, percebemos que erramos algo na lógica que gerou 
+             um problema no servidor.
+
+Ver: https://www.webfx.com/web-development/glossary/http-status-codes/
+     https://httpstatusdogs.com/
+     https://http.cat/
+
+No console podemos ver que aparecem mais requisições (cada linha representa um novo request). Quando o servidor Alura devolve a resposta para o navegador vem o 
+conteúdo da página inicial em um formato especial, chamado de HTML. O HTML define a estrutura da nossa página, define os menus, botões, links, rodapé etc. Mas 
+dentro do HTML não vêm as imagens e outros arquivos necessários para deixar o site perfeito. Dentro dele vem apenas a URL (endereço) desses outros recursos.
+Então, ao receber o HTML, o navegador dispara várias outras requisições para carregar as imagens, fontes e outros dados. Como também são requisições HTTP, o 
+console mostra suas informações. Podemos ver que na resposta vem o tipo do conteúdo, por exemplo text/html, text/css, image/svg+xml, entre outros.
+O importante é saber que o protocolo HTTP não está preso em algum formato específico. Podemos trafegar qualquer informação com ele, seja texto ou binário!
+
+
+Parâmetros na URL:
+Quando enviamos parâmetros na URL, devemos iniciar pelo ?, o nome do parâmetro e um =, para separar o nome do parâmetro do seu valor 
+?nome_do_parametro=seu_valor;
+Quando usamos mais do que, um parâmetro devemos usar & para separá-los: ?nome_do_parametro=seu_valor&nome_do_outro_param=valor
+
+
+O protocolo HTTP envia dados em texto puro e já estudamos sobre as implicações disso em questões de segurança. Vimos inclusive como o HTTPS lida com isso.
+Em alguns momentos se faz necessário avisar na própria requisição um formato específico esperado para a resposta.
+De que forma podemos especificar o formato que esperamos que seja devolvido?
+A resposta correta é usando o cabeçalho Accept.
+Accept: text/html, Accept: text/css, Accept: application/xml, Accept: application/json, Accept:image/jpeg e Accept: image/*
+Ou Accept: */*
+
+REST - REST é um padrão arquitetural para comunicações entre aplicações
+Ver: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
+
+==== Cookies ===========================================================================================================================
+Quando falamos de Cookies na verdade queremos dizer Cookies HTTP ou Cookie web. Um cookie é um pequeno arquivo de texto, normalmente criado pela aplicação web, 
+para guardar algumas informações sobre usuário no navegador. Quais são essas informações depende um pouco da aplicação. Pode ser que fique gravado alguma 
+preferência do usuário. Ou algumas informações sobre as compras na loja virtual ou, como vimos no vídeo, a identificação do usuário. Isso depende da utilidade 
+para a aplicação web.
+Um cookie pode ser manipulado e até apagado pelo navegador e, quando for salvo no navegador, fica associado com um domínio. Ou seja, podemos ter um cookie para 
+www.alura.com.br, e outro para www.caelum.com.br. Aliás, um site ou web app pode ter vários cookies!
+Quando enviamos uma requisição HTTP, todos os dados para que ela seja respondida devem ser enviados. Mas e o e-mail e a senha? Quando o login é feito, a Alura 
+tem certeza de que um usuário existe e gera uma identificação quase aleatória pra esse usuário. E esse número fica salvo em um arquivo especial, chamado 
+cookie, que é gerado e enviado por cada site :)
+=========================================================================================================================================
 
 
 ==== Comunicação Peer-to-peer do Torrent ================================================================================================
@@ -31,3 +99,20 @@ clara divisão entre Cliente-Servidor, cada cliente também é servidor e vice-v
 Isto é útil quando você precisa distribuir um trabalho ou necessita baixar algo de vários lugares diferentes. Faz sentido?
 Usando algum aplicativo de Torrent, o protocolo utilizado não é o HTTP, e sim o protocolo P2P, como BitTorrent ou Gnutella.
 =========================================================================================================================================
+
+==== Web Service ========================================================================================================================
+Quando falamos de um Web Service, sempre usamos o protocolo da web, ou seja o HTTP.
+Um Web Service disponibiliza uma funcionalidade na web, através do protocolo HTTP. As funcionalidades variam muito e dependem muito da empresa e do negócio 
+dela, mas por exemplo, na Alura temos um Web Service que traz todas as informações de um curso (nome, capítulos, exercícios, etc). O Google ou Facebook possuem 
+muitos Web Services para acessar um usuário, ver os posts dele, interesses, etc. Muitas vezes esses serviços são pagos.
+O importante é que sempre usamos o protocolo HTTP. A grande diferença de um Web Service é que os dados não vem no formato HTML, e sim em algum formato 
+independente da visualização, como XML ou JSON.
+Temos um pequeno exemplo de um Web Services que usamos em um dos treinamentos presenciais. Tente acessar: http://argentumws.caelum.com.br/negociacoes
+Repare que recebemos dados sobre negociações, mas o formato é XML. Isso é um Web Service! É a tarefa do cliente ler os dados e apresentar para o usuário final. 
+O cliente não precisa ser o navegador (e normalmente não é), pode ser um celular ou uma aplicação Desktop.
+=========================================================================================================================================
+
+
+
+
+
