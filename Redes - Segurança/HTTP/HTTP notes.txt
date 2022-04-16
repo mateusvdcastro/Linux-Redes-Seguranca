@@ -75,6 +75,35 @@ Ou Accept: */*
 REST - REST é um padrão arquitetural para comunicações entre aplicações
 Ver: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
 
+
+!curl  = O cURL é um projeto de software de computador que fornece uma biblioteca e uma ferramenta de linha de comando para transferir dados usando vários protocolos .O projeto cURL produz dois produtos, libcurl e cURL. Lançado pela primeira vez em 1997, o nome cURL vem do inglês "Client URL", que significa "URL do cliente"
+no terminal:
+curl -v <URL> 
+
+========= HTTP/2 ========================================================================================================================
+Com o crescimento do número de dispositivos móveis conectados a Web, é cada vez mais importante que a quantidade de dados trafegada seja 
+a menor possível, afinal este tipo de dispositivo não costuma ter uma conexão com muita banda larga. O protocolo HTTP/2 traz diversas 
+tecnologias para diminuir o tamanho das requisições. (Como compactar os dados utilizando uma tecnologia chamada Gzip) 
+(o HTTP/2 possui diversas tecnologias de compactação de sua requisição. Isto acaba sendo muito útil para clientes móveis, visto que a 
+maioria das redes mobile ainda não são de grande qualidade.)
+Por padrão, no protocolo HTTP versão 1.1 não é necessário o uso da camada de segurança TSL/SSL. Como hoje em dia trafegamos muitos dados 
+críticos na Web, como senhas, logins e dados bancários, um protocolo atualizado que faz uso dessa segurança parece quase uma necessidade.
+(com o HTTP/2 o uso de HTTPS acaba sendo obrigatório, e esta é uma das grandes vantagens do uso desta nova atualização do protocolo.)
+
+O HPACK é uma tecnologia especializada em comprimir os Headers das comunicações HTTP/2. Como toda requisição HTTP acompanha algum header 
+por padrão, uma tecnologia de compressão embutida no protocolo é demasiadamente útil para economizar dados trafegados.
+
+Quando estamos utilizando Headers Stateful (implementado no http/2), simplesmente colocamos nas requisições os cabeçalhos que se alteraram 
+entre uma e outra, trazendo uma enorme economia de dados, visto que toda requisição HTTP possui um cabeçalho e que, muitas vezes, no 
+HTTP/1.1, cabeçalhos repetidos eram trafegados em todas as requisições.
+
+No http/2 temos também o conceito de Server Push, o servidor pode empurrar para o clientes certos recursos antes mesmo de serem solicitados, 
+pois ele consegue analisar o HTML e ver o que mais é preciso para carregar a página fazendo com que não seja necessário gastar tempo pedindo 
+todos os outros recursos.
+
+HTTP/2 fica a mais nível de Servidores, os usuários comuns não ficam em muito contato
+=========================================================================================================================================
+
 ==== Cookies ===========================================================================================================================
 Quando falamos de Cookies na verdade queremos dizer Cookies HTTP ou Cookie web. Um cookie é um pequeno arquivo de texto, normalmente criado pela aplicação web, 
 para guardar algumas informações sobre usuário no navegador. Quais são essas informações depende um pouco da aplicação. Pode ser que fique gravado alguma 
