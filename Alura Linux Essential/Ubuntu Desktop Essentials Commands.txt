@@ -256,6 +256,11 @@ $ last            => mostra quando foram os últimos acessos dos usuários
 $ sudo -i         => roda um shell para o usuário root, mesmo que a senha do root não tenha sido definida
 $ ln              => Este comando cria ligações (links) entre arquivos. Há dois conceitos de ligação em sistemas Unix:Ligação direta – define mais um nome para um arquivo (um arquivo pode ter diversos nomes). O arquivo será removido  do disco quando o último nome for removido. Não há algo como um nome original, todos os nomes tem o mesmo status.Ligação simbólica ou dymlink – define um caminho para um arquivo. Ligações simbólicas podem apontar para arquivos em diferentes sistemas de arquivo e não necessitam apontar para arquivos que realmente existem.
 $ ln -s /etc/passwd teste  => Para criar, no diretório atual, um link simbólico chamado teste para o arquivo /etc/passwd. -s : cria uma ligação simbólica (soft link).
+$ objdump -d <ARQ_EXE>     => mostra o código assembly de um arquivo executável (binário)
+$ hexdump <ARQ_EXE>        => mostra o código binário em hexadecimal de um arq executável
+$
+$
+$
 ================================================================================================================================================================
 
 ======== DIRETÓRIOS IMPORTANTES===============================================================================================================================================
