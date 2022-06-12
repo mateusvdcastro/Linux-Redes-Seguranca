@@ -1,0 +1,36 @@
+==== Entrar no editor vim
+$ vim
+$ EDITOR=/usr/bin/vi
+$ /usr/bin/vi                        => para entrar no editor
+$ :q                                 => para sair do editor
+
+Na pasta $HOME criar o arquivo .vimrc que servirá para configurar o vim
+
+Navegação
+
+j      => Para baixo
+k      => Para cima
+l      => Para a esquerda
+h      => Para a direita
+n + j  => n casas para baixo
+n + k  => n casas para cima
+n + l  => n casas para a esquerda
+n + h  => n casas para a direita
+:q!    => sair do arquivo sem salvar
+:w     => salvar
+:wq    => salvar e sair
+
+Setas - Navegam no arquivo. "$" - Vai para o final da linha atual. "0" (zero) - Vai para o ínicio da linha. Shift + "g" - Vai para a 
+última linha do texto. "Número da linha" + Shift + g - Para ir pra uma linha específica do texto (3 + Shift + g => vai para a linha 3). 
+"/" + palavra ou frase + Enter - Faz uma busca no arquivo pelo texto especificado. "n" - Vai para a próxima ocorrência do texto 
+especificado. Shift + "n" - Vai para a ocorrência anterior do texto especificado.
+
+Edição de texto
+
+"i" - inclui texto (na posição atual). "a" - adiciona texto (na posição posterior). Shift + "a" - adiciona texto (fim da linha). "Esc" 
+- Sai do modo edição de texto para o modo navegação.
+
+"x" - Remove caracteres (n x remove n caracteres). "dd" - Remove uma linha (n dd remove n linhas). "yy" - Copia a linha atual. "Número 
+de linhas" + "yy" - Copia X linhas a partir da atual. "p" - Cola o texto no arquivo a partir da posição atual. "Número de vezes" + "p" 
+- Cola um texto N vezes a partir da posição atual. ":w"- salva o arquivo. ":q!" - Sai do arquivo sem salvar. ":wq" - Salva e sai do 
+arquivo.

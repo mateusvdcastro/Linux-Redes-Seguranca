@@ -1,0 +1,64 @@
+# execute no git bash da pasta que deseja
+# ou use no terminal mesmo, entrando na pasta do projeto com 
+
+cd C:/etc/etc
+cd ..                  (para sair da pasta)
+ls                     (mostrar oq arquivos que estão lá dentro)
+mkdir                  (criar uma pasta)
+
+=========== Basico do Git =================================================================================================================
+git init                             (cria o repositório)
+git status
+git add .                            (manda os arquivos para a area stading ex: git add Readme.md)
+git commit -m "primeiro commit"
+git push -u origin main              (envia as alterações para o meu github origin)
+===========================================================================================================================================
+
+=========== Interações com o Github =======================================================================================================
+
+git clone <link> <pasta-meu-projeto-clone>     (ex: git clone https://github.com/mateusvdcastro/Modelagem-Computacional.git)
+git pull  <link>                               (ex: git pull https://github.com/mateusvdcastro/SQL-com-MySQL-Server-da-Oracle.git  | pega todo o conteúdo atualizado que está na nuvem e trás para minha máquina local)
+git push -u origin main                        (envia as alterações para o meu github origin)
+git restore --source 8164768 .                 (volta o para um estado anterior do projeto dado um código hash de commit que pode ser pego pelo git log --oneline)
+git clone -branch new_feature <repositorio>    (Você também pode configurar o git clone e clonar o repositório a partir de uma branch específica. O exemplo ao lado clonaria apenas a branch new_feature de repositorio.)
+
+===========================================================================================================================================
+
+=========== Cadastro ======================================================================================================================
+git config --global user.name "mateusvdcastro"
+git config user.name                                                     (ver o usuário cadastrado)
+git config --global user.email "mateusvc1124@gmail.com"
+git config user.email                                                    (ver o email cadastrado)
+===========================================================================================================================================
+
+=========== Branches ======================================================================================================================
+git branch teste            (criar nova branch, neste caso chamado teste)
+git checkout teste          (mudar para a branch teste)
+git diff                    (diferenças nos arquivos alterados nas diferentes branches)
+===========================================================================================================================================
+
+git --version
+rm -rf .git                  (apaga o repositório)
+git reset                    (reverte o git add)
+git log                      (para ver todos os commits feitos em uma branch - Exibe os registros log do commit.)
+git log --oneline            (para ver todos os commits feitos em uma branch com o número de identificação de cada um)
+git log -p                   (Se, em vez de menos informações, quisermos ver mais como as alterações do commit)
+git log --author="user_name" (Também podemos pesquisar as informações do autor daquele commit)
+git log --since=1.month.ago --until=1.day.ago
+git log --pretty="format:%h %s"                (No comando acima, estamos buscando as informações do commit desde um mês atrás até um dia atrás, Você também pode formatar a visualização das informações de commit)
+
+*** Para trocar o nome de master para main
+git branch -M "main"
+
+git remote add origin https://github.com/mateusvdcastro/SQL-com-MySQL-Server-da-Oracle.git
+git pull origin main --allow-unrelated-histories
+
+
+Commit => Estamos adicionando as alterações mais recentes do projeto.
+
+!No github, se clicar 3 vezes na tecla "ponto" < ... > em um repositório ele abre um vscode no navegador com as pastas desse projeto
+
+https://www.alura.com.br/artigos/escrever-bom-readme
+https://www.alura.com.br/artigos/como-trabalhar-com-markdown
+https://docs.github.com/pt/enterprise-server@3.2/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+https://www.atlassian.com/br/git/tutorials/setting-up-a-repository
