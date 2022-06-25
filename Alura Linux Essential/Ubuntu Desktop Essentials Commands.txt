@@ -258,10 +258,18 @@ $ ln              => Este comando cria ligações (links) entre arquivos. Há do
 $ ln -s /etc/passwd teste  => Para criar, no diretório atual, um link simbólico chamado teste para o arquivo /etc/passwd. -s : cria uma ligação simbólica (soft link).
 $ objdump -d <ARQ_EXE>     => mostra o código assembly de um arquivo executável (binário)
 $ hexdump <ARQ_EXE>        => mostra o código binário em hexadecimal de um arq executável
-$
-$
+$ nc -lvp port_number      => Sobe um servidor TCP usando netcat (nc)
+$ nc -lvup port_number     => Sobe um servidor UDP
 $
 ================================================================================================================================================================
+
+========== Como ver meu IP Público Pelo Terminal ===============================================================================================================
+$ wget -qO- http://ipecho.net/plain
+$ dig +short myip.opendns.com @resolver1.opendns.com
+$ nslookup -querytype=TXT o-o.myaddr.l.google.com ns1.google.com
+$ nslookup myip.opendns.com resolver1.opendns.com
+================================================================================================================================================================
+
 
 ======== DIRETÓRIOS IMPORTANTES===============================================================================================================================================
 /etc/apt/sources.list       => The sources.list file is a key factor in adding or upgrading applications to your Ubuntu installation. This is also used by your system for system updates. The file is basically the roadmap for your system to know where it may download programs for installation or upgrade.

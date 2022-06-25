@@ -1,0 +1,20 @@
+================ Linux ====================================================================
+#!/bin/bash
+# Como criar um ambiente virtual Python
+python3 -m venv redetrofica-env
+source redetrofica-env/bin/activate
+# deactivate       # => Para encerrar o venv
+python3
+python3 -m install numpy matplotlib
+# https://docs.python.org/pt-br/3/tutorial/venv.html
+============================================================================================
+
+================ Windows ===================================================================
+python -m venv nome_ambiente
+nome_venv\scripts\activate.bat ==> caso esteja no CMD
+nome_venv\scripts\activate.ps1 ==> caso esteja no PowerShell
+deactivate
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process ==> libera o powershell para que ele permita a criação de ambientes
+
+!Com a extensão do VsCode Python, na hora de selecionar um interpretador Python, usar o interpretador que esteja dentro do seu ambiente
+============================================================================================
