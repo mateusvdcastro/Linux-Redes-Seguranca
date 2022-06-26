@@ -548,7 +548,7 @@ https://github.com/pyca/bcrypt/
         $ 
         $  
 
-
+https://www.comptia.org/pt/certificacoes/security => Certificado introdutório, antes de fazer o CEH ou OSCP
 https://www.offensive-security.com/pwk-oscp/
 https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/
 https://www.eccouncil.org/programs/licensed-penetration-tester-lpt-master/
