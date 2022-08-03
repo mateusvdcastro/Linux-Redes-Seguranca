@@ -1,0 +1,14 @@
+O NGINX é um servidor web. Ele é um serviço, é um programa que roda e que serve para responder requisições web.
+A tarefa de receber a requisição e decidir o que vai fazer, se vai mandar para uma aplicação, se vai devolver algum arquivo direto - essa é a tarefa de um servidor web.
+Então é aí que entra o NGINX! Esse é o papel dele. O que o NGINX vai fazer dentro de um servidor é ficar ouvindo uma porta.
+O NGINX é um servidor web, ele ouve uma porta para responder requisições HTTP - mas já existiam outros servidores que fazem exatamente isso. Acredito que o mais famoso seja o Apache, muito provavelmente você já ouviu falar do servidor HTTP da Apache.
+Qual é a grande diferença do NGINX? Simplificando também, a ideia do Apache era: você tem um servidor do Apache rodando processo do Apache. Quando chega uma requisição, esse processo cria um novo processo e trata essa requisição, depois mata esse processo e fica tudo certo.
+Só que isso é muito custoso. Criar um processo, fazer a mudança de contexto de um processo para o outro e depois matar um processo. Isso é uma tarefa custosa. Então, o que o NGINX faz?
+Ele não usa somente essa ideia de processos, threads e programação paralela, ele usa um outro conceito de programação assíncrona muito interessante - que eu vou simplificar aqui também para você entender o conceito por alto.
+Então, temos aqui uma base do funcionamento do NGINX. Quando você inicia um serviço do NGINX, ele cria um processo principal, e seus processos subordinados worker process. Esses worker process são criados baseado no número de núcleos que o seu processador tem.
+Suponha que eu tenho um servidor que tem um processador com quatro núcleos. Então eu poderia criar, por exemplo, 4 processos worker process para tratar requisições. Porque assim eu tenho um maior número de processos tratando cada número de requisições, então eu consigo tratar mais requisições.
+Só que a sacada é: não é como se cada processo tratasse uma requisição. Não é isso! Cada um desses processos trata um número grande de requisições, várias requisições, e para que ele consiga tratar mais de um requisição, ele usa um conceito de Multiplexing I/O. Ou seja, ele faz mais de uma coisa de forma assíncrona.
+
+
+Mas como o nginx e o computador sabem o que significa "localhost"?
+Todo sistema operacional possui um arquivo de hosts. No Linux, por padrão fica em /etc/hosts. No Mac, /private/etc/hosts. Já no Windows, C:\Windows\System32\Drivers\Etc\hosts. Esse arquivo informa ao sistema operacional que quando uma conexão for estabelecida usando algum nome, o IP correspondente deve ser usado. Para o nome localhost, temos o IP da nossa própria máquina (127.0.0.1).
