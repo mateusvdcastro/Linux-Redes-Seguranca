@@ -441,8 +441,10 @@ Canais de Wifi:
       * Ao criar um Security Group da AWS por default (máquinas Linux), é criada uma regra que permite que você faça a conexão através do protocolo SSH (porta 22).
       * pfSense - Logo após a instalação, sem termos feito nenhuma customização, é possível acessar o pfSense através do browser (porta 80) e também através do console do próprio firewall. Por default, o acesso via SSH vem desabilitado. Para um gerenciamento seguro, é recomendável que você desabilite o acesso à porta 80 ( a porta padrão do HTTP) e habilite o gerenciamento web exclusivamente pela porta 443 (HTTPS).
       * O posicionamento das regras dentro de um firewall é pré-requisito para o correto funcionamento do mesmo. Uma boa prática é colocar logo no início as regras responsáveis por tratar o maior volume de requisições, dessa maneira você otimiza os recursos (memória, CPU, etc) utilizados pelo firewall.
-!
-
+!Proxy e Proxy Reverso:
+      * Ngix é um Proxy Reverso. Um proxy é um intermediário entre as requisições cliente-servidor, usado para por exemplo filtrar resquisições eliminando 
+        as indesejadas (bloquear em uma empresa o acesso a redes sociais/sites adultos). Mas, o conceito padrão de proxy é algo que fica no lado do cliente 
+        interceptando os pacotes de rede. Como nesse caso o proxy está no lado do servidor, chamamos de proxy reverso.
 =========================================================================================================================================
 https://pypi.org/project/bcrypt/
 https://github.com/pyca/bcrypt/

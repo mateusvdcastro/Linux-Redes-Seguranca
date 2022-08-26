@@ -73,6 +73,18 @@ $  =>
 $  =>
 $  =>
 
+====== Nginx no Docker ==================================================================================================
+$ docker run --name some-nginx -dp 8000:80 nginx
+$ docker exec -it some-nginx nginx -h
+$ docker exec -it some-nginx cat /etc/nginx/nginx.conf
+$ docker exec -it some-nginx nginx -s reload   => Recarrega as configurações para que as alterações sejam aplicadas
+$ docker exec -it some-nginx nginx -t          => Verifica se os arquivos de configuração estão configurados corretamente
+
+Baixar nano para editar os arquivos:
+$ docker exec -it some-nginx apt update -y
+$ docker exec -it some-nginx apt install -y nano
+=============================================================================================================================================================
+
 !Container:
    * O container nada mais é do que a imagem (imagem é a "receita" para criarmos containers) mas com uma camada adicional de permissão de leitura e escrita
    * O container funciona da seguinte maneira: dentro do nosso sistema operacional nós temos diversos containers, diversas aplicações que estarão sendo executadas no nosso sistema operacional. Só que no fim das contas eles vão funcionar diretamente como processos dentro do nosso sistema. Enquanto uma máquina virtual terá toda aquela etapa de virtualização dos sistemas operacionais, dentro do nosso sistema original, os containers vão funcionar diretamente como processos dentro do nosso sistema.

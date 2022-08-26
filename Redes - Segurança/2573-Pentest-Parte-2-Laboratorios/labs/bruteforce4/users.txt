@@ -1,0 +1,4 @@
+pete|petepass
+john|johnpass
+bruno|java-eh-vida
+guilherme|cake

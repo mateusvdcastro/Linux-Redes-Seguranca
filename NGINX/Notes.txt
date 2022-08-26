@@ -1,14 +1,103 @@
 O NGINX é um servidor web. Ele é um serviço, é um programa que roda e que serve para responder requisições web.
-A tarefa de receber a requisição e decidir o que vai fazer, se vai mandar para uma aplicação, se vai devolver algum arquivo direto - essa é a tarefa de um servidor web.
+A tarefa de receber a requisição e decidir o que vai fazer, se vai mandar para uma aplicação, se vai devolver algum arquivo direto - essa é a 
+tarefa de um servidor web.
 Então é aí que entra o NGINX! Esse é o papel dele. O que o NGINX vai fazer dentro de um servidor é ficar ouvindo uma porta.
-O NGINX é um servidor web, ele ouve uma porta para responder requisições HTTP - mas já existiam outros servidores que fazem exatamente isso. Acredito que o mais famoso seja o Apache, muito provavelmente você já ouviu falar do servidor HTTP da Apache.
-Qual é a grande diferença do NGINX? Simplificando também, a ideia do Apache era: você tem um servidor do Apache rodando processo do Apache. Quando chega uma requisição, esse processo cria um novo processo e trata essa requisição, depois mata esse processo e fica tudo certo.
-Só que isso é muito custoso. Criar um processo, fazer a mudança de contexto de um processo para o outro e depois matar um processo. Isso é uma tarefa custosa. Então, o que o NGINX faz?
-Ele não usa somente essa ideia de processos, threads e programação paralela, ele usa um outro conceito de programação assíncrona muito interessante - que eu vou simplificar aqui também para você entender o conceito por alto.
-Então, temos aqui uma base do funcionamento do NGINX. Quando você inicia um serviço do NGINX, ele cria um processo principal, e seus processos subordinados worker process. Esses worker process são criados baseado no número de núcleos que o seu processador tem.
-Suponha que eu tenho um servidor que tem um processador com quatro núcleos. Então eu poderia criar, por exemplo, 4 processos worker process para tratar requisições. Porque assim eu tenho um maior número de processos tratando cada número de requisições, então eu consigo tratar mais requisições.
-Só que a sacada é: não é como se cada processo tratasse uma requisição. Não é isso! Cada um desses processos trata um número grande de requisições, várias requisições, e para que ele consiga tratar mais de um requisição, ele usa um conceito de Multiplexing I/O. Ou seja, ele faz mais de uma coisa de forma assíncrona.
+O NGINX é um servidor web, ele ouve uma porta para responder requisições HTTP - mas já existiam outros servidores que fazem exatamente isso. 
+Acredito que o mais famoso seja o Apache, muito provavelmente você já ouviu falar do servidor HTTP da Apache.
+Qual é a grande diferença do NGINX? Simplificando também, a ideia do Apache era: você tem um servidor do Apache rodando processo do Apache. Quando 
+chega uma requisição, esse processo cria um novo processo e trata essa requisição, depois mata esse processo e fica tudo certo.
+Só que isso é muito custoso. Criar um processo, fazer a mudança de contexto de um processo para o outro e depois matar um processo. Isso é uma 
+tarefa custosa. Então, o que o NGINX faz?
+Ele não usa somente essa ideia de processos, threads e programação paralela, ele usa um outro conceito de programação assíncrona muito 
+interessante - que eu vou simplificar aqui também para você entender o conceito por alto.
+Então, temos aqui uma base do funcionamento do NGINX. Quando você inicia um serviço do NGINX, ele cria um processo principal, e seus processos 
+subordinados worker process. Esses worker process são criados baseado no número de núcleos que o seu processador tem.
+Suponha que eu tenho um servidor que tem um processador com quatro núcleos. Então eu poderia criar, por exemplo, 4 processos worker process para 
+tratar requisições. Porque assim eu tenho um maior número de processos tratando cada número de requisições, então eu consigo tratar mais 
+requisições.
+Só que a sacada é: não é como se cada processo tratasse uma requisição. Não é isso! Cada um desses processos trata um número grande de 
+requisições, várias requisições, e para que ele consiga tratar mais de um requisição, ele usa um conceito de Multiplexing I/O. Ou seja, ele faz 
+mais de uma coisa de forma assíncrona.
 
 
 Mas como o nginx e o computador sabem o que significa "localhost"?
-Todo sistema operacional possui um arquivo de hosts. No Linux, por padrão fica em /etc/hosts. No Mac, /private/etc/hosts. Já no Windows, C:\Windows\System32\Drivers\Etc\hosts. Esse arquivo informa ao sistema operacional que quando uma conexão for estabelecida usando algum nome, o IP correspondente deve ser usado. Para o nome localhost, temos o IP da nossa própria máquina (127.0.0.1).
+Todo sistema operacional possui um arquivo de hosts. No Linux, por padrão fica em /etc/hosts. No Mac, /private/etc/hosts. 
+Já no Windows, C:\Windows\System32\Drivers\Etc\hosts. Esse arquivo informa ao sistema operacional que quando uma conexão for estabelecida usando 
+algum nome, o IP correspondente deve ser usado. Para o nome localhost, temos o IP da nossa própria máquina (127.0.0.1).
+
+
+
+Na pasta abaixo que vemos em Nginx -h
+/etc/nginx/conf.d/default.conf ou servers/*
+
+
+server {
+
+    listen       80;   # a porta que o nginx vai escutar requisições
+    listen       [::]:80;
+    
+    location / {                                # location / define tudo que começar com / (que no caso é literalmente tudo) cairá nesse conjunto de regras. Nessas regras podemos definir qual o diretório raiz do projeto, qual o arquivo padrão, regras de redirecionamento, etc.
+        root         /usr/share/nginx/html; 
+        index        index.html index.htm; 
+    }
+
+    error_page  401 400 402   /erro.html;  # com isso mostramos o html que estiver em /usr/share/nginx/html/erro.html sempre tivermos os erros http digitados
+
+    
+}
+
+
+Ngix é um Proxy Reverso. Um proxy é um intermediário entre as requisições cliente-servidor, usado para por exemplo filtrar resquisições eliminando 
+as indesejadas (bloquear em uma empresa o acesso a redes sociais/sites adultos). Mas, o conceito padrão de proxy é algo que fica no lado do cliente 
+interceptando os pacotes de rede. Como nesse caso o proxy está no lado do servidor, chamamos de proxy reverso.
+
+server {
+
+    listen       8080;   # a porta que o nginx vai escutar requisições
+    listen       [::]:8080;
+    
+    location / {                                # location / define tudo que começar com / (que no caso é literalmente tudo) cairá nesse conjunto de regras. Nessas regras podemos definir qual o diretório raiz do projeto, qual o arquivo padrão, regras de redirecionamento, etc.
+        proxy_pass http://localhost:80          # Aqui, caso tenhamos requisições sendo enviadas para esse server na porta 8080 ele irá redirecionar para outro servidor na porta 80
+    }
+
+    error_page  401 400 402   /erro.html;  # com isso mostramos o html que estiver em /usr/share/nginx/html/erro.html sempre tivermos os erros http digitados
+
+    
+}
+
+Se quisermos usar o Proxy Reverso para que ele mande todas as requições de imagem, aúdios e etc direto para o usuário e resquições .php, .py, .js
+ele redirecione para um servidor de aplicação (django, tomcat) fazemos isso assim:
+
+server {
+
+    listen       80;   
+    listen       [::]:80;
+
+    location / {                                
+        root         /usr/share/nginx/html; 
+        index        index.html index.htm;          
+    }
+    
+    location ~ \.py$ {  # Foi usado expressões regulares para que todo arquiovo python seja redirecionado para cá                              
+        proxy_pass http://localhost:8000    # Digamos que tenhamos um servidor Django rodando na porta 8000, então todo arquivo python será enviado para cá          
+    }
+
+    error_page  401 400 402   /erro.html;  
+    
+}
+
+O nginx é um servidor incrivelmente performático, então nós ganhamos muito ao não enviar todas as requisições para o servidor de aplicação. O nginx pode enviar diretamente os arquivos estáticos sem processar nada, além de poder definir cache, compressão, etc.
+
+
+O que são Microsserviços? Ver: https://aws.amazon.com/pt/microservices/#:~:text=Microsservi%C3%A7os%20s%C3%A3o%20uma%20abordagem%20arquitet%C3%B4nica,pertencem%20a%20pequenas%20equipes%20autossuficientes.
+
+O que é um API Gateway? 
+
+Ver :https://www.redhat.com/pt-br/topics/api/what-does-an-api-gateway-do
+
+Ver: https://www.nginx.com/blog/deploying-nginx-plus-as-an-api-gateway-part-1/
+
+
+
+
+
