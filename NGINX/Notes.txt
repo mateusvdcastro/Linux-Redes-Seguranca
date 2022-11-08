@@ -26,6 +26,7 @@ Já no Windows, C:\Windows\System32\Drivers\Etc\hosts. Esse arquivo informa ao s
 algum nome, o IP correspondente deve ser usado. Para o nome localhost, temos o IP da nossa própria máquina (127.0.0.1).
 
 
+============== Servidor HTTP ========================================================================================================================================
 
 Na pasta abaixo que vemos em Nginx -h
 /etc/nginx/conf.d/default.conf ou servers/*
@@ -46,6 +47,9 @@ server {
     
 }
 
+======================================================================================================================================================================
+
+============== Proxy Reverso =========================================================================================================================================
 
 Ngix é um Proxy Reverso. Um proxy é um intermediário entre as requisições cliente-servidor, usado para por exemplo filtrar resquisições eliminando 
 as indesejadas (bloquear em uma empresa o acesso a redes sociais/sites adultos). Mas, o conceito padrão de proxy é algo que fica no lado do cliente 
@@ -88,6 +92,11 @@ server {
 
 O nginx é um servidor incrivelmente performático, então nós ganhamos muito ao não enviar todas as requisições para o servidor de aplicação. O nginx pode enviar diretamente os arquivos estáticos sem processar nada, além de poder definir cache, compressão, etc.
 
+==================================================================================================================================================================
+
+
+
+============== Microsserviços e API Gateway =========================================================================================================================
 
 O que são Microsserviços? Ver: https://aws.amazon.com/pt/microservices/#:~:text=Microsservi%C3%A7os%20s%C3%A3o%20uma%20abordagem%20arquitet%C3%B4nica,pertencem%20a%20pequenas%20equipes%20autossuficientes.
 
@@ -98,6 +107,102 @@ Ver :https://www.redhat.com/pt-br/topics/api/what-does-an-api-gateway-do
 Ver: https://www.nginx.com/blog/deploying-nginx-plus-as-an-api-gateway-part-1/
 
 
+$ docker run --name other-nginx -dp 8080:80 -p 8081:8081 -p 8082:8082 nginx => Ao criar o container Nginx (other-nginx) para usarmos como API Gateway, devemos mapear todas as portas que serão necessárias. A porta host é a 80->8080 que irá redirecionar para os microsserviços da porta 8081->8081 8082->8082
+
+====== Baixar o nano ou vim para editar os arquivos ========
+$ docker exec -it other-nginx apt update -y
+$ docker exec -it other-nginx apt install -y nano
+==============================================================
+
+$ docker run --name other-nginx mkdir /home/servicos1
+$ docker run --name other-nginx mkdir /home/servicos2
+$ docker run --name other-nginx touch /home/servicos1/index.html  => Arquivos do microsserviço 1 (exemplo: o serviço de banco de dados/financeiro/gameficação/etc)
+$ docker run --name other-nginx touch /home/servicos2/index.html
+$ docker run --name other-nginx touch /home/erro.html             => Página de erro personalizada
+$ docker run --name other-nginx touch /home/index.html            => Página inicial
+
+====== Em /etc/nginx/conf.d/microsservicos.conf ==============
+$ docker exec -it other-nginx touch /etc/nginx/conf.d/microsservicos.conf => Onde iremos configurar os servidores de microsserviços
+server {
+
+    listen       8081;   
+    listen       [::]:8081;
+
+    location / {                                
+        root         /home/servicos1; 
+        index        index.html index.htm;          
+    }
+       
+}
+
+server {
+
+    listen       8082;   
+    listen       [::]:8082;
+
+    location / {                                
+        root         /home/servicos2; 
+        index        index.html index.htm;          
+    }
+       
+}
+==============================================================
+
+====== Em /etc/nginx/conf.d/default.conf =====================
+
+server {
+
+    listen       80;   
+    listen       [::]:80;
+    server_name  localhost;
+
+    location / {                                
+        root         /home; 
+        index        index.html index.htm;          
+    }
+
+    location /servicos1 {
+        proxy_pass http://localhost:8081/;  # Aqui foi feito os redirecionamento de servidores de microsserviços usando o conceito de proxy reverso
+    }
+
+    location /servicos2 {
+        proxy_pass http://localhost:8081/;
+    }
+       
+    error_page 404 403 400  /erro.html
+}
 
 
+==============================================================
+==================================================================================================================================================================
+
+============== Load Balancer ======================================================================================================================================
+
+Todo o hardware tem o seu limite, e muitas vezes o mesmo serviço tem que ser repartido por várias máquinas, sob pena de se tornar congestionado. Estas soluções podem-se especializar em pequenos grupos sobre os quais se faz um balanceamento de carga: utilização do CPU, de armazenamento, ou de rede.
+Neste caso, toda requisição que chegar na porta 8083, terá como resposta uma vez o que está na porta 8081 e na outra vez no que está na 8082
+
+====== Em /etc/nginx/conf.d/load-balancer.conf ==============
+
+upstream servicos {
+      server localhost:8081;
+      server localhost:8082;
+}
+
+
+server {
+
+    listen       8083;   
+
+    server_name  localhost;
+
+    location / {                                
+        proxy_pass http://servicos;       
+    }
+
+}
+==============================================================
+
+Através do nome definido em upstream, podemos acessar algum dos servidores deste grupo dependendo de algumas regras definidas.
+
+==================================================================================================================================================================
 

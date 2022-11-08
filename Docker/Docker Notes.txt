@@ -74,7 +74,8 @@ $  =>
 $  =>
 
 ====== Nginx no Docker ==================================================================================================
-$ docker run --name some-nginx -dp 8000:80 nginx
+$ docker run --name some-nginx -dp 8000:80 nginx  => 8000 porta que vou acessar pelo meu computador host e 80 é a porta de dentro da VM/Container
+$ docker run --name some-nginx -dp 8000:80 -p 8001:8001 -p 8002:8002 nginx => Mapeie várias portas caso for usar multiplos serviços
 $ docker exec -it some-nginx nginx -h
 $ docker exec -it some-nginx cat /etc/nginx/nginx.conf
 $ docker exec -it some-nginx nginx -s reload   => Recarrega as configurações para que as alterações sejam aplicadas

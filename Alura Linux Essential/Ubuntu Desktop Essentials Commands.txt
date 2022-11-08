@@ -220,6 +220,7 @@ $ ps              => mostra todos os processos que estão rodando no shell atual
 $ ps -e           => mostra todos os processos do sistema 
 $ ps -ef          => mostra todos os processos do sistema com mais detalhes  ex: ps -ef | grep "vi"   - usamos o grep para buscar informações na lista
 $ pstree          => Este utilitário lista os processos em execução usando o formato de árvore.
+$ ps x            => Mostra os processos, seus números de identificação e os comandos usados para rodá-los
 $ jobs            => Lista os processos inicializados a partir do terminal.
 $ bg              => Este comando faz com que um processo (identificado por num), que está sendo executado em primeiro plano, passe a ser executado em segundo plano.
 $ [processo] &    => esse E comercial depois do nome de algum programa faz com que ele fique rodando em segundo plano ex: gedit &
