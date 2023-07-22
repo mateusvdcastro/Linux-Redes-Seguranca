@@ -37,3 +37,6 @@ cat ~/.ssh/nome_da_chave.pub
 $ sudo service ssh status
 $ sudo rm -Rf ~/.ssh/                     -> apagar a pasta do ssh 
 $ sudo apt-get purge openssh-client       -> desinstalar ssh
+
+
+
