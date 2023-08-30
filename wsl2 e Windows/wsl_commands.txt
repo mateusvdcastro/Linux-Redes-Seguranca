@@ -1,5 +1,3 @@
-io gui
-
 Wsl Doc: https://docs.microsoft.com/pt-br/windows/wsl/basic-commands
 
 $ wsl --install -d <Distribution Name>        => wsl.exe caso for rodar no Linux. Instalar uma distribuição do Linux específica
