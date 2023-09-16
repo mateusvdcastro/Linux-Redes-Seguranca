@@ -1,3 +1,5 @@
+Oi
+
 # execute no git bash da pasta que deseja
 # ou use no terminal mesmo, entrando na pasta do projeto com 
 
