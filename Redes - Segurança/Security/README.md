@@ -1,11 +1,11 @@
 ## Notes and studies about Linux, Network and CyberSecurity
 
->https://hackerone.com/hacktivity => Recompensas por Bug Bounty
-https://web.archive.org/web/20210513155142/https://www.bugcrowd.com/resources/reports/bugcrowd-priority-one-report/ => relatórios de segurança
-https://portswigger.net/users/register => oferece alguns apps e labs que podem ser atacados
-https://overthewire.org/wargames/
-https://www.hackthebox.com/
-http://www.itsecgames.com/index.htm => Máquina virtual com vulnerabilidades
+>https://hackerone.com/hacktivity => Recompensas por Bug Bounty  
+https://web.archive.org/web/20210513155142/https://www.bugcrowd.com/resources/reports/bugcrowd-priority-one-report/ => relatórios de segurança  
+https://portswigger.net/users/register => oferece alguns apps e labs que podem ser atacados  
+https://overthewire.org/wargames/  
+https://www.hackthebox.com/  
+http://www.itsecgames.com/index.htm => Máquina virtual com vulnerabilidades  
 
 # General Notes
 White Hats -> Hackers Éticos  
@@ -48,9 +48,9 @@ garantir a sinergia e a colaboração entre o blue team e o red team.
 
 # Bug Bounty
 
->https://www.hackerone.com/
-https://www.bugcrowd.com/
-https://www.bughunt.com.br/
+>https://www.hackerone.com/  
+https://www.bugcrowd.com/  
+https://www.bughunt.com.br/  
 
 # Owasp Top10 2021 
 
@@ -103,6 +103,7 @@ sigla SSRF, que ocorre quando uma aplicação web está buscando um recurso remo
 **Google Hacking:**
 https://pt.wikipedia.org/wiki/Google_Hacking
 
+```
 Na barra de busca do google podemos retirar palavras que não queremos que seja buscada: ex: vivo -telefone -plano
 $ site <site.com> <palavra_chave>  => irá fazer buscas apenas no domínio informado com a palavra chave informada
 $ inurl      => pesquisa sites com um trecho especifico na url ex: inurl:"?id="
@@ -110,6 +111,7 @@ $ filetype <type file> <palavra_chave>  => retorna sites que contenham o tipo de
 $
 
 Digitar os comandos acima fará com que o google lhe peça confirmação por captcha, para fugir disso caso queira fazer uma automação, você pode usar a API do Google
+```
 
 # Conceitos
 **WAF (Web Application Firewall):**  
@@ -118,12 +120,12 @@ Digitar os comandos acima fará com que o google lhe peça confirmação por cap
     https://www.tecmint.com/install-modsecurity-nginx-debian-ubuntu/
 
 **SIEM (Gerenciamento e Correlação de Eventos de Segurança):**  
-	A tecnologia SIEM coleta dados de log de eventos de várias fontes, identifica atividades que se desviam da norma com análise em tempo real e toma as medidas apropriadas.
-     ! O Graylog é uma importante solução de gestão de registros centralizados para capturar, armazenar e permitir a análise de petabytes de dados de máquina.
+	A tecnologia SIEM coleta dados de log de eventos de várias fontes, identifica atividades que se desviam da norma com análise em tempo real e toma as medidas apropriadas.  
+     - O Graylog é uma importante solução de gestão de registros centralizados para capturar, armazenar e permitir a análise de petabytes de dados de máquina.
 
 **IDS/IPS (Intrusion Detection System)/(Intrusion Prevention System), traduzindo, significam Sistema de Detecção de Intrusão e Sistema de Prevenção de Intrusão respectivamente.:**  
-      São recursos que examinam o tráfego na rede, para detectar e prevenir os acessos não autorizados na mesma, protegendo-a da exploração das vulnerabilidades.
-      !Snort no pfsense
+      São recursos que examinam o tráfego na rede, para detectar e prevenir os acessos não autorizados na mesma, protegendo-a da exploração das vulnerabilidades.  
+      - Snort no pfsense
 
 # Tecnologias de Pentes
 ```
