@@ -7,7 +7,7 @@
 
 [:lock:  CyberSecurity Notes](https://github.com/mateusvdcastro/Linux-Redes-Seguranca/tree/main/Redes%20-%20Seguran%C3%A7a/Security)  
 
-[:computer: Network Notes](https://github.com/mateusvdcastro/Linux-Redes-Seguranca/edit/main/README.md#como-ver-meu-ip-p%C3%BAblico-pelo-terminal)
+[:computer: Network Notes](https://github.com/mateusvdcastro/Linux-Redes-Seguranca/tree/main/Redes%20-%20Seguran%C3%A7a/Network)
 
 ---
 [![Github Badge](https://img.shields.io/badge/-Github-000?style=flat-square&logo=Github&logoColor=white&link=https://github.com/fagnerpsantos)]([https://github.com/fagnerpsantos](https://github.com/mateusvdcastro))
