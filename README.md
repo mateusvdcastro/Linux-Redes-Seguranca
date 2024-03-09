@@ -1,4 +1,4 @@
-## Notes and studies about Linux, Network and CyberSecurity : )
+## Notes and studies about Linux, Network and CyberSecurity
 
 **Click on the links below to see my studies**
 
