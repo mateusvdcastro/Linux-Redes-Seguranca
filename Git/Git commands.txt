@@ -29,6 +29,10 @@ git config --global user.name "mateusvdcastro"
 git config user.name                                                     (ver o usuário cadastrado)
 git config --global user.email "mateusvc1124@gmail.com"
 git config user.email                                                    (ver o email cadastrado)
+ssh-keygen -t rsa -C "mateus.vespasiano@unifesp.br"
+notepad ~/.ssh/id_rsa.pub
+ssh -T git@github.com
+git remote add origin git@github.com:mateusvdcastro
 ===========================================================================================================================================
 
 =========== Branches ======================================================================================================================
