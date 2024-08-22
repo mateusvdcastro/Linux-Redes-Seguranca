@@ -584,3 +584,4 @@ Threads de núcleo
 
 ## [[Deadlocks]]
 
+## [[Gerenciamento básico de memória e troca de processos]]

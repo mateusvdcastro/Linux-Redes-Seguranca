@@ -41,6 +41,8 @@ Para que um deadlock ocorra, quatro condições devem ser simultaneamente satisf
 Processos, mostrados como círculos, e recursos, mostrados como quadrados. Um arco direcionado de um nó de recurso (quadrado) para um nó de processo (círculo) significa que o recurso foi previamente solicitado, concedido e está atualmente com aquele processo. Um arco direcionado de um processo para um recurso significa que o processo está atualmente bloqueado esperando por aquele recurso.
 
 ![[Pasted image 20240530142630.png]]
+
+
 ### Prevenção, Detecção e Recuperação de Deadlocks
 
 #### Prevenção de Deadlocks

@@ -233,3 +233,13 @@ No MINIX3, a fila de prontos mantém os processos que estão prontos para execu�
 
 # Utils
 - O sistema UNIX tem um comando, nice(), que permite que um usuário reduza voluntariamente a prioridade do seu processo, a fim de ser legal com os outros usuários, mas ninguém nunca o utiliza.
+- Comando para montar a pasta compartilhada:
+```c
+$ mount -t vbfs -o share=NAME none /mnt /* Trocar NAME pelo nome da pasta criada no VirtualBox */
+```
+- Compilar o arquivo test.c:
+```c
+$ cc -oprog source.c  
+$ ./prog
+$ ./prog 100 2000 100000000 > exp_01_IO2000CPU100000000.txt /* IO consome muito tempo, diminuir para ser mais rápido a execução */
+```
