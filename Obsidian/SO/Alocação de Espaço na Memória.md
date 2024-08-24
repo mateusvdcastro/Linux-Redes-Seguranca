@@ -21,6 +21,8 @@
 
 #### Alocação Não Contígua - Paginação
 
+#paginação
+
 **Paginação** é uma técnica que resolve alguns dos problemas da segmentação, como a fragmentação externa e a necessidade de acomodar blocos de tamanho variável na memória.
 
 **Como Funciona**:

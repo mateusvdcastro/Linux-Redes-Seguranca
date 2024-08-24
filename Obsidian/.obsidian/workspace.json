@@ -11,27 +11,50 @@
             "id": "984c3c1365e55c18",
             "type": "leaf",
             "state": {
+              "type": "image",
+              "state": {
+                "file": "Images/Pasted image 20240824154050.png"
+              }
+            }
+          },
+          {
+            "id": "29da3a6df63a11e4",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "Fundamentos.md",
+                "file": "SO/SO Trabalho Escalonador.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "ea23ebbaeb7280f7",
+            "id": "8430a08a0e09edfb",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SO/Gerenciamento de Memória Livre.md",
+                "file": "SO/LBA e CHS.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "378c2ecc391a6f20",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SO/Discos.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -97,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Fundamentos.md",
+                "file": "SO/SO Trabalho Escalonador.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Fundamentos.md",
+                "file": "SO/SO Trabalho Escalonador.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Fundamentos.md"
+                "file": "SO/SO Trabalho Escalonador.md"
               }
             }
           }
@@ -158,29 +181,40 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "984c3c1365e55c18",
+  "active": "4fd99a7f17aa019c",
   "lastOpenFiles": [
-    "SO/SO.md",
+    "SO/Raid.md",
+    "Untitled",
+    "SO/Discos.md",
+    "SO/LBA e CHS.md",
+    "Images/Pasted image 20240824154050.png",
+    "Images/Pasted image 20240824164755.png",
+    "Images/Pasted image 20240824165905.png",
+    "Images/Pasted image 20240824165956.png",
+    "Images/Pasted image 20240824170029.png",
+    "Images/Pasted image 20240804160229.png",
+    "Images/Pasted image 20240429180025.png",
+    "Images/Pasted image 20240804190631.png",
+    "Images/Pasted image 20240804185751.png",
+    "Images/Pasted image 20240804190551.png",
+    "SO/Gravação Magnética.md",
+    "Images/Untitled.canvas",
+    "Malware.md",
     "SO/Deadlocks.md",
+    "Anonimato na rede.md",
     "SO/Paginação.md",
     "SO/Alocação de Espaço na Memória.md",
+    "SO/Algoritmos de substituição de página.md",
+    "Noticias.md",
     "SO/Gerenciamento de Memória Livre.md",
+    "SO/Fragmentação de Memória.md",
     "SO/Gerenciamento básico de memória e troca de processos.md",
+    "Fundamentos.md",
+    "Cyber Security.md",
+    "SO/SO.md",
     "SO/Processos.md",
     "SO/Lista 2 SO Threads e IPC.md",
     "SO/Lista 1 SO - Processos e Threads.md",
-    "SO/Fragmentação de Memória.md",
-    "Algoritmos de substituição de página.md",
-    "Images/Pasted image 20240804190019.png",
-    "Images/Pasted image 20240804190035.png",
-    "Images/Pasted image 20240804192823.png",
-    "Images/Pasted image 20240804191841.png",
-    "Images/Pasted image 20240804190631.png",
-    "Images/Pasted image 20240804190551.png",
-    "Images/Pasted image 20240804190120.png",
-    "Images/Pasted image 20240804185751.png",
-    "Images/Pasted image 20240804165815.png",
-    "Images/Pasted image 20240804165351.png",
     "SO/Swapping.md",
     "SO/SO Trabalho Escalonador.md",
     "2024-08-04.md",
@@ -188,17 +222,7 @@
     "Untitled.canvas",
     "SO/IPC.md",
     "^Swapping.md",
-    "Fundamentos.md",
-    "Cyber Security.md",
-    "CompTIA Security +.md",
-    "Pentest.md",
-    "Network.md",
     "SO trabalho",
-    "Images",
-    "bcrypt.md",
-    "OSI.md",
-    "IP.md",
-    "Nikto.md",
-    "Nikito.md"
+    "Images"
   ]
 }

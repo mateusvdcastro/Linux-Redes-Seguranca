@@ -477,6 +477,7 @@ $ md5sum <file>     => Verifica a integridade um arquivo transferido pela rede (
 $ netdiscover -i eth0
 ```
 
+[[Anonimato na rede]]
 ## Certificações
 
 https://www.comptia.org/pt/certificacoes/security => Certificado introdutório, antes de fazer o CEH ou OSCP

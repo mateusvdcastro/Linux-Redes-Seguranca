@@ -109,12 +109,9 @@ Agora, na segunda abordagem, os dados são transmitidos em pacotes, cada pacote,
 
 Ou seja, em Circuit Switch a sessão era fechada ponta a ponta, então funcionava como uma rodovia de mão única. Agora com Packet Switching, enquanto um pacote é transmitido outro pacote de outra requisição pode ser enviado na sequência, funcionando como uma rodovia de várias faixas. 
 
-  
-#HD_Raid_0: Suponha o caso em que tenho 2 HD 's de 1TB. Em raid 0 o SO vai identificar esses dois HD 's como sendo um só. Ou seja, a partição c:/ verá como 2TB de armazenamento. No caso do Raid 0 temos maior performance, pois como os programas no computador são armazenados em blocos no HD, a tabela de particionamento pode guardar o A, C, E, G no HD 1 e B, D, F, H no HD 2. Desta forma, temos o dobro do armazenamento mas também o dobro da performance de leitura e escrita. O problema está na segurança, se o HD 1 der defeito, e todos os arquivos forem perdidos, você tem perda de dados em um programa. Ou seja, perdeu tudo que estava no HD 1 e o HD 2 também, pois ele fica com pacotes incompletos. (Raid 0 é bom para jogos ou dados que possuem backup em Nuvem).
-
+[[Discos]]
   
 
-#HD_Raid_1:  Neste caso, se tivermos 2 HDs de 1TB. O SO verá ambos como um sendo o espelho do outro. Assim, teremos a performance de um único HD, pois toda informação escrita em um será escrita no outro. A vantagem deste, é que caso haja perda de um HD o usuário não sentirá falta. Basta trocar o HD com problema e no próximo boot o SO irá copiar tudo de um HD para o outro.
 
 
 >[!NOTE]

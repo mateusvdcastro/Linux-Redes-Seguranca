@@ -23,6 +23,8 @@
 
 #### Fragmentação Externa
 
+#fragmentaçãoexterna
+
 **Definição**:
 
 - A fragmentação externa ocorre quando há espaço livre suficiente na memória total, mas ele está espalhado em pequenos blocos que não são contíguos. Como resultado, não é possível alocar memória para um novo processo mesmo que o espaço total livre seja suficiente.
