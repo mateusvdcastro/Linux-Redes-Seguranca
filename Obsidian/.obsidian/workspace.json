@@ -30,19 +30,55 @@
             }
           },
           {
-            "id": "8430a08a0e09edfb",
+            "id": "4caf59a037d73cb6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SO/LBA e CHS.md",
+                "file": "SO/Formatação de Discos.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "378c2ecc391a6f20",
+            "id": "ca31f2103787b62c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SO/Algoritmos de escalonamento de braço de disco.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f643f452fede9660",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SO/Paginação.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "6e4ab97001d415a4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SO/Paginação.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "fe10948cc101f592",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -54,7 +90,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -83,7 +119,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "TLB",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -100,11 +136,12 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 425.50418853759766
+    "width": 234.50418853759766
   },
   "right": {
     "id": "2c75f9417c4b1c3d",
@@ -120,7 +157,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SO/SO Trabalho Escalonador.md",
+                "file": "SO/Paginação.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +174,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SO/SO Trabalho Escalonador.md",
+                "file": "SO/Paginação.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -160,7 +197,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SO/SO Trabalho Escalonador.md"
+                "file": "SO/Paginação.md"
               }
             }
           }
@@ -181,47 +218,48 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "4fd99a7f17aa019c",
+  "active": "f643f452fede9660",
   "lastOpenFiles": [
-    "SO/Raid.md",
-    "Untitled",
+    "SO/Algoritmos de escalonamento de braço de disco.md",
+    "SO/Paginação.md",
+    "SO/SO.md",
+    "SO/Prova 2.md",
+    "SO/Processos.md",
+    "SO/Gerenciamento básico de memória e troca de processos.md",
+    "SO/Gerenciamento de Memória Livre.md",
+    "Anonimato na rede.md",
+    "CompTIA Security +.md",
+    "Pentest.md",
+    "SO/Algoritmos de substituição de página.md",
+    "SO/Apresentação.md",
     "SO/Discos.md",
+    "SO/Tratamento de Erros.md",
+    "SO/Formatação de Discos.md",
+    "SO/Raid.md",
     "SO/LBA e CHS.md",
+    "SO/Alocação de Espaço na Memória.md",
+    "Images/Pasted image 20240826172427.png",
+    "Fundamentos.md",
+    "Images/Pasted image 20240826170350.png",
+    "SO/SO Trabalho Escalonador.md",
+    "Images/Pasted image 20240826153533.png",
+    "Images/Pasted image 20240826153437.png",
+    "Images/Pasted image 20240824194434.png",
+    "Images/Pasted image 20240824203726.png",
+    "Images/Pasted image 20240826133641.png",
+    "Noticias.md",
+    "Images/Pasted image 20240824195100.png",
+    "Untitled",
     "Images/Pasted image 20240824154050.png",
     "Images/Pasted image 20240824164755.png",
-    "Images/Pasted image 20240824165905.png",
-    "Images/Pasted image 20240824165956.png",
-    "Images/Pasted image 20240824170029.png",
-    "Images/Pasted image 20240804160229.png",
-    "Images/Pasted image 20240429180025.png",
-    "Images/Pasted image 20240804190631.png",
-    "Images/Pasted image 20240804185751.png",
-    "Images/Pasted image 20240804190551.png",
     "SO/Gravação Magnética.md",
     "Images/Untitled.canvas",
     "Malware.md",
     "SO/Deadlocks.md",
-    "Anonimato na rede.md",
-    "SO/Paginação.md",
-    "SO/Alocação de Espaço na Memória.md",
-    "SO/Algoritmos de substituição de página.md",
-    "Noticias.md",
-    "SO/Gerenciamento de Memória Livre.md",
     "SO/Fragmentação de Memória.md",
-    "SO/Gerenciamento básico de memória e troca de processos.md",
-    "Fundamentos.md",
     "Cyber Security.md",
-    "SO/SO.md",
-    "SO/Processos.md",
-    "SO/Lista 2 SO Threads e IPC.md",
-    "SO/Lista 1 SO - Processos e Threads.md",
-    "SO/Swapping.md",
-    "SO/SO Trabalho Escalonador.md",
-    "2024-08-04.md",
     "SO",
     "Untitled.canvas",
-    "SO/IPC.md",
-    "^Swapping.md",
     "SO trabalho",
     "Images"
   ]

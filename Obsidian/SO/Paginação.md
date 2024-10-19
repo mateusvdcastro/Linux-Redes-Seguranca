@@ -190,3 +190,5 @@ Quando o sistema alterna entre diferentes processos, é necessário mudar a tabe
 
 - **Registradores de Hardware para Tabela de Páginas**: Cada processo tem sua própria tabela de páginas carregada em registradores rápidos, o que é eficiente, mas caro em termos de hardware.
 - **Tabela de Páginas na Memória**: Apenas o registrador que aponta para a tabela de páginas é atualizado, tornando a troca de contexto mais eficiente.
+
+==A MMU utiliza a tabela de páginas para encontrar o mapeamento correto entre endereços virtuais e físicos. Se o mapeamento já estiver presente no TLB, a tradução é feita rapidamente; caso contrário, a MMU consulta a tabela de páginas.==
