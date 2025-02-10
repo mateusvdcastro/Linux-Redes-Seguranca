@@ -21,26 +21,31 @@ git push -u origin main              (envia as alterações para o meu github or
 => git push -u origin main                        (envia as alterações para o meu github origin)
 => git restore --source 8164768 .                 (volta o para um estado anterior do projeto dado um código hash de commit que pode ser pego pelo git log --oneline)
 => git clone -branch new_feature <repositorio>    (Você também pode configurar o git clone e clonar o repositório a partir de uma branch específica. O exemplo ao lado clonaria apenas a branch new_feature de repositorio.)
-
+=> git cherry-pick <commit-id>
+=> git merge <branch to merge>
 ===========================================================================================================================================
 
 =========== Cadastro ======================================================================================================================
-git config --global user.name "mateusvdcastro"
+git config --global user.name "<username>"
 git config user.name                                                     (ver o usuário cadastrado)
-git config --global user.email "mateusvc1124@gmail.com"
+git config --global user.email "<email>"
 git config user.email                                                    (ver o email cadastrado)
-ssh-keygen -t rsa -C "mateus.vespasiano@unifesp.br"
+ssh-keygen -t rsa -C "<email>"
 notepad ~/.ssh/id_rsa.pub
 ssh -T git@github.com
-git remote add origin git@github.com:mateusvdcastro
+git remote add origin git@github.com:<username>
 ===========================================================================================================================================
 
 =========== Branches ======================================================================================================================
-git branch teste            (criar nova branch, neste caso chamado teste)
-git checkout teste          (mudar para a branch teste)
-git diff                    (diferenças nos arquivos alterados nas diferentes branches)
+git branch teste             (criar nova branch, neste caso chamado teste)
+git checkout teste           (mudar para a branch teste)
+git checkout -b <new_branch> (create a new branch and switch)
+git branch -D <branch>       (delete branch)
+git diff                     (diferenças nos arquivos alterados nas diferentes branches)
 ===========================================================================================================================================
 
+git log --graph              (log with drawing)
+gitk --all                   (graphical interface)
 git --version
 rm -rf .git                  (apaga o repositório)
 git reset                    (reverte o git add)
