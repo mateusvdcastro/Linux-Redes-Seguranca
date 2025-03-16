@@ -14,7 +14,9 @@
               "type": "image",
               "state": {
                 "file": "Images/Pasted image 20240824154050.png"
-              }
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20240824154050"
             }
           },
           {
@@ -26,7 +28,9 @@
                 "file": "SO/SO Trabalho Escalonador.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "SO Trabalho Escalonador"
             }
           },
           {
@@ -35,34 +39,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SO/Formatação de Discos.md",
+                "file": "Malware.md",
                 "mode": "source",
                 "source": false
-              }
-            }
-          },
-          {
-            "id": "ca31f2103787b62c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SO/Algoritmos de escalonamento de braço de disco.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f643f452fede9660",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SO/Paginação.md",
-                "mode": "source",
-                "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "Malware"
             }
           },
           {
@@ -74,7 +56,9 @@
                 "file": "SO/Paginação.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "Paginação"
             }
           },
           {
@@ -86,11 +70,13 @@
                 "file": "SO/Discos.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "Discos"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -109,8 +95,11 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
-              }
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -119,13 +108,15 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "TLB",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -133,11 +124,12 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -157,7 +149,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SO/Paginação.md",
+                "file": "Malware.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -165,7 +157,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Malware"
             }
           },
           {
@@ -174,10 +168,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SO/Paginação.md",
+                "file": "Malware.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Malware"
             }
           },
           {
@@ -187,8 +183,12 @@
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
-              }
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -197,8 +197,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SO/Paginação.md"
-              }
+                "file": "Malware.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Malware"
             }
           }
         ]
@@ -215,11 +220,23 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f643f452fede9660",
+  "active": "4fd99a7f17aa019c",
   "lastOpenFiles": [
+    "Malware.md",
+    "Onion.md",
+    "Network.md",
+    "Noticias.md",
+    "Anonimato na rede.md",
+    "Fundamentos.md",
+    "Pentest.md",
+    "Cyber Security.md",
+    "CompTIA Security +.md",
+    "SO/Formatação de Discos.md",
+    "Untitled.canvas",
     "SO/Algoritmos de escalonamento de braço de disco.md",
     "SO/Paginação.md",
     "SO/SO.md",
@@ -227,19 +244,14 @@
     "SO/Processos.md",
     "SO/Gerenciamento básico de memória e troca de processos.md",
     "SO/Gerenciamento de Memória Livre.md",
-    "Anonimato na rede.md",
-    "CompTIA Security +.md",
-    "Pentest.md",
     "SO/Algoritmos de substituição de página.md",
     "SO/Apresentação.md",
     "SO/Discos.md",
     "SO/Tratamento de Erros.md",
-    "SO/Formatação de Discos.md",
     "SO/Raid.md",
     "SO/LBA e CHS.md",
     "SO/Alocação de Espaço na Memória.md",
     "Images/Pasted image 20240826172427.png",
-    "Fundamentos.md",
     "Images/Pasted image 20240826170350.png",
     "SO/SO Trabalho Escalonador.md",
     "Images/Pasted image 20240826153533.png",
@@ -247,19 +259,13 @@
     "Images/Pasted image 20240824194434.png",
     "Images/Pasted image 20240824203726.png",
     "Images/Pasted image 20240826133641.png",
-    "Noticias.md",
     "Images/Pasted image 20240824195100.png",
     "Untitled",
     "Images/Pasted image 20240824154050.png",
     "Images/Pasted image 20240824164755.png",
     "SO/Gravação Magnética.md",
     "Images/Untitled.canvas",
-    "Malware.md",
-    "SO/Deadlocks.md",
-    "SO/Fragmentação de Memória.md",
-    "Cyber Security.md",
     "SO",
-    "Untitled.canvas",
     "SO trabalho",
     "Images"
   ]
