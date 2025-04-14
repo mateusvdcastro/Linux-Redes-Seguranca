@@ -2,6 +2,11 @@
 ```
 $ sudo umount '/tmp/.X11-unix'
 $ sudo rm -rf /tmp/.X11-unix
+& ffuf -w <Wordlist> -u http://<URL>/FUZZ
+& dirb https://<URL>/ <Wordlist>
+& gobuster dir --url https://<URL>/ -w <Wordlist>
+& dnsrecon -t brt -d <url> || dnsrecon -d example.com -D /usr/share/wordlists/dnsmap.txt -t std --xml dnsrecon.xml
+& ffuf -w /usr/share/wordlists/SecLists/Discovery/DNS/namelist.txt -H "Host: FUZZ.<host>" -u <url>
 ```
 
 
@@ -70,12 +75,13 @@ https://pt.wikipedia.org/wiki/Google_Hacking
 
 Na barra de busca do google podemos retirar palavras que não queremos que seja buscada: ex: vivo -telefone -plano
 
-```
-$ site <site.com> <palavra_chave>  => irá fazer buscas apenas no domínio informado com a palavra chave informada
-$ inurl      => pesquisa sites com um trecho especifico na url ex: inurl:"?id="
-$ filetype <type file> <palavra_chave>  => retorna sites que contenham o tipo de arquivo informado
-```
-
+| Filter   | Example            | Description                                                  |
+| -------- | ------------------ | ------------------------------------------------------------ |
+| site     | site:tryhackme.com | returns results only from the specified website address      |
+| inurl    | inurl:admin        | returns results that have the specified word in the URL      |
+| filetype | filetype:pdf       | returns results which are a particular file extension        |
+| intitle  | intitle:admin      | returns results that contain the specified word in the title |
+Unlike the [robots.txt] file, which restricts what search engine crawlers can look at, the [sitemap.xml] file gives a list of every file the website owner wishes to be listed on a search engine.
 
 Digitar os comandos acima fará com que o google lhe peça confirmação por captcha, para fugir disso caso queira fazer uma automação, você pode usar a API do Google
 
@@ -452,3 +458,7 @@ $ netdiscover -i eth0
 ```
 
 [[Anonimato na rede]]
+
+PIM => Gerenciamento dos papéis/responsividades/permissões dos usuários
+PAM => Gerenciamento das permissões e privilégios do acesso ao sistema
+

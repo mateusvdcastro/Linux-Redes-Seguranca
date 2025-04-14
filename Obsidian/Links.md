@@ -6,6 +6,15 @@ https://malpedia.caad.fkie.fraunhofer.de/ => Malware
 https://www.cve.org/ => CVE
 https://nvd.nist.gov/vuln => NIST Vulnerabilities
 https://www.virustotal.com/ => Virus analysis
+https://sansorg.egnyte.com/dl/bF4I3yCcnt/ => Rules of Engagement (ROE)
+https://wiki.owasp.org/index.php/OWASP_favicon_database => OWASP favicon database
+[https://crt.sh](https://crt.sh/) => Discover subdomains belonging to a domain, sites like  offer a searchable database of certificates that shows current and historical results.
+https://github.com/aboul3la/Sublist3r => OSTINT - Subdomains search
+**Frameworks**
+https://github.com/mtesauro/owasp-wte/blob/master/temp-projects/wte-docs/contents/usr/share/doc/WTE-Documentation/OSSTMM/OSSTMM.3.pdf => OSSTMM
+https://owasp.org/ => OWASP
+https://nvd.nist.gov/vuln => NIST
+https://www.ncsc.gov.uk/collection/cyber-assessment-framework/caf-objective-a-managing-security-risk => CAF
 
 [Relatórios de Segurança](https://web.archive.org/web/20210513155142/https://www.bugcrowd.com/resources/reports/bugcrowd-priority-one-report/)
 [Labs PortSwigger](https://portswigger.net/users/register)
