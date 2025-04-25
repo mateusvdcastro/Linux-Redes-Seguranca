@@ -10,10 +10,11 @@ https://sansorg.egnyte.com/dl/bF4I3yCcnt/ => Rules of Engagement (ROE)
 https://wiki.owasp.org/index.php/OWASP_favicon_database => OWASP favicon database
 [https://crt.sh](https://crt.sh/) => Discover subdomains belonging to a domain, sites like  offer a searchable database of certificates that shows current and historical results.
 https://github.com/aboul3la/Sublist3r => OSTINT - Subdomains search
-**Cryptography**:
+#### **Cryptography**:
 https://crackstation.net/ => MD5, Sha-1, Sha-256, Sha-512
 https://www.base64decode.org/ => Base64 decode and encode
-**Frameworks**
+https://pipedream.com/requestbin => SSRF helpfull tool 
+#### **Frameworks**
 https://github.com/mtesauro/owasp-wte/blob/master/temp-projects/wte-docs/contents/usr/share/doc/WTE-Documentation/OSSTMM/OSSTMM.3.pdf => OSSTMM
 https://owasp.org/ => OWASP
 https://nvd.nist.gov/vuln => NIST
@@ -25,6 +26,12 @@ https://www.ncsc.gov.uk/collection/cyber-assessment-framework/caf-objective-a-ma
 [Hackthebox](https://www.hackthebox.com/)
 [Máquina virtual com vulnerabilidades](http://www.itsecgames.com/index.htm)
 
+## XSS 
+- https://github.com/mandatoryprogrammer/xsshunter-express => Blind XSS
+- [XSS found in Shopify](https://hackerone.com/reports/415484)
+- [$7,500 for XSS found in Steam chat](https://hackerone.com/reports/409850)
+- [$2,500 for XSS in HackerOne](https://hackerone.com/reports/449351)
+- [XSS found in Infogram](https://hackerone.com/reports/283825)
 ## Bug Bounty
 [Site para recompensas por Bug Bounty](https://hackerone.com/hacktivity)
 https://www.hackerone.com/
@@ -41,3 +48,5 @@ https://alpinesecurity.com/training/catalog/  ==> Para se preparar para o LPT
 https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html
 https://www.offensive-security.com/web200-oswa/
 https://solyd.com.br/treinamentos/pentest-profissional-v2022/
+
+
