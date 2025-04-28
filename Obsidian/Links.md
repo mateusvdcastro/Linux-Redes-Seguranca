@@ -10,6 +10,7 @@ https://sansorg.egnyte.com/dl/bF4I3yCcnt/ => Rules of Engagement (ROE)
 https://wiki.owasp.org/index.php/OWASP_favicon_database => OWASP favicon database
 [https://crt.sh](https://crt.sh/) => Discover subdomains belonging to a domain, sites like  offer a searchable database of certificates that shows current and historical results.
 https://github.com/aboul3la/Sublist3r => OSTINT - Subdomains search
+https://github.com/payloadbox/command-injection-payload-list => Command Injection Payloads
 #### **Cryptography**:
 https://crackstation.net/ => MD5, Sha-1, Sha-256, Sha-512
 https://www.base64decode.org/ => Base64 decode and encode
