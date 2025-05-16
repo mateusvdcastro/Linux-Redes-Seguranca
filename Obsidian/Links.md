@@ -14,7 +14,8 @@ https://github.com/payloadbox/command-injection-payload-list => Command Injectio
 #### **Cryptography**:
 https://crackstation.net/ => MD5, Sha-1, Sha-256, Sha-512
 https://www.base64decode.org/ => Base64 decode and encode
-https://pipedream.com/requestbin => SSRF helpfull tool 
+https://pipedream.com/requestbin => SSRF helpfull tool
+https://gchq.github.io/CyberChef/ => The Cyber Swiss Army Knife
 #### **Frameworks**
 https://github.com/mtesauro/owasp-wte/blob/master/temp-projects/wte-docs/contents/usr/share/doc/WTE-Documentation/OSSTMM/OSSTMM.3.pdf => OSSTMM
 https://owasp.org/ => OWASP

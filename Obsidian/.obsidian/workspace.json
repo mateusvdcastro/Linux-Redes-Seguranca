@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Cyber Security.md",
+                "file": "Links.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Cyber Security"
+              "title": "Links"
             }
           }
         ]
@@ -172,6 +172,7 @@
   "active": "9bfb0fe1c455c1c9",
   "lastOpenFiles": [
     "Cyber Security.md",
+    "SO/SO.md",
     "Links.md",
     "CompTIA Security +.md",
     "Fundamentos.md",
@@ -186,7 +187,6 @@
     "Untitled.canvas",
     "SO/Algoritmos de escalonamento de braço de disco.md",
     "SO/Paginação.md",
-    "SO/SO.md",
     "SO/Prova 2.md",
     "SO/Processos.md",
     "SO/Gerenciamento básico de memória e troca de processos.md",
