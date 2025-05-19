@@ -11,6 +11,15 @@ Find out valid users
 & ffuf -w /usr/share/wordlists/SecLists/Usernames/Names/names.txt -X POST -d "username=FUZZ&email=x&password=x&cpassword=x" -H "Content-Type: application/x-www-form-urlencoded" -u http://<domain>/signup -mr "username already exists"
 Brute Force
 & ffuf -w valid_usernames.txt:W1,/usr/share/wordlists/SecLists/Passwords/Common-Credentials/10-million-password-list-top-100.txt:W2 -X POST -d "username=W1&password=W2" -H "Content-Type: application/x-www-form-urlencoded" -u http://<domain>/login -fc 200
+
+
+nslookup -type=A tryhackme.com 1.1.1.1
+nslookup -type=MX tryhackme.com 1.1.1.1
+nslookup -type=TXT tryhackme.com 1.1.1.1
+whois tryhackme.com
+dig tryhackme.com A
+dig @1.1.1.1 tryhackme.com MX
+
 ```
 
 
@@ -105,12 +114,34 @@ Digitar os comandos acima fará com que o google lhe peça confirmação por cap
 # Tecnologias de Pentest
 
 #Nmap:
-	Nmap é um software livre que realiza port scan desenvolvido pelo Gordon Lyon, autoproclamado hacker "Fyodor". É muito utilizado para avaliar a segurança dos computadores, e para descobrir serviços ou servidores em uma rede de computadores.
+
+Nmap é um software livre que realiza port scan desenvolvido pelo Gordon Lyon, autoproclamado hacker "Fyodor". É muito utilizado para avaliar a segurança dos computadores, e para descobrir serviços ou servidores em uma rede de computadores.
+
+1. When a _privileged_ user tries to scan targets on a local network (Ethernet), Nmap uses _ARP requests_. A privileged user is `root` or a user who belongs to `sudoers` and can run `sudo`.
+2. When a _privileged_ user tries to scan targets outside the local network, Nmap uses ICMP echo requests, TCP ACK (Acknowledge) to port 80, TCP SYN (Synchronize) to port 443, and ICMP timestamp request.
+3. When an _unprivileged_ user tries to scan targets outside the local network, Nmap resorts to a TCP 3-way handshake by sending SYN packets to ports 80 and 443.
 ```bash
 $ nmap -A [IP do servidor]
 $ nmap -A -T4 -Pn 192.168.0.8  # Exibe todas as portas e quais processos elas estão rodando
 $ nmap -n -p 80 --open 192.168.15.0/24 # verifica todas as conexões abertas na porta 80 no range da minha rede, assim descobrimos o IP da máquina, depois basta colocar esse ip no navegador
 ```
+
+| Scan Type              | Example Command                             |
+| ---------------------- | ------------------------------------------- |
+| ARP Scan               | `sudo nmap -PR -sn MACHINE_IP/24`           |
+| ICMP Echo Scan         | `sudo nmap -PE -sn MACHINE_IP/24`           |
+| ICMP Timestamp Scan    | `sudo nmap -PP -sn MACHINE_IP/24`           |
+| ICMP Address Mask Scan | `sudo nmap -PM -sn MACHINE_IP/24`           |
+| TCP SYN Ping Scan      | `sudo nmap -PS22,80,443 -sn MACHINE_IP/30`  |
+| TCP ACK Ping Scan      | `sudo nmap -PA22,80,443 -sn MACHINE_IP/30`  |
+| UDP Ping Scan          | `sudo nmap -PU53,161,162 -sn MACHINE_IP/30` |
+
+|Option|Purpose|
+|---|---|
+|`-n`|no DNS lookup|
+|`-R`|reverse-DNS lookup for all hosts|
+|`-sn`|host discovery only|
+
 Ver: https://nmap.org/docs.html
 
 #Wapiti:

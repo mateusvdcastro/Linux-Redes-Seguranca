@@ -5,8 +5,6 @@
 Playlist Redes Fábio Akita:
 [Introdução a Redes: Como Dados viram Ondas? | Parte 1](https://www.youtube.com/watch?v=0TndL-Nh6Ok&list=PLdsnXVqbHDUcTGjNZuRYCVj3AZtdt6oG7)
 
-## (Sua segurança é uma droga)
-
 https://pypi.org/project/bcrypt/
 https://github.com/pyca/bcrypt/
 
